@@ -98,13 +98,11 @@ public class ServiceUser {
 	@Autowired
 	RepositoryUserCompanyRelation repositoryUserCompanies;
 
-	/*@Autowired
-	RepositoryLoginOtp repositoryLoginOtp;
-
 	@Autowired
 	ServiceEmailHandler serviceEmailHandler;
 
-
+	/*@Autowired
+	RepositoryLoginOtp repositoryLoginOtp;
 
 	@Autowired
 	RepositoryCompany repositoryCompany;
@@ -397,26 +395,6 @@ public class ServiceUser {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	/**
 	 * Description: get user List 
 	 * @param dtoSearch
@@ -691,7 +669,122 @@ public class ServiceUser {
 		dtoSearch2.setRecords(dtoList);
 		return dtoSearch2;
 	}
-	
+
+	/**
+	 * This methods blocks/unblocks user
+	 * @param dtoWhiteListIp
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public DtoUser blockUnblockUser(DtoUser dtoUser) {
+		User user = this.repositoryUser.findByUserIdAndIsDeleted(dtoUser.getUserId(), false);
+		if (user != null) {
+			user.setActive(dtoUser.getIsActive());
+			this.repositoryUser.saveAndFlush(user);
+		}
+		return dtoUser;
+	}
+
+
+	/**
+	 * @param user
+	 */
+	public void resetPassword(User user) {
+		String randomPassword = UtilRandomKey.getRandomOrderNumber();
+		user.setPassword(passwordEncoder.encode(randomPassword));
+		user.setResetPassword(true);
+		repositoryUser.saveAndFlush(user);
+		serviceEmailHandler.sendResetPasswordMailByAdmin(user.getEmail(), randomPassword, user.getUsername());
+	}
+
+	/**
+	 * @param password
+	 * @param userExist
+	 * @return
+	 */
+	public boolean changeUserPasswordAndSendEmail(String password, User userExist) {
+		if (userExist != null && userExist.getEmail() != null) {
+			userExist.setPassword(passwordEncoder.encode(password));
+
+			repositoryUser.saveAndFlush(userExist);
+			try {
+				serviceEmailHandler.sendChangeUserPasswordEmail(userExist.getEmail(), password, userExist.getUsername());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				log.debug(ex);
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+	/**
+	 * Description: get admin profile detail
+	 * @param dtoUser2
+	 * @return
+	 */
+	public DtoUser getAdminProfileDetail(DtoUser dtoUser2) 
+	{
+		String langId = httpServletRequest.getHeader(LANG_ID);
+		User user = repositoryUser.findByUserIdAndIsDeleted(dtoUser2.getUserId(), false);
+		if (user != null) {
+			UserDetail userDetail = repositoryUserDetail.findByUserUserIdAndIsDeleted(user.getUserId(), false);
+			if (userDetail != null) {
+				return new DtoUser(userDetail, user, langId);
+			}
+		}
+		return null;
+	}
+
+
+	/**
+	 * Description: update admin profile
+	 * @param dtoUser
+	 * @return
+	 */
+	public String[] updateAdminProfile(DtoUser dtoUser) 
+	{
+		int loggedInUserId = Integer.parseInt(httpServletRequest.getHeader(USER_ID));
+		User user = null;
+		try 
+		{
+			user = repositoryUser.findByUserId(dtoUser.getUserId());
+			UserDetail userDetail = null;
+			if (user != null) 
+			{
+				if (UtilRandomKey.isNotBlank(dtoUser.getPassword())) 
+				{
+					user.setPassword(passwordEncoder.encode(dtoUser.getPassword()));
+				}
+				user.setUpdatedBy(loggedInUserId);
+				user = repositoryUser.saveAndFlush(user);
+				userDetail = repositoryUserDetail.findByUserUserIdAndIsDeleted(user.getUserId(), false);
+				if (userDetail != null) 
+				{
+					userDetail.setUpdatedBy(loggedInUserId);
+					userDetail.setFirstName(dtoUser.getFirstName());
+					userDetail.setLastName(dtoUser.getLastName());
+					userDetail.setMiddleName(dtoUser.getMiddleName());
+					userDetail.setSecondaryFirstName(dtoUser.getSecondaryFirstName());
+					userDetail.setSecondaryLastName(dtoUser.getSecondaryLastName());
+					userDetail.setSecondaryMiddleName(dtoUser.getSecondaryMiddleName());
+					userDetail.setUser(user);
+					repositoryUserDetail.saveAndFlush(userDetail);
+				}
+				return new String[] { "success", String.valueOf(user.getUserId()) };
+			}
+			return new String[] { "error", String.valueOf(dtoUser.getUserId()) };
+		}
+		catch (Exception e) 
+		{
+			log.info(Arrays.toString(e.getStackTrace()));
+			return new String[] { e.getMessage(), String.valueOf(dtoUser.getUserId()) };
+		}
+	}
+
+
 
 
 
@@ -759,32 +852,13 @@ public class ServiceUser {
 	}
 
 
-	   *//**
-	   * @param password
-	   * @param userExist
-	   * @return
-	   *//*
-	public boolean changeUserPasswordAndSendEmail(String password, User userExist) {
-		if (userExist != null && userExist.getEmail() != null) {
-			userExist.setPassword(passwordEncoder.encode(password));
-			repositoryUser.saveAndFlush(userExist);
-			try {
-				serviceEmailHandler.sendChangeUserPasswordEmail(userExist.getEmail(), password, userExist.getUsername());
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				log.debug(ex);
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
+	   */
 
-	    *//**
-	    * Description: send otp to user 
-	    * @param dtoUserData
-	    * @return
-	    *//*
+	/**
+	 * Description: send otp to user 
+	 * @param dtoUserData
+	 * @return
+	 *//*
 	public DtoUser sendOTPtoUser(DtoUser dtoUserData) {
 		DtoUser dtoUserLogin = new DtoUser();
 		User user3 = repositoryUser.findByusernameAndIsDeleted(dtoUserData.getUserName(), false);
@@ -882,12 +956,12 @@ public class ServiceUser {
 		return dtoUserLogin;
 	}
 
-	     *//**
-	     * Description: save Authorization setting
-	     * @param dtoAuthorization
-	     * @return
-	     * @throws ParseException
-	     *//*
+	  *//**
+	  * Description: save Authorization setting
+	  * @param dtoAuthorization
+	  * @return
+	  * @throws ParseException
+	  *//*
 	public DtoAuthorizationDetail saveAuthorizationDetail(DtoAuthorizationDetail dtoAuthorization)
 			throws ParseException {
 		AuthorizationSetting authorizationDetail = new AuthorizationSetting();
@@ -911,10 +985,10 @@ public class ServiceUser {
 		return dtoAuthorization;
 	}
 
-	      *//**
-	      * @param dtoUserIp
-	      * @return
-	      *//*
+	   *//**
+	   * @param dtoUserIp
+	   * @return
+	   *//*
 	public DtoUserIp setUserIPForAuthentication(DtoUserIp dtoUserIp) {
 
 		WhitelistIp whitelistIp = new WhitelistIp();
@@ -940,10 +1014,10 @@ public class ServiceUser {
 		return dtoUserIp;
 	}
 
-	       *//**
-	       * @param dtoUserIp
-	       * @return
-	       *//*
+	    *//**
+	    * @param dtoUserIp
+	    * @return
+	    *//*
 	public Boolean updateUserIPForAuthentication(DtoUserIp dtoUserIp) {
 		Boolean isUpdate = false;
 		WhitelistIp whitelistIp = repositoryWhiteListIp.findOne(dtoUserIp.getId());
@@ -965,110 +1039,20 @@ public class ServiceUser {
 		return isUpdate;
 	}
 
-	        *//**
-	        * @param userName
-	        * @return
-	        *//*
+	     *//**
+	     * @param userName
+	     * @return
+	     *//*
 	public User getUserDetailByUserName(String userName) {
 		return this.repositoryUser.findByusernameAndIsDeleted(userName, false);
 	}
 
-	         *//**
-	         * This methods blocks/unblocks user
-	         * @param dtoWhiteListIp
-	         * @return
-	         *//*
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public DtoUser blockUnblockUser(DtoUser dtoUser) {
-		User user = this.repositoryUser.findByUserIdAndIsDeleted(dtoUser.getUserId(), false);
-		if (user != null) {
-			user.setActive(dtoUser.getIsActive());
-			this.repositoryUser.saveAndFlush(user);
-		}
-		return dtoUser;
-	}
-
-	          *//**
-	          * @param user
-	          *//*
-	public void resetPassword(User user) {
-		String randomPassword = UtilRandomKey.getRandomOrderNumber();
-		user.setPassword(passwordEncoder.encode(randomPassword));
-		user.setResetPassword(true);
-		repositoryUser.saveAndFlush(user);
-		serviceEmailHandler.sendResetPasswordMailByAdmin(user.getEmail(), randomPassword, user.getUsername());
-	}
-
-	           *//**
-	           * Description: update admin profile
-	           * @param dtoUser
-	           * @return
-	           *//*
-	public String[] updateAdminProfile(DtoUser dtoUser) 
-	{
-		int loggedInUserId = Integer.parseInt(httpServletRequest.getHeader(USER_ID));
-		User user = null;
-		try 
-		{
-			user = repositoryUser.findByUserId(dtoUser.getUserId());
-			UserDetail userDetail = null;
-			if (user != null) 
-			{
-				if (UtilRandomKey.isNotBlank(dtoUser.getPassword())) 
-				{
-					user.setPassword(passwordEncoder.encode(dtoUser.getPassword()));
-				}
-				user.setUpdatedBy(loggedInUserId);
-				user = repositoryUser.saveAndFlush(user);
-				userDetail = repositoryUserDetail.findByUserUserIdAndIsDeleted(user.getUserId(), false);
-				if (userDetail != null) 
-				{
-					userDetail.setUpdatedBy(loggedInUserId);
-					userDetail.setFirstName(dtoUser.getFirstName());
-					userDetail.setLastName(dtoUser.getLastName());
-					userDetail.setMiddleName(dtoUser.getMiddleName());
-					userDetail.setSecondaryFirstName(dtoUser.getSecondaryFirstName());
-					userDetail.setSecondaryLastName(dtoUser.getSecondaryLastName());
-					userDetail.setSecondaryMiddleName(dtoUser.getSecondaryMiddleName());
-					userDetail.setUser(user);
-					repositoryUserDetail.saveAndFlush(userDetail);
-				}
-				return new String[] { "success", String.valueOf(user.getUserId()) };
-			}
-			return new String[] { "error", String.valueOf(dtoUser.getUserId()) };
-		}
-		catch (Exception e) 
-		{
-			log.info(Arrays.toString(e.getStackTrace()));
-			return new String[] { e.getMessage(), String.valueOf(dtoUser.getUserId()) };
-		}
-	}
-
-	            *//**
-	            * Description: get admin profile detail
-	            * @param dtoUser2
-	            * @return
-	            *//*
-	public DtoUser getAdminProfileDetail(DtoUser dtoUser2) 
-	{
-		String langId = httpServletRequest.getHeader(LANG_ID);
-		User user = repositoryUser.findByUserIdAndIsDeleted(dtoUser2.getUserId(), false);
-		if (user != null) {
-			UserDetail userDetail = repositoryUserDetail.findByUserUserIdAndIsDeleted(user.getUserId(), false);
-			if (userDetail != null) {
-				return new DtoUser(userDetail, user, langId);
-			}
-		}
-		return null;
-	}
-
-
-	             *//**
-	             * Description: save mac address
-	             * @param macAddress
-	             * @param user
-	             * @return
-	             *//*
+	      *//**
+	      * Description: save mac address
+	      * @param macAddress
+	      * @param user
+	      * @return
+	      *//*
 	public boolean saveMacAddress(DtoUser dtoUser, User user) 
 	{
 		UserMacAddress userMacAddress=null;
@@ -1095,11 +1079,11 @@ public class ServiceUser {
 		}
 	}
 
-	              *//**
-	              * Description: delete mac address 
-	              * @param dtoUser
-	              * @return
-	              *//*
+	       *//**
+	       * Description: delete mac address 
+	       * @param dtoUser
+	       * @return
+	       *//*
 	public boolean deleteMacAddressOfUser(DtoUser dtoUser) 
 	{
 		int loggedInUserId = Integer.parseInt(httpServletRequest.getHeader(USER_ID));
@@ -1466,5 +1450,5 @@ public class ServiceUser {
 	}
 
 
-	*/
-	}
+	 */
+}

@@ -3,7 +3,7 @@
  * Description: SessionManager
  * Name of Project: SmartSoftware
  * Created on: Feb 10, 2020
- * Modified on: Feb 10, 2020 4:19:38 AM
+ * Modified on: Feb 26, 2020 4:19:38 AM
  * @author Juned
  * Version: 
  */
@@ -22,10 +22,12 @@ import org.springframework.stereotype.Component;
 import com.ss.constant.SmartRoles;
 import com.ss.model.Company;
 import com.ss.model.User;
+import com.ss.model.UserDraft;
 import com.ss.model.UserSession;
 import com.ss.model.dto.DtoUser;
 import com.ss.repository.RepositoryCompany;
 import com.ss.repository.RepositoryUser;
+import com.ss.repository.RepositoryUserDraft;
 import com.ss.repository.RepositoryUserSession;
 import com.ss.util.UtilRandomKey;
 
@@ -44,10 +46,10 @@ public class SessionManager {
 	
 	/*@Autowired
 	ServiceLogin serviceLogin;
-	
+	*/
 	@Autowired
 	RepositoryUserDraft repositoryUserDraft;
-	*/
+	
 	@Autowired (required=false)
 	HttpServletRequest httpRequest;
 	
@@ -183,7 +185,7 @@ public UserSession validateUserSessionId(HttpServletRequest request) {
 	 * @param userId
 	 * @return
 	 */
-	/*public boolean clearSessionLog(Integer userId) {
+	public boolean clearSessionLog(Integer userId) {
 		UserSession session = repositoryUserSession.findByUserUserIdAndIsDeleted(userId, false);
 		if (session != null) 
 		{
@@ -211,7 +213,7 @@ public UserSession validateUserSessionId(HttpServletRequest request) {
 		} else {
 			return false;
 		}
-	}*/
+	}
 
 	/**
 	 * @param dtoUser
