@@ -56,7 +56,7 @@ smtp:
   protocol : smtp
   host: smtp.gmail.com
   username: jbaig29@gmail.com
-  password: 'juned@1234'
+  password: Juned@1234
   port: 587
   sender: SmartSoft
 #

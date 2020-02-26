@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,7 @@ import com.ss.authetication.SessionManager;
 import com.ss.config.ResponseMessage;
 import com.ss.constant.Constant;
 import com.ss.constant.MessageLabel;
+import com.ss.constant.SmartRoles;
 import com.ss.model.User;
 import com.ss.model.UserDetail;
 import com.ss.model.UserSession;
@@ -70,7 +72,7 @@ public class ControllerUser {
 
 	@Autowired
 	ServiceUserGroup serviceUserGroup;
-*/
+	 */
 	@Autowired
 	ServiceResponse serviceResponse;
 
@@ -80,7 +82,7 @@ public class ControllerUser {
 	 * @param dtoUser
 	 * @return
 	 */
-	@RequestMapping(value = "/createUser", method = RequestMethod.POST, produces = "application/json"                                                                                                                                                                                    )
+	@RequestMapping(value = "/createUser", method = RequestMethod.POST, produces = "application/json" )
 	public ResponseMessage createUser(HttpServletRequest request, @RequestBody DtoUser dtoUser) {
 		ResponseMessage responseMessage = null;
 		UserSession session = sessionManager.validateUserSessionId(request);
@@ -116,14 +118,14 @@ public class ControllerUser {
 		}
 		return responseMessage;
 	}
-	
+
 	/**
 	 * @description : Update User
 	 * @param request
 	 * @param dtoUser
 	 * @return
 	 */
-	@RequestMapping(value = "/updateUser", method = RequestMethod.POST/*, produces = "application/json"*/)
+	@RequestMapping(value = "/updateUser", method = RequestMethod.POST, produces = "application/json")
 	public ResponseMessage updateUser(HttpServletRequest request, @RequestBody DtoUser dtoUser) {
 		ResponseMessage responseMessage = null;
 		DtoRequestResponseLog dtoRequestResponseLog = RequestResponseLogger.logRequest(request, dtoUser);
@@ -160,7 +162,7 @@ public class ControllerUser {
 	 * @param dtoUser
 	 * @return
 	 */
-	@RequestMapping(value = "/deleteMutipleUsers", method = RequestMethod.POST/*, produces = "application/json"*/)
+	@RequestMapping(value = "/deleteMutipleUsers", method = RequestMethod.POST, produces = "application/json")
 	public ResponseMessage deleteMutipleUsers(HttpServletRequest request, @RequestBody DtoUser dtoUser) {
 		ResponseMessage responseMessage = null;
 		UserSession session = sessionManager.validateUserSessionId(request);
@@ -180,7 +182,7 @@ public class ControllerUser {
 		}
 		return responseMessage;
 	}
-	
+
 	/**
 	 * @description : Get User Detail By UserId
 	 * @param request
@@ -227,8 +229,8 @@ public class ControllerUser {
 		}
 		return responseMessage;
 	}
-	
-	
+
+
 	/**
 	 * @description : Get Users List For Drop Down
 	 * @param request
@@ -262,9 +264,9 @@ public class ControllerUser {
 		return responseMessage;
 	}
 
-	
 
-	
+
+
 	/**
 	 * @description : Check Email
 	 * @param request
@@ -290,8 +292,8 @@ public class ControllerUser {
 		return responseMessage;
 	}
 
-	
-	
+
+
 
 	/**
 	 * @description : Get Users List
@@ -383,7 +385,7 @@ public class ControllerUser {
 		}
 		return responseMessage;
 	}
-	
+
 	/**
 	 * @description : List Of UserDetail
 	 * @param request
@@ -405,7 +407,7 @@ public class ControllerUser {
 		}
 		return responseMessage;
 	}
-	
+
 	@RequestMapping(value = "/getActiveUsersList", method = RequestMethod.PUT, produces = "application/json")
 	public ResponseMessage getActiveUsersList(HttpServletRequest request, @RequestBody DtoSearch dtoSearch) {
 		ResponseMessage responseMessage = null;
@@ -432,45 +434,10 @@ public class ControllerUser {
 		return responseMessage;
 	}
 
-	
-	
-	
-	/**
-	 * @description : User logout
-	 * @param user
-	 * @param request
-	 * @return
-	 */
-	/*@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	@ResponseBody
-	public ModelMap logoutService(@RequestBody DtoUser user, HttpServletRequest request) {
-		LOGGER.info(" user logout service :::::: ");
-		ResponseMessage responseMessage = null;
-		UserSession session = sessionManager.validateUserSessionId(request);
-		if (session == null) {
-			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
-					serviceResponse.getMessageByShortAndIsDeleted("SESSION_EXPIRED", false));
-		} else {
-			User userExist = repositoryUser.findByUserIdAndIsDeleted(user.getUserId(), false);
-			if (userExist != null) {
-				boolean result = sessionManager.clearSessionLog(userExist.getUserId());
-				if (result) {
-					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_LOGOUT_SUCCESSFULLY, false));
-				} else {
-					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
-				}
-			} else {
-				responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_NOT_FOUND, false));
-			}
-		}		
-		return new ModelMap("response", responseMessage);
-	}*/
 
-	
-	
+
+
+
 
 
 	/**
@@ -478,7 +445,7 @@ public class ControllerUser {
 	 * @param user
 	 * @param request
 	 * @return
-	 *//*
+	 */
 	@RequestMapping(value = "/changeUserPassword", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelMap changeUserPassword(@RequestBody DtoUser user, HttpServletRequest request) {
@@ -507,133 +474,12 @@ public class ControllerUser {
 		return new ModelMap("response", responseMessage);
 	}
 
-	*//**
-	 * @description : User logout
-	 * @param user
-	 * @param request
-	 * @return
-	 *//*
-	@RequestMapping(value = "/logoutBeforeCompanySelection", method = RequestMethod.POST)
-	@ResponseBody
-	public ModelMap logoutServiceBeforeCompanySelection(@RequestBody DtoUser user, HttpServletRequest request) {
-		LOGGER.info(" user logout service :::::: ");
-		ResponseMessage responseMessage = null;
-		UserSession session = sessionManager.validateUserSessionIdBeforeCompanySelection(request);
-		if (session == null) {
-			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
-					serviceResponse.getMessageByShortAndIsDeleted("SESSION_EXPIRED", false));
-		} else {
-			User userExist = repositoryUser.findByUserIdAndIsDeleted(user.getUserId(), false);
-			if (userExist != null) {
-				boolean result = sessionManager.clearSessionLog(userExist.getUserId());
-				if (result) {
-					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_LOGOUT_SUCCESSFULLY, false));
-				} else {
-					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
-				}
-			} else {
-				responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_NOT_FOUND, false));
-			}
-		}		
-		return new ModelMap("response", responseMessage);
-	}
-	
-	*//**
-	 * @description : Admin changes user access over ip
-	 * @param dtoUserIp
-	 * @param request
-	 * @return
-	 * @throws ParseException
-	 *//*
-	@RequestMapping(value = "/saveAuthorizationDetail", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseMessage saveAuthorizationDetail(@RequestBody DtoAuthorizationDetail dtoAuthorization,
-			HttpServletRequest request) throws ParseException {
-		LOGGER.info(" save Authorization Detail service :::::: ");
-		ResponseMessage responseMessage = null;
-		UserSession session = sessionManager.validateUserSessionId(request);
-		if (session == null) {
-			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
-					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
-		} else {
-			dtoAuthorization = serviceUser.saveAuthorizationDetail(dtoAuthorization);
-			responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.AUTHORIZATION_DETAIL_SAVED, false),
-					dtoAuthorization);
-		}
-		return responseMessage;
-	}
-
-	/**
-	 * @description : Set User IP
-	 * @param request
-	 * @param dtoUserIp
-	 * @param responseMessage
-	 * @return
-	 *//*
-	@RequestMapping(value = "/setUserIP", method = RequestMethod.PUT)
-	public ResponseMessage setUserIP(HttpServletRequest request, @RequestBody DtoUserIp dtoUserIp,
-			ResponseMessage responseMessage) {
-		if (dtoUserIp.getIpAddress() != null) {
-			UserSession session = sessionManager.validateUserSessionId(request);
-			if (session == null) {
-				responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
-				return responseMessage;
-			} else {
-				DtoUserIp dtoUserIp2 = serviceUser.setUserIPForAuthentication(dtoUserIp);
-				if (dtoUserIp2.getMessageType() == null) {
-					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.IP_ADDED, false), true);
-				} else {
-					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-							serviceResponse.getMessageByShortAndIsDeleted(dtoUserIp2.getMessageType(), false), false);
-				}
-			}
-		}
-		return responseMessage;
-	}
-
-	*//**
-	 * @description : Update User IP
-	 * @param request
-	 * @param dtoUserIp
-	 * @param responseMessage
-	 * @return
-	 *//*
-	@RequestMapping(value = "/updateUserIP", method = RequestMethod.PUT)
-	public ResponseMessage updateUserIP(HttpServletRequest request, @RequestBody DtoUserIp dtoUserIp,
-			ResponseMessage responseMessage) {
-		if (dtoUserIp.getIpAddress() != null) {
-			UserSession session = sessionManager.validateUserSessionId(request);
-			if (session == null) {
-				responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
-				return responseMessage;
-			} else {
-				Boolean isIPUpdated = serviceUser.updateUserIPForAuthentication(dtoUserIp);
-				if (isIPUpdated) {
-					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.IP_UPDATED, false), true);
-				} else {
-					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.IP_REQUIRED, false), false);
-				}
-			}
-		}
-		return responseMessage;
-	}
-
-	*/
 	/**
 	 * @description : Block Unblock User
 	 * @param dtoUser
 	 * @param request
 	 * @return
-	 *//*
+	 */
 	@RequestMapping(value = "/blockUnblockUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = "Accept=application/json")
 	public ResponseMessage blockUnblockUserGroup(@RequestBody DtoUser dtoUser, HttpServletRequest request) {
 		ResponseMessage responseMessage = null;
@@ -654,12 +500,12 @@ public class ControllerUser {
 		return responseMessage;
 	}
 
-	*//**
+	/**
 	 * @description : Reset Password
 	 * @param request
 	 * @param dtoUser
 	 * @return
-	 *//*
+	 */
 	@RequestMapping(value = "/resetPassword", method = RequestMethod.POST, produces = "application/json")
 	public ResponseMessage resetPassword(HttpServletRequest request, @RequestBody DtoUser dtoUser) {
 		ResponseMessage responseMessage = null;
@@ -682,12 +528,45 @@ public class ControllerUser {
 		return responseMessage;
 	}
 
-	*//**
+	/**
+	 * @description : Get Admin Profile Detail
+	 * @param request
+	 * @param dtoUser
+	 * @return
+	 */
+	@RequestMapping(value = "/getAdminProfileDetail", method = RequestMethod.POST, produces = "application/json")
+	public ResponseMessage getAdminDetailById(HttpServletRequest request, @RequestBody DtoUser dtoUser) {
+		ResponseMessage responseMessage = null;
+		UserSession session = sessionManager.validateUserSessionId(request);
+		if (session == null) {
+			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+			return responseMessage;
+		} else {
+			User user = repositoryUser.findByUserIdAndIsDeleted(dtoUser.getUserId(), false);
+			if (user != null) {
+				if (user.getRole().getRoleName().equalsIgnoreCase(SmartRoles.SUPERADMIN.name())) {
+					DtoUser users = serviceUser.getAdminProfileDetail(dtoUser);
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.ADMIN_DETAIL_SUCCESS, false), users);
+				} else {
+					responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.BAD_REQUEST, false));
+				}
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_NOT_FOUND, false));
+			}
+		}
+		return responseMessage;
+	}
+
+	/**
 	 * @description : Update Admin Profile
 	 * @param request
 	 * @param dtoUser
 	 * @return
-	 *//*
+	 */
 	@RequestMapping(value = "/updateAdminProfile", method = RequestMethod.POST, consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
 	public ResponseMessage updateAdminProfile(HttpServletRequest request, @RequestBody DtoUser dtoUser) {
 		ResponseMessage responseMessage = null;
@@ -720,40 +599,166 @@ public class ControllerUser {
 		return responseMessage;
 	}
 
-	*//**
-	 * @description : Get Admin Profile Detail
+
+
+	/**
+	 * @description : User logout
+	 * @param user
 	 * @param request
-	 * @param dtoUser
 	 * @return
-	 *//*
-	@RequestMapping(value = "/getAdminProfileDetail", method = RequestMethod.POST, produces = "application/json")
-	public ResponseMessage getAdminDetailById(HttpServletRequest request, @RequestBody DtoUser dtoUser) {
+	 */
+	@RequestMapping(value = "/logoutBeforeCompanySelection", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelMap logoutServiceBeforeCompanySelection(@RequestBody DtoUser user, HttpServletRequest request) {
+		LOGGER.info(" user logout service :::::: ");
 		ResponseMessage responseMessage = null;
-		UserSession session = sessionManager.validateUserSessionId(request);
+		UserSession session = sessionManager.validateUserSessionIdBeforeCompanySelection(request);
 		if (session == null) {
 			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
-					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
-			return responseMessage;
+					serviceResponse.getMessageByShortAndIsDeleted("SESSION_EXPIRED", false));
 		} else {
-			User user = repositoryUser.findByUserIdAndIsDeleted(dtoUser.getUserId(), false);
-			if (user != null) {
-				if (user.getRole().getRoleName().equalsIgnoreCase(SmartRoles.SUPERADMIN.name())) {
-					DtoUser users = serviceUser.getAdminProfileDetail(dtoUser);
+			User userExist = repositoryUser.findByUserIdAndIsDeleted(user.getUserId(), false);
+			if (userExist != null) {
+				boolean result = sessionManager.clearSessionLog(userExist.getUserId());
+				if (result) {
 					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.ADMIN_DETAIL_SUCCESS, false), users);
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_LOGOUT_SUCCESSFULLY, false));
 				} else {
-					responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
-							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.BAD_REQUEST, false));
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
 				}
 			} else {
 				responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
 						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_NOT_FOUND, false));
 			}
+		}		
+		return new ModelMap("response", responseMessage);
+	}
+	
+	
+	/**
+	 * @description : User logout
+	 * @param user
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelMap logoutService(@RequestBody DtoUser user, HttpServletRequest request) {
+		LOGGER.info(" user logout service :::::: ");
+		ResponseMessage responseMessage = null;
+		UserSession session = sessionManager.validateUserSessionId(request);
+		if (session == null) {
+			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+					serviceResponse.getMessageByShortAndIsDeleted("SESSION_EXPIRED", false));
+		} else {
+			User userExist = repositoryUser.findByUserIdAndIsDeleted(user.getUserId(), false);
+			if (userExist != null) {
+				boolean result = sessionManager.clearSessionLog(userExist.getUserId());
+				if (result) {
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_LOGOUT_SUCCESSFULLY, false));
+				} else {
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+				}
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_NOT_FOUND, false));
+			}
+		}		
+		return new ModelMap("response", responseMessage);
+	}
+
+
+	 /**
+	  * @description : Admin changes user access over ip
+	  * @param dtoUserIp
+	  * @param request
+	  * @return
+	  * @throws ParseException
+	  *//*
+	@RequestMapping(value = "/saveAuthorizationDetail", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseMessage saveAuthorizationDetail(@RequestBody DtoAuthorizationDetail dtoAuthorization,
+			HttpServletRequest request) throws ParseException {
+		LOGGER.info(" save Authorization Detail service :::::: ");
+		ResponseMessage responseMessage = null;
+		UserSession session = sessionManager.validateUserSessionId(request);
+		if (session == null) {
+			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+		} else {
+			dtoAuthorization = serviceUser.saveAuthorizationDetail(dtoAuthorization);
+			responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.AUTHORIZATION_DETAIL_SAVED, false),
+					dtoAuthorization);
 		}
 		return responseMessage;
-	 }
-	
-	*//**
+	}
+
+	/**
+	   * @description : Set User IP
+	   * @param request
+	   * @param dtoUserIp
+	   * @param responseMessage
+	   * @return
+	   *//*
+	@RequestMapping(value = "/setUserIP", method = RequestMethod.PUT)
+	public ResponseMessage setUserIP(HttpServletRequest request, @RequestBody DtoUserIp dtoUserIp,
+			ResponseMessage responseMessage) {
+		if (dtoUserIp.getIpAddress() != null) {
+			UserSession session = sessionManager.validateUserSessionId(request);
+			if (session == null) {
+				responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+				return responseMessage;
+			} else {
+				DtoUserIp dtoUserIp2 = serviceUser.setUserIPForAuthentication(dtoUserIp);
+				if (dtoUserIp2.getMessageType() == null) {
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.IP_ADDED, false), true);
+				} else {
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(dtoUserIp2.getMessageType(), false), false);
+				}
+			}
+		}
+		return responseMessage;
+	}
+
+	    *//**
+	    * @description : Update User IP
+	    * @param request
+	    * @param dtoUserIp
+	    * @param responseMessage
+	    * @return
+	    *//*
+	@RequestMapping(value = "/updateUserIP", method = RequestMethod.PUT)
+	public ResponseMessage updateUserIP(HttpServletRequest request, @RequestBody DtoUserIp dtoUserIp,
+			ResponseMessage responseMessage) {
+		if (dtoUserIp.getIpAddress() != null) {
+			UserSession session = sessionManager.validateUserSessionId(request);
+			if (session == null) {
+				responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+				return responseMessage;
+			} else {
+				Boolean isIPUpdated = serviceUser.updateUserIPForAuthentication(dtoUserIp);
+				if (isIPUpdated) {
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.IP_UPDATED, false), true);
+				} else {
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.IP_REQUIRED, false), false);
+				}
+			}
+		}
+		return responseMessage;
+	}
+
+	     */
+	/**
 	 * @description : Save mac address
 	 * @param request
 	 * @param dtoUser
@@ -786,12 +791,12 @@ public class ControllerUser {
 		return responseMessage;
 	}
 
-	*//**
-	 * @description : delete mac address
-	 * @param request
-	 * @param dtoUser
-	 * @return
-	 *//*
+	  *//**
+	  * @description : delete mac address
+	  * @param request
+	  * @param dtoUser
+	  * @return
+	  *//*
 	@RequestMapping(value = "/deleteMacAddress", method = RequestMethod.POST, produces = "application/json")
 	public ResponseMessage deleteMacAddress(HttpServletRequest request, @RequestBody DtoUser dtoUser) {
 		ResponseMessage responseMessage = null;
@@ -813,7 +818,7 @@ public class ControllerUser {
 		return responseMessage;
 	}
 
-	
+
 
 	@RequestMapping(value = "/updateIpCheckedStatus", method = RequestMethod.POST, produces = "application/json")
 	public ResponseMessage updateIpCheckedStatus(HttpServletRequest request, @RequestBody DtoUser dtoUser) {
@@ -841,45 +846,12 @@ public class ControllerUser {
 		return responseMessage;
 	}
 
-	*//**
-	 * @description : It will return all the Header and their side bar
-	 * @param dtoScreenDetail
-	 * @param request
-	 * @return
-	 *//*
-	@RequestMapping(value = "/headerDetail", method = RequestMethod.GET)
-	@ResponseBody
-	public ResponseMessage loginScreen(HttpServletRequest request) {
-		LOGGER.info("Get Screen Detail");
-		ResponseMessage responseMessage = null;
-
-		UserSession session = sessionManager.validateUserSessionId(request);
-		if (session == null) {
-			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
-					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
-			return responseMessage;
-		} else {
-
-			List<DtoHeader> dtoHeaderList = serviceUser.getHeaderDetail();
-			if (dtoHeaderList != null) {
-				responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.HEADER_RECORD_FOUND, false),
-						dtoHeaderList);
-
-			} else {
-				responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.RECORD_NOT_FOUND, false));
-			}
-		}
-		return responseMessage;
-	}
-
-	*//**
-	 * @description : It will return all the Header and their side bar
-	 * @param dtoScreenCategory
-	 * @param request
-	 * @return
-	 *//*
+	   *//**
+	    * @description : It will return all the Header and their side bar
+	    * @param dtoScreenCategory
+	    * @param request
+	    * @return
+	    *//*
 	@RequestMapping(value = "/sideBarMenuDetail", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseMessage sideBarMenuDetail(HttpServletRequest request) {
@@ -904,7 +876,7 @@ public class ControllerUser {
 		}
 		return responseMessage;
 	}
-	
+
 	@RequestMapping(value = { "/sideMenuByHeaderId" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.POST })
 	@ResponseBody
@@ -932,6 +904,8 @@ public class ControllerUser {
 
 		return responseMessage;
 	}
+	     */
+	
 
-	*/
-	}
+
+}
