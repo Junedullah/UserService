@@ -1,0 +1,80 @@
+debug: true
+
+
+security:
+  user:
+    password: none
+cors:
+  allowed:
+      origins: "*"
+
+# Set the file size limit (default 1Mb). If you want to specify that files be
+# unlimited set the multipart.maxFileSize property to -1.
+multipart:
+   maxFileSize: -1
+   maxRequestSize: 2048MB
+
+spring:
+  data:
+    rest:
+      base-uri: /
+#  http:
+#   multipart:
+#      enabled: true
+#      max-file-size: -1
+#      max-request-size: 1024Mb
+
+---
+
+
+spring:
+  profiles: default, local
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/smartsoft-user-service
+    username: root
+    password: 'root'
+
+    max-active: 100
+    maximum-pool-size: 200
+    max-age: 10000
+    connection-timeout: 3000000
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update  
+#ddl-auto:  create
+
+server:
+   port: 8081
+
+smtp:
+  protocol : smtp
+  host: smtp.gmail.com
+  username: jbaig29@gmail.com
+  password: 'juned@1234'
+  port: 587
+  sender: SmartSoft
+#
+script:
+  #path: D:\\FB\\bti2.sql
+  path:  E:\\HCM by Juned\\CODE BACK UP\\userDb\\smartuser.sql
+  accesspath: http://localhost:8082
+  accessfinancialpath: http://localhost:8085
+  dbSuffix: _company
+
+dbpath:
+#  dbcreation: 'jdbc:mysql://btidb.algoras.com/?useSSL=false&user=bti_user_user&password=aVlsZB8s8ELMGVKO'
+  dbcreation: 'jdbc:mysql://localhost/?useSSL=false&user=root&password=root'  #B7i3rp
+  #dbcreation: 'jdbc:mysql://localhost:5990/?useSSL=false&user=root&password=E5B2707854'
+  dbscriptcreate2: '?user=root&password=root' #B7i3rp
+
+# for Linux
+#  mysqlpath: 'mysql'
+
+ #for Windows
+  mysqlpath: 'C:\wamp64\bin\mysql\mysql5.7.14\bin\mysql'
