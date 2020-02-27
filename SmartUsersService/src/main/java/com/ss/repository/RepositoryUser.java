@@ -14,7 +14,6 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ss.model.User;
@@ -96,8 +95,7 @@ public interface RepositoryUser extends JpaRepository<User, Integer> {
 	 * @param email
 	 * @return
 	 */
-	public List<User> findByIsDeletedAndEmail( boolean deleted, String email);
-
+	public List<User> findByIsDeletedAndEmail(boolean deleted, String email);
 
 	/**
 	 * @return

@@ -1,10 +1,10 @@
 /**SmartSoftware User - Service */
 /**
- * Description: Interface for RepositoryStateMaster 
+ * Description: Interface for RepositoryUserDetail 
  * Name of Project: SmartSoftware
- * Created on: March 22, 2020
- * Modified on: March 22, 2020 10:19:38 AM
- * @author Juned
+ * Created on: FEB 13, 2020
+ * Modified on: FEB 13, 2020 4:30:38 PM
+ * @author Shahnawaz
  * Version: 
  */
 package com.ss.repository;
@@ -15,7 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.ss.model.StateMaster;
-
 
 @Repository("repositoryStateMaster")
 public interface RepositoryStateMaster extends JpaRepository<StateMaster, Integer> {

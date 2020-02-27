@@ -29,11 +29,11 @@ public class DtoUser {
 	private String selectCompanies;
 	private String password;
 	private String middleName;
-	private List<DtoRoleGroup> listOfRoleGroup;
+	/*private List<DtoRoleGroup> listOfRoleGroup;
 	private List<DtoUserGroup> listOfUserGroup;
 	private List<DtoCompany> listOfCompanies;
-	private DtoUserGroup userGroup;	
-/*	private List<DtoReportMaster> dtoReportMaster;*/
+	private List<DtoReportMaster> dtoReportMaster;
+	private DtoUserGroup userGroup;	*/
 	private Boolean deleted;
 	private String session;
 	private String country;
@@ -723,30 +723,6 @@ public class DtoUser {
 	}
 	public void setReportIds(List<Integer> reportIds) {
 		this.reportIds = reportIds;
-	}
-	public List<DtoRoleGroup> getListOfRoleGroup() {
-		return listOfRoleGroup;
-	}
-	public void setListOfRoleGroup(List<DtoRoleGroup> listOfRoleGroup) {
-		this.listOfRoleGroup = listOfRoleGroup;
-	}
-	public List<DtoUserGroup> getListOfUserGroup() {
-		return listOfUserGroup;
-	}
-	public void setListOfUserGroup(List<DtoUserGroup> listOfUserGroup) {
-		this.listOfUserGroup = listOfUserGroup;
-	}
-	public List<DtoCompany> getListOfCompanies() {
-		return listOfCompanies;
-	}
-	public void setListOfCompanies(List<DtoCompany> listOfCompanies) {
-		this.listOfCompanies = listOfCompanies;
-	}
-	public DtoUserGroup getUserGroup() {
-		return userGroup;
-	}
-	public void setUserGroup(DtoUserGroup userGroup) {
-		this.userGroup = userGroup;
 	}
 	
 	

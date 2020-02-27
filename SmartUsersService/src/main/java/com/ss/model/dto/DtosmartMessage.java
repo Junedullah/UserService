@@ -12,7 +12,14 @@ package com.ss.model.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ss.model.SmartMessage;
 
-
+/**
+ * Description: DTO Bti Message class having getter and setter for fields (POJO) Name
+ * Name of Project: BTI
+ * Created on: May 09, 2017
+ * Modified on: May 09, 2017 4:19:38 PM
+ * @author seasia
+ * Version: 
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DtosmartMessage {
 	private String messagePrimary;

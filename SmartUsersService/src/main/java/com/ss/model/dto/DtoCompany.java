@@ -1,13 +1,4 @@
-/**
- * BTI - BAAN for Technology And Trade IntL. 
- * Copyright @ 2017 BTI. 
- * 
- * All rights reserved.
- * 
- * THIS PRODUCT CONTAINS CONFIDENTIAL INFORMATION  OF BTI. 
- * USE, DISCLOSURE OR REPRODUCTION IS PROHIBITED WITHOUT THE 
- * PRIOR EXPRESS WRITTEN PERMISSION OF BTI.
- */
+
 package com.ss.model.dto;
 
 import java.util.List;
@@ -18,12 +9,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ss.model.Company;
 import com.ss.util.UtilRandomKey;
 
-/*SmartSoftware User - Service */
+/**SmartSoftware User - Service */
 /**
- * Description: The persistent class for the country_master database table.
+ * Description: The persistent class for the dtocompany.
  * Name of Project: SmartSoftware
- * Created on: March 11, 2020
- * Modified on: March 11, 2020 11:19:38 AM
+ * Created on: fab 11, 2020
+ * Modified on:fab 11, 2020 11:19:38 AM
  * @author shahnawaz
  * Version: 
  */
@@ -36,7 +27,7 @@ public class DtoCompany {
 	private String address;
 	private Boolean isActive;
 	private List<Integer> ids;
-	private DtoUserGroup userGroup;
+//	private DtoUserGroup userGroup;
 	private String state;
 	private String city;
 	private String country;
@@ -156,13 +147,13 @@ public class DtoCompany {
 		this.ids = ids;
 	}
 
-	public DtoUserGroup getUserGroup() {
-		return userGroup;
-	}
-
-	public void setUserGroup(DtoUserGroup userGroup) {
-		this.userGroup = userGroup;
-	}
+//	public DtoUserGroup getUserGroup() {
+//		return userGroup;
+//	}
+//
+//	public void setUserGroup(DtoUserGroup userGroup) {
+//		this.userGroup = userGroup;
+//	}
 
 	public String getState() {
 		return state;
