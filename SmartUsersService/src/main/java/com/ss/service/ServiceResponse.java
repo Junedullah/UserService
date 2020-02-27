@@ -38,7 +38,7 @@ public class ServiceResponse {
 	 */
 	public DtosmartMessage getMessageByShortAndIsDeleted(String message, boolean b) {
 		String langId = httpServletRequest.getHeader("langId");
-		SmartMessage exceptionMessage = repositoryException.findByMessageShortAndIsDeletedAndLanguageLanguageId(message, b,Integer.parseInt(langId));
+		SmartMessage exceptionMessage = repositoryException.findByMessageShortAndIsDeletedAndLanguageLanguageId(message, false,1/*Integer.parseInt(langId)*/);
 		return new DtosmartMessage(exceptionMessage);
 	}
 
@@ -51,7 +51,7 @@ public class ServiceResponse {
 	{
 		String responseMessage = "";
 		String langId = httpServletRequest.getHeader("langId");
-		SmartMessage exceptionMessage = repositoryException.findByMessageShortAndIsDeletedAndLanguageLanguageId(message, b,Integer.parseInt(langId));
+		SmartMessage exceptionMessage = repositoryException.findByMessageShortAndIsDeletedAndLanguageLanguageId(message, false,Integer.parseInt(langId));
 		if(exceptionMessage!=null)
 		{
 			responseMessage = exceptionMessage.getMessage();

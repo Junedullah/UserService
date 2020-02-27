@@ -2,9 +2,9 @@
 /**
  * Description: DTO Country class having getter and setter for fields (POJO) Name
  * Name of Project: SmartSoftware
- * Created on: March 19, 2020
- * Modified on: March 19, 2020 10:19:38 AM
- * @author Juned
+ * Created on: fab 19, 2020
+ * Modified on: fab 19, 2020 10:19:38 AM
+ * @author Shahnawaz
  * Version: 
  */
 package com.ss.model.dto;

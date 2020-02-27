@@ -32,8 +32,8 @@ public class DtoUser {
 	private List<DtoRoleGroup> listOfRoleGroup;
 	private List<DtoUserGroup> listOfUserGroup;
 	private List<DtoCompany> listOfCompanies;
-	private DtoUserGroup userGroup;	
-/*	private List<DtoReportMaster> dtoReportMaster;*/
+	/*private List<DtoReportMaster> dtoReportMaster;
+	private DtoUserGroup userGroup;	*/
 	private Boolean deleted;
 	private String session;
 	private String country;
@@ -741,12 +741,6 @@ public class DtoUser {
 	}
 	public void setListOfCompanies(List<DtoCompany> listOfCompanies) {
 		this.listOfCompanies = listOfCompanies;
-	}
-	public DtoUserGroup getUserGroup() {
-		return userGroup;
-	}
-	public void setUserGroup(DtoUserGroup userGroup) {
-		this.userGroup = userGroup;
 	}
 	
 	

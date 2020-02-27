@@ -1,10 +1,10 @@
 /**SmartSoftware User - Service */
 /**
- * Description: Interface for RepositoryCountryMaster 
+ * Description: Interface for RepositoryUserDetail 
  * Name of Project: SmartSoftware
- * Created on: March 21, 2020
- * Modified on: March 21, 2020 11:19:38 AM
- * @author Juned
+ * Created on: FEB 13, 2020
+ * Modified on: FEB 13, 2020 4:30:38 PM
+ * @author Shahnawaz
  * Version: 
  */
 package com.ss.repository;
@@ -15,7 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.ss.model.CountryMaster;
-
 
 @Repository("repositoryCountryMaster")
 public interface RepositoryCountryMaster extends JpaRepository<CountryMaster, Integer> {

@@ -2,9 +2,9 @@
 /**
  * Description: The persistent class for the state_master database table.
  * Name of Project: SmartSoftware
- * Created on: March 25, 2020
- * Modified on: March 25, 2020 11:19:38 AM
- * @author Juned
+ * Created on: fab 25, 2020
+ * Modified on: fab 25, 2020 11:19:38 AM
+ * @author Shahnawaz
  * Version: 
  */
 package com.ss.model;
