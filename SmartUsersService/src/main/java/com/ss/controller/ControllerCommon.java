@@ -33,7 +33,7 @@ public class ControllerCommon {
 	@RequestMapping(value = "/getAllLanaguage", method = RequestMethod.GET)
 	public ResponseMessage getAllLanaguage(HttpServletRequest request) throws Exception {
 		ResponseMessage responseMessage = null;
-		UserSession session = null;//sessionManager.validateUserSessionId(request);
+		UserSession session = sessionManager.validateUserSessionId(request);
 		if (session == null) {
 			DtoSearch dtoSearch = serviceLanguage.getAllLanguage();
 			if (dtoSearch.getRecords() != null) {
