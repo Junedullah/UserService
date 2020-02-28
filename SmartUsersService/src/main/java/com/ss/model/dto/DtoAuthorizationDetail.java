@@ -35,10 +35,10 @@ public class DtoAuthorizationDetail {
 	private String endTime;
 	List<Integer> dayIds;
 	List<Integer> userIds;
+	List<Integer> companyIds;
 	private Integer authorizedUserGroupId;
 	private List<Integer> ids;
-	List<String> daysList;
-	List<Integer> companyIds;
+	List<String> daysList;	
 	List<Integer> userGroupIds;
 	private Integer pageNumber;
 	private Integer pageSize;
