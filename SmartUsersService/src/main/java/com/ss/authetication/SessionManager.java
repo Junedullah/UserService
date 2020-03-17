@@ -29,6 +29,7 @@ import com.ss.repository.RepositoryCompany;
 import com.ss.repository.RepositoryUser;
 import com.ss.repository.RepositoryUserDraft;
 import com.ss.repository.RepositoryUserSession;
+import com.ss.service.ServiceLogin;
 import com.ss.util.UtilRandomKey;
 
 
@@ -44,9 +45,9 @@ public class SessionManager {
 	@Autowired
 	RepositoryCompany repositoryCompany;
 	
-	/*@Autowired
+	@Autowired
 	ServiceLogin serviceLogin;
-	*/
+	
 	@Autowired
 	RepositoryUserDraft repositoryUserDraft;
 	
@@ -120,8 +121,8 @@ public UserSession validateUserSessionId(HttpServletRequest request) {
 			{
 				
 			Company company=repositoryCompany.findByTenantIdAndIsDeleted(companyTenantId,false);
-			//Boolean flag= serviceLogin.checkValidCompanyAccess(company.getCompanyId(), idCurrentUser);			
-			Boolean	flag=true;
+		Boolean flag= serviceLogin.checkValidCompanyAccess(company.getCompanyId(), idCurrentUser);			
+			
 				if(flag){
 					return session;
 				}

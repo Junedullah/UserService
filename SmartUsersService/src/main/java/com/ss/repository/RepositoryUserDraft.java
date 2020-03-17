@@ -31,6 +31,6 @@ public interface RepositoryUserDraft extends JpaRepository<UserDraft, Integer>
 	
 	@Query("select u from UserDraft u where u.user.userId !=:userId and u.screen.screenCode=:screenCode and u.company.companyId=:companyId")
 	UserDraft checkScreenIsBlockByAnotherUserOrNotByCompany(@Param("screenCode") String screenCode, 
-			@Param("userId") int userId,@Param("companyId") int companyId);
-	*/
+			@Param("userId") int userId,@Param("companyId") int companyId);*/
+	
 }

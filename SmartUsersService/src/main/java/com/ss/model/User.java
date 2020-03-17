@@ -12,16 +12,21 @@ package com.ss.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name="user")
@@ -62,13 +67,14 @@ public class User extends BaseEntity implements Serializable{
 	@JoinColumn(name = "role_id")
 	private Role role;
 
-/*	// bi-directional many-to-one association to UserCompanyRelation
+	// bi-directional many-to-one association to UserCompanyRelation
 	@OneToMany(mappedBy = "user")
 	private List<UserCompanyRelation> userCompanyRelations;
+	
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ReportMaster> reportMaster;
-	*/
+	
 
 	// bi-directional many-to-one association to UserDetail
 	@OneToMany(mappedBy = "user")

@@ -1,3 +1,4 @@
+package com.ss.util;
 /**SmartSoftware User - Service */
 /**
  * Description: CLXSMSUtility
@@ -8,7 +9,7 @@
  * Version: 
  */
 
-package com.ss.util;
+
 
 import java.util.List;
 
@@ -24,7 +25,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
 
 @SuppressWarnings("deprecation")
 @Component
@@ -61,6 +61,4 @@ public class CLXSMSUtility {
             httpClient.getConnectionManager().shutdown();
         }
 	}
-	
-
 }

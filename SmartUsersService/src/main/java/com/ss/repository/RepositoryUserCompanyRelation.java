@@ -50,8 +50,7 @@ public interface RepositoryUserCompanyRelation extends JpaRepository<UserCompany
 	 * @param deleted
 	 * @return
 	 */
-	public UserCompanyRelation findByCompanyCompanyIdAndUserUserIdAndIsDeleted(int companyId, int userId,
-			boolean deleted);
+	public UserCompanyRelation findByCompanyCompanyIdAndUserUserIdAndIsDeleted(int companyId, int userId,boolean deleted);
 
 	/**
 	 * @param companyId

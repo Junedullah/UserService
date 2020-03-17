@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/***","/login/**","/group/**","/user/**","/company/**","/authSettings/**", "/ip/**","/plugUnplugServices/**","/language/**","/department/**","/division/**","/hrCity/**", "/workFlowAssign/**","/fields/**", "/common/**", "/grids/**","/reportmaster/**","/companyreport/**","http://10.0.0.244:8080/activiti-app/**").permitAll()
+			.antMatchers("/***","/login/**","/group/**","/user/**","/company/**","/authSettings/**", "/ip/**","/plugUnplugServices/**","/language/**","/department/**","/division/**","/hrCity/**", "/workFlowAssign/**","/fields/**", "/common/**", "/grids/**","/reportmaster/**","/companyreport/**"/*,"http://10.0.0.244:8080/activiti-app/**"*/).permitAll()
 				.anyRequest().authenticated().and().httpBasic(); //Basic authentication enabled
 		
 		

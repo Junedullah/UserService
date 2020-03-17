@@ -137,7 +137,7 @@ public interface RepositoryUser extends JpaRepository<User, Integer> {
 	 */
 	@Query("select count(*) from User u where u.isDeleted=false and u.isActive=true")
 	public Integer getCountOfTotalUsersIsActive();
-	
- List<User> findByRoleRoleIdAndIsDeletedOrderByCreatedDateDesc(int roleId, Boolean delete);
+
+	List<User> findByRoleRoleIdAndIsDeletedOrderByCreatedDateDesc(int roleId, Boolean delete);
 
 }

@@ -1,3 +1,12 @@
+/**SmartSoftware User - Service */
+/**
+ * Description: Utility class for random verification code generation
+ * Name of Project: SmartSoftware
+ * Created on: Feb 10, 2020
+ * Modified on: Feb 10, 2020 10:19:38 AM
+ * @author Juned
+ * Version: 
+ */
 package com.ss.util;
 
 
