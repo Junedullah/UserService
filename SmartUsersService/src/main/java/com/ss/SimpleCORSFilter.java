@@ -52,7 +52,7 @@ public class SimpleCORSFilter implements Filter {
 		return parseAllowedOrigins(allowedOriginsString);
 	}
 
-	/* (non-Javadoc)
+	/** (non-Javadoc)
 	 * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
 	 */
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
@@ -70,14 +70,14 @@ public class SimpleCORSFilter implements Filter {
 		chain.doFilter(req, response);
 	}
 
-	/* (non-Javadoc)
+	/** (non-Javadoc)
 	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
 	 */
 	public void init(FilterConfig filterConfig) {
 		// to do nothing
 	}
 
-	/* (non-Javadoc)
+	/** (non-Javadoc)
 	 * @see javax.servlet.Filter#destroy()
 	 */
 	public void destroy() {

@@ -9,6 +9,7 @@
  */
 package com.ss.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,14 +34,18 @@ import com.ss.constant.SmartRoles;
 import com.ss.model.User;
 import com.ss.model.UserDetail;
 import com.ss.model.UserSession;
+import com.ss.model.dto.DtoAuthorizationDetail;
 import com.ss.model.dto.DtoRequestResponseLog;
 import com.ss.model.dto.DtoSearch;
 import com.ss.model.dto.DtoUser;
 import com.ss.model.dto.DtoUserDetail;
+import com.ss.model.dto.DtoUserIp;
 import com.ss.repository.RepositoryUser;
 import com.ss.repository.RepositoryUserDetail;
 import com.ss.service.ServiceResponse;
 import com.ss.service.ServiceUser;
+import com.ss.service.ServiceUserGroup;
+import com.ss.service.ServiceUserMacAddress;
 import com.ss.util.RequestResponseLogger;
 
 @RestController
@@ -64,11 +69,13 @@ public class ControllerUser {
 	@Autowired
 	SessionManager sessionManager;
 
-	/*
-	 * @Autowired ServiceUserMacAddress serviceUserIp;
-	 * 
-	 * @Autowired ServiceUserGroup serviceUserGroup;
-	 */
+
+	@Autowired 
+	ServiceUserMacAddress serviceUserIp;
+
+	@Autowired 
+	ServiceUserGroup serviceUserGroup;
+
 	@Autowired
 	ServiceResponse serviceResponse;
 
@@ -82,41 +89,41 @@ public class ControllerUser {
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST, produces = "application/json")
 	public ResponseMessage createUser(HttpServletRequest request, @RequestBody DtoUser dtoUser) {
 		ResponseMessage responseMessage = null;
-		 UserSession session = sessionManager.validateUserSessionId(request);
-		
-		  if (session == null) { responseMessage = new
-		 ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
-		  serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false),
-		 false); return responseMessage; } else {
-		
-		 User userNameCheck = repositoryUser.findByusernameAndIsDeleted(dtoUser.getEmail(), false);
-		
-		  if (userNameCheck != null) { responseMessage = new
-		  ResponseMessage(HttpStatus.FOUND.value(), HttpStatus.FOUND,
-		  serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.
-		  USER_NAME_ALREADY_EXIST, false));
-		  
-		  return responseMessage; } else {
-		 
-		String[] result = serviceUser.saveorUpdateUser(dtoUser);
-		if (result[0].equalsIgnoreCase(Constant.SUCCESS)) {
-			responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
-					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_CREATED_SUCCESS, false));
-		} else {
-			User user = repositoryUser.findByUserId(Integer.parseInt(result[1]));
-			if (user != null) {
-				
-				  UserDetail userDetail =
-				  repositoryUserDetail.findByUserUserId(user.getUserId()); if (userDetail !=
-				  null) { repositoryUserDetail.delete(userDetail); }
-				 
-				repositoryUser.delete(user);
-			}
-			responseMessage = new ResponseMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-					HttpStatus.INTERNAL_SERVER_ERROR, result[0]);
-		}
-		 }
-		 }
+		UserSession session = sessionManager.validateUserSessionId(request);
+
+		if (session == null) { responseMessage = new
+				ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false),
+						false); return responseMessage; } else {
+
+							User userNameCheck = repositoryUser.findByusernameAndIsDeleted(dtoUser.getEmail(), false);
+
+							if (userNameCheck != null) { responseMessage = new
+									ResponseMessage(HttpStatus.FOUND.value(), HttpStatus.FOUND,
+											serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.
+													USER_NAME_ALREADY_EXIST, false));
+
+							return responseMessage; } else {
+
+								String[] result = serviceUser.saveorUpdateUser(dtoUser);
+								if (result[0].equalsIgnoreCase(Constant.SUCCESS)) {
+									responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
+											serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_CREATED_SUCCESS, false));
+								} else {
+									User user = repositoryUser.findByUserId(Integer.parseInt(result[1]));
+									if (user != null) {
+
+										UserDetail userDetail =
+												repositoryUserDetail.findByUserUserId(user.getUserId()); if (userDetail !=
+												null) { repositoryUserDetail.delete(userDetail); }
+
+												repositoryUser.delete(user);
+									}
+									responseMessage = new ResponseMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+											HttpStatus.INTERNAL_SERVER_ERROR, result[0]);
+								}
+							}
+						}
 		return responseMessage;
 	}
 
@@ -157,28 +164,28 @@ public class ControllerUser {
 	public ResponseMessage getUsersList(HttpServletRequest request, @RequestBody DtoSearch dtoSearch) {
 		DtoRequestResponseLog dtoRequestResponseLog = RequestResponseLogger.logRequest(request, dtoSearch);
 		ResponseMessage responseMessage = null;
-		
-		  UserSession session = sessionManager.validateUserSessionId(request); if
-		  (session == null) { responseMessage = new
-		  ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
-		  serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN,
-		  false)); return responseMessage; } else {
-		 
-		dtoSearch = serviceUser.getUsersList(dtoSearch);
-		if (dtoSearch.getRecords() != null) {
-			@SuppressWarnings("unchecked")
-			List<DtoUser> list = (List<DtoUser>) dtoSearch.getRecords();
-			if (list != null && !list.isEmpty()) {
-				responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_SUCCESS, false), dtoSearch);
-			} else {
-				responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.RECORD_NOT_FOUND, false));
 
-			}
-		}
-		 }		RequestResponseLogger.logResponse(dtoRequestResponseLog, responseMessage);
-		return responseMessage;
+		UserSession session = sessionManager.validateUserSessionId(request); if
+		(session == null) { responseMessage = new
+		ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+				serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN,
+						false)); return responseMessage; } else {
+
+							dtoSearch = serviceUser.getUsersList(dtoSearch);
+							if (dtoSearch.getRecords() != null) {
+								@SuppressWarnings("unchecked")
+								List<DtoUser> list = (List<DtoUser>) dtoSearch.getRecords();
+								if (list != null && !list.isEmpty()) {
+									responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+											serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_SUCCESS, false), dtoSearch);
+								} else {
+									responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
+											serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.RECORD_NOT_FOUND, false));
+
+								}
+							}
+						}		RequestResponseLogger.logResponse(dtoRequestResponseLog, responseMessage);
+						return responseMessage;
 	}
 
 	/**
@@ -219,7 +226,7 @@ public class ControllerUser {
 		return responseMessage;
 	}
 
-	
+
 
 	/**
 	 * @description : Get User Detail By UserId
@@ -327,7 +334,7 @@ public class ControllerUser {
 		return responseMessage;
 	}
 
-	
+
 
 	/**
 	 * @description : Search Users
@@ -505,12 +512,14 @@ public class ControllerUser {
 		return new ModelMap("response", responseMessage);
 	}
 
+
+
 	/**
-		 * @description : Block Unblock User
-		 * @param dtoUser
-		 * @param request
-		 * @return
-		 */
+	 * @description : Block Unblock User
+	 * @param dtoUser
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/blockUnblockUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = "Accept=application/json")
 	public ResponseMessage blockUnblockUserGroup(@RequestBody DtoUser dtoUser, HttpServletRequest request) {
 		ResponseMessage responseMessage = null;
@@ -668,8 +677,150 @@ public class ControllerUser {
 		return new ModelMap("response", responseMessage);
 	}
 
-	
-	
-	
+	/**
+	 * @description : Set User IP
+	 * @param request
+	 * @param dtoUserIp
+	 * @param responseMessage
+	 * @return
+	 */
+	@RequestMapping(value = "/setUserIP", method = RequestMethod.PUT)
+	public ResponseMessage setUserIP(HttpServletRequest request, @RequestBody DtoUserIp dtoUserIp,
+			ResponseMessage responseMessage) {
+		if (dtoUserIp.getIpAddress() != null) {
+			UserSession session = sessionManager.validateUserSessionId(request);
+			if (session == null) {
+				responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+				return responseMessage;
+			} else {
+				DtoUserIp dtoUserIp2 = serviceUser.setUserIPForAuthentication(dtoUserIp);
+				if (dtoUserIp2.getMessageType() == null) {
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.IP_ADDED, false), true);
+				} else {
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(dtoUserIp2.getMessageType(), false), false);
+				}
+			}
+		}
+		return responseMessage;
+	}
 
+	/**
+	 * @description : Update User IP
+	 * @param request
+	 * @param dtoUserIp
+	 * @param responseMessage
+	 * @return
+	 */
+	@RequestMapping(value = "/updateUserIP", method = RequestMethod.PUT)
+	public ResponseMessage updateUserIP(HttpServletRequest request, @RequestBody DtoUserIp dtoUserIp,
+			ResponseMessage responseMessage) {
+		if (dtoUserIp.getIpAddress() != null) {
+			UserSession session = sessionManager.validateUserSessionId(request);
+			if (session == null) {
+				responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+				return responseMessage;
+			} else {
+				Boolean isIPUpdated = serviceUser.updateUserIPForAuthentication(dtoUserIp);
+				if (isIPUpdated) {
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.IP_UPDATED, false), true);
+				} else {
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.IP_REQUIRED, false), false);
+				}
+			}
+		}
+		return responseMessage;
+	}
+
+	/**
+	 * @description : Admin changes user access over ip
+	 * @param dtoUserIp
+	 * @param request
+	 * @return
+	 * @throws ParseException
+	 */
+	@RequestMapping(value = "/saveAuthorizationDetail", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseMessage saveAuthorizationDetail(@RequestBody DtoAuthorizationDetail dtoAuthorization,
+			HttpServletRequest request) throws ParseException {
+		LOGGER.info(" save Authorization Detail service :::::: ");
+		ResponseMessage responseMessage = null;
+		UserSession session = sessionManager.validateUserSessionId(request);
+		if (session == null) {
+			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+		} else {
+			dtoAuthorization = serviceUser.saveAuthorizationDetail(dtoAuthorization);
+			responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.AUTHORIZATION_DETAIL_SAVED, false),
+					dtoAuthorization);
+		}
+		return responseMessage;
+	}
+
+	/**
+	 * @description : Save mac address
+	 * @param request
+	 * @param dtoUser
+	 * @return
+	 */
+	@RequestMapping(value = "/saveMacAddress", method = RequestMethod.POST, produces = "application/json")
+	public ResponseMessage saveMacAddress(HttpServletRequest request, @RequestBody DtoUser dtoUser) {
+		ResponseMessage responseMessage = null;
+		UserSession session = sessionManager.validateUserSessionId(request);
+		if (session == null) {
+			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+			return responseMessage;
+		} else {
+			User user = repositoryUser.findByUserIdAndIsDeleted(dtoUser.getUserId(), false);
+			if (user != null) {
+				boolean response = serviceUser.saveMacAddress(dtoUser, user);
+				if (response) {
+					responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.MAC_ADDRESS_ADDED, false));
+				} else {
+					responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.BAD_REQUEST, false));
+				}
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_NOT_FOUND, false));
+			}
+		}
+		return responseMessage;
+	}
+
+	/**
+	 * @description : delete mac address
+	 * @param request
+	 * @param dtoUser
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteMacAddress", method = RequestMethod.POST, produces = "application/json")
+	public ResponseMessage deleteMacAddress(HttpServletRequest request, @RequestBody DtoUser dtoUser) {
+		ResponseMessage responseMessage = null;
+		UserSession session = sessionManager.validateUserSessionId(request);
+		if (session == null) {
+			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+			return responseMessage;
+		} else {
+			boolean response = serviceUser.deleteMacAddressOfUser(dtoUser);
+			if (response) {
+				responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.MAC_ADDRESS_DELETED, false));
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.BAD_REQUEST, false));
+			}
+		}
+		return responseMessage;
+	}
+	
 }

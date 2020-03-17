@@ -34,6 +34,7 @@ public class UtilFindIPAddress {
 			}
 		}
 		return request.getRemoteAddr();
+		//return request.getLocalAddr();
 	}
 
 	/**

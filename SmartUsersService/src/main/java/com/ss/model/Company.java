@@ -10,15 +10,24 @@
 package com.ss.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Where;
 
 
 @Entity @org.hibernate.annotations.Entity(dynamicInsert = true)
@@ -38,36 +47,33 @@ public class Company extends BaseEntity implements Serializable {
 
 	@Column(name = "country_code")
 	private String countryCode;
-	
+
 	@Column(name = "tenant_id")
 	private String tenantId;
-	
+
 	@Column(name = "database_ip")
 	private String databaseIP;
-	
+
 	@Column(name = "database_port")
 	private String databasePort;
-	
+
 	@Column(name = "database_username")
 	private String databaseUsername;
-	
+
 	@Column(name = "database_password")
 	private String databasePassword;
 
-	/*
-	 * @ManyToMany(mappedBy = "companyId")
-	 * 
-	 * @LazyCollection(LazyCollectionOption.FALSE) private List<Field> fieldId;
-	 * 
-	 * // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy =
-	 * "company") // @Where(clause = "is_deleted = false") // private List<Company>
-	 * companyList;
-	 * 
-	 * @ManyToMany(cascade = { CascadeType.ALL })
-	 * 
-	 * @LazyCollection(LazyCollectionOption.FALSE) private List<ReportMaster>
-	 * reportMaster;
-	 */
+	@ManyToMany(mappedBy = "companyId")
+	@LazyCollection(LazyCollectionOption.FALSE) 
+	private List<Field> fieldId;
+
+	/*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy ="company")  @Where(clause = "is_deleted = false") 
+	private List<Company> companyList;*/
+
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@LazyCollection(LazyCollectionOption.FALSE) 
+	private List<ReportMaster>	reportMaster;
+
 	public String getDatabaseIP() {
 		return databaseIP;
 	}
@@ -117,13 +123,13 @@ public class Company extends BaseEntity implements Serializable {
 	private String phone;
 
 	private String zipcode;
-	
+
 	@Column(name = "web_address")
 	private String webAddress;
-	
+
 	@Column(name = "latitude")
 	private Double latitude;
-	
+
 	@Column(name = "longitude")
 	private Double longitude;
 
@@ -141,17 +147,17 @@ public class Company extends BaseEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "country_id")
 	private CountryMaster countryMaster;
-	/*
-	 * // bi-directional many-to-one association to UserCompanyRelation
-	 * 
-	 * @OneToMany(mappedBy = "company") private List<UserCompanyRelation>
-	 * userCompanyRelations;
-	 */
-	/*
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "field_id") private Field field;
-	 */
+
+	// bi-directional many-to-one association to UserCompanyRelation	  
+	@OneToMany(mappedBy = "company") 
+	private List<UserCompanyRelation>
+	userCompanyRelations;
+
+
+	@ManyToOne	  
+	@JoinColumn(name = "field_id") 
+	private Field field;
+
 
 	public int getCompanyId() {
 		return this.companyId;
@@ -273,13 +279,7 @@ public class Company extends BaseEntity implements Serializable {
 		this.countryMaster = countryMaster;
 	}
 
-	/*
-	 * public List<UserCompanyRelation> getUserCompanyRelations() { return
-	 * this.userCompanyRelations; }
-	 * 
-	 * public void setUserCompanyRelations(List<UserCompanyRelation>
-	 * userCompanyRelations) { this.userCompanyRelations = userCompanyRelations; }
-	 */
+	
 
 	public String getWebAddress() {
 		return webAddress;
@@ -304,7 +304,7 @@ public class Company extends BaseEntity implements Serializable {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	
+
 	public String getTenantId() {
 		return tenantId;
 	}
@@ -313,30 +313,37 @@ public class Company extends BaseEntity implements Serializable {
 		this.tenantId = tenantId;
 	}
 
-	/*
-	 * public UserCompanyRelation addUserCompanyRelation(UserCompanyRelation
-	 * userCompanyRelation) { getUserCompanyRelations().add(userCompanyRelation);
-	 * userCompanyRelation.setCompany(this);
-	 * 
-	 * return userCompanyRelation; }
-	 * 
-	 * public UserCompanyRelation removeUserCompanyRelation(UserCompanyRelation
-	 * userCompanyRelation) { getUserCompanyRelations().remove(userCompanyRelation);
-	 * userCompanyRelation.setCompany(null);
-	 * 
-	 * return userCompanyRelation; }
-	 * 
-	 * public Field getField() { return field; }
-	 * 
-	 * public void setField(Field field) { this.field = field; }
-	 * 
-	 * public List<Field> getFieldId() { return fieldId; }
-	 * 
-	 * public void setFieldId(List<Field> fieldId) { this.fieldId = fieldId; }
-	 * 
-	 * public List<ReportMaster> getReportMaster() { return reportMaster; }
-	 * 
-	 * public void setReportMaster(List<ReportMaster> reportMaster) {
-	 * this.reportMaster = reportMaster; }
-	 */
+	public List<Field> getFieldId() {
+		return fieldId;
+	}
+
+	public void setFieldId(List<Field> fieldId) {
+		this.fieldId = fieldId;
+	}
+
+	public List<ReportMaster> getReportMaster() {
+		return reportMaster;
+	}
+
+	public void setReportMaster(List<ReportMaster> reportMaster) {
+		this.reportMaster = reportMaster;
+	}
+
+	public List<UserCompanyRelation> getUserCompanyRelations() {
+		return userCompanyRelations;
+	}
+
+	public void setUserCompanyRelations(List<UserCompanyRelation> userCompanyRelations) {
+		this.userCompanyRelations = userCompanyRelations;
+	}
+
+	public Field getField() {
+		return field;
+	}
+
+	public void setField(Field field) {
+		this.field = field;
+	}
+
+	
 }

@@ -12,7 +12,7 @@ package com.ss.model.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.Module;
+import com.ss.model.Module;
 import com.ss.util.UtilRandomKey;
 
 
@@ -20,16 +20,16 @@ import com.ss.util.UtilRandomKey;
 public class DtoHeader {
 	
 	private Integer moduleId;
-//	private List<DtoSideMenu> sideMenuList;
+	private List<DtoSideMenu> sideMenuList;
 	private String headerName;
 	private String helpMessageHeader;
-//	private List<DtoScreenCategory> screenCategoryList;
+	private List<DtoScreenCategory> screenCategoryList;
 
 	public DtoHeader() {
 
 	}
 
-/*	public DtoHeader(Module module) {
+	public DtoHeader(Module module) {
 		this.moduleId = module.getModuleId();
 			if (UtilRandomKey.isNotBlank(module.getHelpMessage())) {
 				this.helpMessageHeader = module.getHelpMessage();
@@ -42,7 +42,7 @@ public class DtoHeader {
 			} else {
 				this.headerName = "";
 			}
-	}*/
+	}
 
 	public Integer getModuleId() {
 		return moduleId;
@@ -52,7 +52,14 @@ public class DtoHeader {
 		this.moduleId = moduleId;
 	}
 
-	
+	public List<DtoSideMenu> getSideMenuList() {
+		return sideMenuList;
+	}
+
+	public void setSideMenuList(List<DtoSideMenu> sideMenuList) {
+		this.sideMenuList = sideMenuList;
+	}
+
 	public String getHeaderName() {
 		return headerName;
 	}
@@ -69,6 +76,12 @@ public class DtoHeader {
 		this.helpMessageHeader = helpMessageHeader;
 	}
 	
+	public List<DtoScreenCategory> getScreenCategoryList() {
+		return screenCategoryList;
+	}
 
+	public void setScreenCategoryList(List<DtoScreenCategory> screenCategoryList) {
+		this.screenCategoryList = screenCategoryList;
+	}
 
 }

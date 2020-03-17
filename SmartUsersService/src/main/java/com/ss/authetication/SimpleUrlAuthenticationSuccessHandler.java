@@ -1,12 +1,12 @@
-/**SmartSoftware User - Service *//*
-*//**
+/**SmartSoftware User - Service */
+/**
  * Description: Simple Url Authentication SuccessHandler
  * Name of Project: SmartSoftware
  * Created on: Feb 10, 2020
  * Modified on: Feb 10, 2020 4:19:38 PM
  * @author Juned
  * Version: 
- *//*
+ */
 package com.ss.authetication;
 
 import java.io.IOException;
@@ -35,8 +35,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ss.constant.SmartRoles;
 import com.ss.model.LoginOtp;
 import com.ss.model.UserSession;
+import com.ss.model.WhitelistIp;
+import com.ss.repository.RepositoryLoginOtp;
 import com.ss.repository.RepositoryUser;
 import com.ss.repository.RepositoryUserSession;
+import com.ss.repository.RepositoryWhiteListIp;
 import com.ss.util.UtilFindIPAddress;
 import com.ss.util.UtilRandomKey;
 
@@ -53,22 +56,22 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 	RepositoryLoginOtp repositoryLoginOtp;
 	@Autowired
 	RepositoryWhiteListIp repositoryWhiteListIp;
- */
+ 
 	/** (non-Javadoc)
 	  @see org.springframework.security.web.authentication.AuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
 	*/ 
-	/*@Override
+	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException {
 		handle(request, response, authentication);
 		clearAuthenticationAttributes(request);
 	}
     
-	*//**
+	/**
 	 * it checks if user ip is allowed
 	 * @param request
 	 * @return
-	 *//*
+	 */
 	@SuppressWarnings("unused")
 	private boolean allowedIpRequest(HttpServletRequest request) 
 	{
@@ -86,14 +89,14 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 		return result;
 	}
 
-	*//**
+	/**
      * it saves session of logged user in userSession table
      * @param request
-     *//*
+     */
 	@Transactional
 	public int createUserSession(HttpServletRequest request) {
 		User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		com.smartsoft.model.User user = repositoryUser.findByUserId(Integer.parseInt(authUser.getUsername()));
+		com.ss.model.User user = repositoryUser.findByUserId(Integer.parseInt(authUser.getUsername()));
 		int userId = 0;
 		if (user != null) {
 			userId = user.getUserId();
@@ -113,10 +116,10 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 		return userId;
 	}
  
-    *//**
+    /**
      * it sends otp to user for authentication
      * @param userId
-     *//*
+     */
 	@Transactional
 	public void sendOTPtoUserForAuthentication(int userId) 
 	{
@@ -150,12 +153,12 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 		}
 	}
 
-	*//**
+	/**
      * @param request
      * @param response
      * @param authentication
      * @throws IOException
-     *//*
+     */
 	protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException {
 		String targetUrl = determineTargetUrl(authentication, request);
@@ -165,12 +168,12 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
  
-    *//** Builds the target URL according to the logic defined in the main class Javadoc. *//*
-    *//**
+    /** Builds the target URL according to the logic defined in the main class Javadoc. */
+    /**
      * @param authentication
      * @param request
      * @return
-     *//*
+     */
 	protected String determineTargetUrl(Authentication authentication, HttpServletRequest request) {
 		String url = request.getHeader("Referer");
 		boolean isSuperAdmin = false;
@@ -208,9 +211,9 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 		}
 	}
  
-    *//**
+    /**
      * @param request
-     *//*
+     */
 	protected void clearAuthenticationAttributes(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if (session == null) {
@@ -219,19 +222,19 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 		session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 	}
  
-    *//**
+    /**
      * @param redirectStrategy
-     *//*
+     */
 	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
 		this.redirectStrategy = redirectStrategy;
 	}
 
-	*//**
+	/**
 	 * @return
-	 *//*
+	 */
 	protected RedirectStrategy getRedirectStrategy() {
 		return redirectStrategy;
 	}
 	
 	
-}*/
+}

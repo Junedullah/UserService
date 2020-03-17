@@ -30,11 +30,11 @@ public class ControllerCommon {
 	/*@Autowired
 	ServiceFieldAccess serviceFieldAccess;*/
 
-	@RequestMapping(value = "/getAllLanaguage", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAllLanguage", method = RequestMethod.GET)
 	public ResponseMessage getAllLanaguage(HttpServletRequest request) throws Exception {
 		ResponseMessage responseMessage = null;
 		UserSession session = sessionManager.validateUserSessionId(request);
-		if (session == null) {
+		if (session != null) {
 			DtoSearch dtoSearch = serviceLanguage.getAllLanguage();
 			if (dtoSearch.getRecords() != null) {
 				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,

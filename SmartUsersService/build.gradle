@@ -44,7 +44,7 @@ dependencies {
 	compile("org.springframework.security:spring-security-web:3.2.6.RELEASE")
 	compile("org.springframework.security:spring-security-config:3.2.6.RELEASE")
 	compile group: 'org.springframework.security', name: 'spring-security-core', version: '3.2.6.RELEASE'
-	
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.2.4.RELEASE'
 	compile("org.springframework:spring-support:2.0.6")
 	//compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '8.0.20'
 	compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '8.5.15'

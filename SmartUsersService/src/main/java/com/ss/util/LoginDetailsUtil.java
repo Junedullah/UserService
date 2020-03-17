@@ -15,12 +15,6 @@ import javax.crypto.spec.SecretKeySpec;
 
  
 
-/**
- * Description: Utility class for random verification code generation  Name of Project: BTI APP Created on: May 16,
- * 2017 Modified on: May 16, 2017 10:19:38 AM
- * 
- * @author seasia Version:
- */
 
 public class LoginDetailsUtil {
 
