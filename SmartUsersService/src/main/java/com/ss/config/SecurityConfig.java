@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,6 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+	
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
@@ -51,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/***","/login/**","/group/**","/user/**","/company/**","/authSettings/**", "/ip/**","/plugUnplugServices/**","/language/**","/department/**","/division/**","/hrCity/**", "/workFlowAssign/**","/fields/**", "/common/**", "/grids/**","/reportmaster/**","/companyreport/**"/*,"http://10.0.0.244:8080/activiti-app/**"*/).permitAll()
+			.antMatchers("/***","/field-customization/**","/login/**","/group/**","/user/**","/company/**","/authSettings/**", "/ip/**","/plugUnplugServices/**","/language/**","/department/**","/division/**","/hrCity/**", "/workFlowAssign/**","/fields/**", "/common/**", "/grids/**","/reportmaster/**","/companyreport/**"/*,"http://10.0.0.244:8080/activiti-app/**"*/).permitAll()
 				.anyRequest().authenticated().and().httpBasic(); //Basic authentication enabled
 		
 		
