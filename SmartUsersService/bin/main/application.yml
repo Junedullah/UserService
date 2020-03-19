@@ -60,22 +60,7 @@ smtp:
   port: 465 #587
   sender: SmartSoft
   
-  spring:
-    mail:
-      default-encoding: UTF-8
-      host: smtp.gmail.com
-      username: jbdatapoint@gmail.com
-      password: juned@123
-      port: 465 #587
-      properties:
-       mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-      protocol: smtp
-      test-connection: false
-  
+ 
 #
 script:
  
