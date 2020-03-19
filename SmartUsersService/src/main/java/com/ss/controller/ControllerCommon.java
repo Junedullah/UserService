@@ -16,7 +16,7 @@ import com.ss.service.ServiceLanguage;
 import com.ss.service.ServiceResponse;
 
 @Controller
-@RequestMapping("/common")
+@RequestMapping("/comon")
 public class ControllerCommon {
 	@Autowired
 	SessionManager sessionManager;

@@ -65,8 +65,10 @@ public class UserDetail extends BaseEntity implements Serializable {
 	private String secondaryLastName;
 
 	@Column(name = "secondary_middle_name")
+
 	private String secondaryMiddleName;*/
 	
+
 	private String phone;
 
 	private String mobile;
@@ -75,26 +77,26 @@ public class UserDetail extends BaseEntity implements Serializable {
 	private String sessionDuration;*/
 
 	private String zipcode;
-	
+
 	// bi-directional many-to-one association to User
-		@ManyToOne
-		@JoinColumn(name = "user_id")
-		private User user;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
-		// bi-directional many-to-one association to StateMaster
-		@ManyToOne
-		@JoinColumn(name = "state_id")
-		private StateMaster stateMaster;
+	// bi-directional many-to-one association to StateMaster
+	@ManyToOne
+	@JoinColumn(name = "state_id")
+	private StateMaster stateMaster;
 
-		// bi-directional many-to-one association to CountryMaster
-		@ManyToOne
-		@JoinColumn(name = "country_id")
-		private CountryMaster countryMaster;
+	// bi-directional many-to-one association to CountryMaster
+	@ManyToOne
+	@JoinColumn(name = "country_id")
+	private CountryMaster countryMaster;
 
-		// bi-directional many-to-one association to CityMaster
-		@ManyToOne
-		@JoinColumn(name = "city_id")
-		private CityMaster cityMaster;
+	// bi-directional many-to-one association to CityMaster
+	@ManyToOne
+	@JoinColumn(name = "city_id")
+	private CityMaster cityMaster;
 
 	public UserDetail() {
 		super();
@@ -235,8 +237,8 @@ public class UserDetail extends BaseEntity implements Serializable {
 	public void setCityMaster(CityMaster cityMaster) {
 		this.cityMaster = cityMaster;
 	}
-	
-	
 
-	
+
+
+
 }

@@ -159,10 +159,10 @@ public class ServiceUser {
 	@Autowired
 	SessionManager sessionManager;
 
-
-	@Autowired
+	
+	/*@Autowired
 	CLXSMSUtility cLXSMSUtility;
-
+*/
 	@Autowired
 	RepositoryUserMacAddress repositoryUserMacAddress;
 
@@ -1222,7 +1222,8 @@ public class ServiceUser {
 
 									try {
 										String message = serviceResponse.getStringMessageByShortAndIsDeleted("OTP_MESSAGE", false);
-										this.cLXSMSUtility.sendSMS("Smart Team", message+" "+otp, celNumberList);
+									//	this.cLXSMSUtility.sendSMS("Smart Team", message+" "+otp, celNumberList);
+										serviceEmailHandler.sendEmail(otpUserDetail.getEmail(), message +" "+otp, "OTP");;
 									} catch (Exception e) {
 										log.info(Arrays.toString(e.getStackTrace()));
 									}
@@ -1232,7 +1233,11 @@ public class ServiceUser {
 											+ phone.substring(phone.length() - 3, phone.length());
 
 									dtoUserLogin.setPhone(phone);
+
 									//dtoUserLogin.setMobile(phone);
+
+									dtoUserLogin.setEmail(otpUserDetail.getEmail());
+
 								}
 
 

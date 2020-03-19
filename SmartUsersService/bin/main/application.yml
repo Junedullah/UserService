@@ -57,11 +57,13 @@ smtp:
   host: smtp.gmail.com
   username: jbdatapoint@gmail.com
   password: juned@123
-  port: 587
+  port: 465 #587
   sender: SmartSoft
+  
+ 
 #
 script:
-  #path: D:\\FB\\bti2.sql
+ 
   path:  E:\\HCM by Juned\\CODE BACK UP\\userDb\\smartuser.sql
   accesspath: http://localhost:8082
   accessfinancialpath: http://localhost:8085
@@ -78,3 +80,5 @@ dbpath:
 
  #for Windows
   mysqlpath: 'C:\wamp64\bin\mysql\mysql5.7.14\bin\mysql'
+  
+  

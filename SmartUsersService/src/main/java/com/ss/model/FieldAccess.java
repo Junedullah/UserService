@@ -25,7 +25,7 @@ import javax.persistence.Table;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true)
-@Table(name = "field_acces")
+@Table(name = "field_access")
 @NamedQuery(name = "FieldAccess.findAll", query = "SELECT a FROM FieldAccess a")
 public class FieldAccess extends BaseEntity implements Serializable {
 

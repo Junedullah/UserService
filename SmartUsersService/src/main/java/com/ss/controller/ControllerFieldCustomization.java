@@ -150,14 +150,16 @@ public class ControllerFieldCustomization {
 	 * @param phone
 	 * @return
 	 */
-	@RequestMapping(value = "/getByCodeAndUser", method = RequestMethod.GET)
-	public ResponseMessage getByCode(HttpServletRequest request, @RequestParam("code") String code,
-			@RequestParam("userId") int userId) {
+
+	@RequestMapping(value = "/getByCodeAndUser", method = RequestMethod.POST)
+	public ResponseMessage getByCode(HttpServletRequest request, @RequestBody DtoFieldCustomization dtoFieldCustomization) {
 
 		ResponseMessage responseMessage = null;
 		UserSession session = sessionManager.validateUserSessionId(request);
 		if (session != null) {
-			DtoFieldCustomization dtoFieldCustomization = serviceFieldCustomization.getByCodeAndUserId(code, userId);
+
+			dtoFieldCustomization = serviceFieldCustomization.getByCodeAndUserId(dtoFieldCustomization.getCode(), dtoFieldCustomization.getUserId());
+
 			if (dtoFieldCustomization != null)
 				responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK, serviceResponse
 						.getMessageByShortAndIsDeleted(MessageLabel.FIELD_CUSTOMIZATION_GET_SUCCESS, false),

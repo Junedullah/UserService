@@ -28,6 +28,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
@@ -60,17 +61,18 @@ public class ServiceEmailHandler {
 
 	@Autowired
 	RepositoryEmailTemplates repositoryEmailTemplates;
-
+	
 	/**
 	 * @return
 	 */
 	public Session getMailSession() {
-		Properties props = new Properties();
+		Properties props = /*javaMailSenderImpl.getJavaMailProperties();*/ new Properties();
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.socketFactory.port",port); //"465");
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", port);
+		props.put("mail.smtp.starttls.enable", "true");
 
 		return Session.getDefaultInstance(props, new Authenticator() {
 			@Override
