@@ -240,7 +240,7 @@ public class ServiceAuthSettings {
 								}
 								
 							}
-							else if (ConfigSetting.SECONDARY.getValue().equalsIgnoreCase(langId))
+						/*	else if (ConfigSetting.SECONDARY.getValue().equalsIgnoreCase(langId))
 							{
 								if(UtilRandomKey.isNotBlank(userDetail.getSecondaryFirstName())){
 									dtoUser.setFirstName(userDetail.getSecondaryFirstName());
@@ -252,7 +252,7 @@ public class ServiceAuthSettings {
 									dtoUser.setFullName(userDetail.getSecondaryFirstName()+" "+userDetail.getSecondaryLastName());
 								}
 								
-							}
+							}*/
 						}
 						dtoUserList.add(dtoUser);
 					}

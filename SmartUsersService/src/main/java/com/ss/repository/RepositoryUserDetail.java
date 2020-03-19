@@ -76,16 +76,19 @@ public interface RepositoryUserDetail extends JpaRepository<UserDetail, Integer>
 	 * @param roleId
 	 * @return
 	 */
-	@Query("select ud from UserDetail ud where (ud.firstName like %:searchKeyWord% or ud.lastName like %:searchKeyWord% or ud.middleName like %:searchKeyWord% or ud.email like %:searchKeyWord% or ud.phone like %:searchKeyWord% or ud.secondaryFirstName like %:searchKeyWord% or ud.secondaryLastName like %:searchKeyWord% or ud.secondaryMiddleName like %:searchKeyWord% ) and ud.isDeleted=false and  ud.user.role.roleId=:roleId")
+/*	@Query("select ud from UserDetail ud where (ud.firstName like %:searchKeyWord% or ud.lastName like %:searchKeyWord% or ud.middleName like %:searchKeyWord% or ud.email like %:searchKeyWord% or ud.phone like %:searchKeyWord% or ud.secondaryFirstName like %:searchKeyWord% or ud.secondaryLastName like %:searchKeyWord% or ud.secondaryMiddleName like %:searchKeyWord% ) and ud.isDeleted=false and  ud.user.role.roleId=:roleId")
 	public List<UserDetail> predictiveUserSearchWithPagination(@Param("searchKeyWord") String searchKeyWord,
-			Pageable pageable, @Param("roleId") Integer roleId);
+			Pageable pageable, @Param("roleId") Integer roleId);*/
 
+	@Query("select ud from UserDetail ud where (ud.firstName like %:searchKeyWord% or ud.lastName like %:searchKeyWord% or ud.middleName like %:searchKeyWord% or ud.email like %:searchKeyWord% or ud.phone like %:searchKeyWord% ) and ud.isDeleted=false and  ud.user.role.roleId=:roleId")
+	public List<UserDetail> predictiveUserSearchWithPagination(@Param("searchKeyWord") String searchKeyWord,
+															   Pageable pageable, @Param("roleId") Integer roleId);
 	/**
 	 * @param searchKeyWord
 	 * @param roleId
 	 * @return
 	 */
-	@Query("select count(*) from UserDetail ud where (ud.firstName like %:searchKeyWord% or ud.lastName like %:searchKeyWord% or ud.middleName like %:searchKeyWord% or ud.email like %:searchKeyWord% or ud.phone like %:searchKeyWord% or ud.secondaryFirstName like %:searchKeyWord% or ud.secondaryLastName like %:searchKeyWord% or ud.secondaryMiddleName like %:searchKeyWord% ) and ud.isDeleted=false and ud.user.role.roleId=:roleId")
+	@Query("select count(*) from UserDetail ud where (ud.firstName like %:searchKeyWord% or ud.lastName like %:searchKeyWord% or ud.middleName like %:searchKeyWord% or ud.email like %:searchKeyWord% or ud.phone like %:searchKeyWord% ) and ud.isDeleted=false and ud.user.role.roleId=:roleId")
 	public Integer predictiveUserSearchTotalCount(@Param("searchKeyWord") String searchKeyWord,
 			@Param("roleId") Integer roleId);
 

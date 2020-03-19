@@ -48,11 +48,11 @@ public class User extends BaseEntity implements Serializable{
 	@Column(name = "is_active", columnDefinition = "tinyint(0) default 0")
 	private boolean isActive;
 
-	@Column(name = "is_reset_password", columnDefinition = "tinyint(0) default 0")
+	/*@Column(name = "is_reset_password", columnDefinition = "tinyint(0) default 0")
 	private boolean isResetPassword;
 	
 	@Column(name = "ip_checked", columnDefinition = "tinyint(0) default 1")
-	protected Boolean ipChecked;
+	protected Boolean ipChecked;*/
 
 	private String password;
 
@@ -120,22 +120,6 @@ public class User extends BaseEntity implements Serializable{
 
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
-	}
-
-	public boolean isResetPassword() {
-		return isResetPassword;
-	}
-
-	public void setResetPassword(boolean isResetPassword) {
-		this.isResetPassword = isResetPassword;
-	}
-
-	public Boolean getIpChecked() {
-		return ipChecked;
-	}
-
-	public void setIpChecked(Boolean ipChecked) {
-		this.ipChecked = ipChecked;
 	}
 
 	public String getPassword() {

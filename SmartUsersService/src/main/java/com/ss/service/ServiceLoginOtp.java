@@ -106,11 +106,11 @@ public class ServiceLoginOtp {
 	public DtoUserLogin validateUserOTP(DtoUserLogin dtoLoginUser) {
 		LoginOtp loginOtp = repositoryLoginOtp.findByUserUserIdAndIsDeleted(dtoLoginUser.getUserId(), false);
 		if (loginOtp != null) {
-			if (loginOtp.getUser().isResetPassword()) {
+			/*if (loginOtp.getUser().isResetPassword()) {
 				dtoLoginUser.setIsResetPassword("Y");
 			} else {
 				dtoLoginUser.setIsResetPassword("N");
-			}
+			}*/
 
 			if (loginOtp.getCode().equals(dtoLoginUser.getOtp())) {
 				Date expiredDate = loginOtp.getExpireDate();

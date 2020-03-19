@@ -277,6 +277,7 @@ public class ServiceUser {
 						dtoUser.setUserStatus(
 								serviceResponse.getMessageByShortAndIsDeleted("INACTIVE", false).getMessage());
 					}
+					dtoUser.setMobile(user.getUserDetails().get(0).getMobile());
 					dtoList.add(dtoUser);
 				}
 			}
@@ -323,7 +324,7 @@ public class ServiceUser {
 						} else {
 							dtoUser.setUserName("N/A");
 						}
-					} else if (ConfigSetting.SECONDARY.getValue().equalsIgnoreCase(langId)) {
+					}/* else if (ConfigSetting.SECONDARY.getValue().equalsIgnoreCase(langId)) {
 						if (UtilRandomKey.isNotBlank(userDetail.getSecondaryFirstName())) {
 							dtoUser.setUserName(userDetail.getSecondaryFirstName());
 							if (UtilRandomKey.isNotBlank(userDetail.getSecondaryLastName())) {
@@ -333,7 +334,7 @@ public class ServiceUser {
 						} else {
 							dtoUser.setUserName("N/A");
 						}
-					}
+					}*/
 					dtoList.add(dtoUser);
 				}
 			}
@@ -374,7 +375,7 @@ public class ServiceUser {
 						} else {
 							dtoUser.setUserName("N/A");
 						}
-					} else if (ConfigSetting.SECONDARY.getValue().equalsIgnoreCase(langId)) {
+					} /*else if (ConfigSetting.SECONDARY.getValue().equalsIgnoreCase(langId)) {
 						if (UtilRandomKey.isNotBlank(userDetail.getSecondaryFirstName())) {
 							dtoUser.setUserName(userDetail.getSecondaryFirstName());
 							if (UtilRandomKey.isNotBlank(userDetail.getSecondaryLastName())) {
@@ -384,7 +385,7 @@ public class ServiceUser {
 						} else {
 							dtoUser.setUserName("N/A");
 						}
-					}
+					}*/
 					dtoList.add(dtoUser);
 				}
 			}
@@ -407,6 +408,7 @@ public class ServiceUser {
 				List<UserCompanyRelation> userCompanyList = repositoryUserCompanies
 						.findByUserUserIdAndIsDeleted(user.getUserId(), false);
 				DtoUser dtoUser = new DtoUser(user, userDetail, langId);
+				dtoUser.setMobile(user.getUserDetails().get(0).getMobile());
 				dtoUser = setUserCompanyRelationListInDto(userCompanyList, dtoUser);
 				return dtoUser;
 			}
@@ -534,7 +536,6 @@ public class ServiceUser {
 
 	/**
 	 * This methods blocks/unblocks user
-	 * @param dtoWhiteListIp
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
@@ -554,7 +555,7 @@ public class ServiceUser {
 	public void resetPassword(User user) {
 		String randomPassword = UtilRandomKey.getRandomOrderNumber();
 		user.setPassword(passwordEncoder.encode(randomPassword));
-		user.setResetPassword(true);
+		//user.setResetPassword(true);
 		repositoryUser.saveAndFlush(user);
 		serviceEmailHandler.sendResetPasswordMailByAdmin(user.getEmail(), randomPassword, user.getUsername());
 	}
@@ -629,9 +630,9 @@ public class ServiceUser {
 					userDetail.setFirstName(dtoUser.getFirstName());
 					userDetail.setLastName(dtoUser.getLastName());
 					userDetail.setMiddleName(dtoUser.getMiddleName());
-					userDetail.setSecondaryFirstName(dtoUser.getSecondaryFirstName());
+					/*userDetail.setSecondaryFirstName(dtoUser.getSecondaryFirstName());
 					userDetail.setSecondaryLastName(dtoUser.getSecondaryLastName());
-					userDetail.setSecondaryMiddleName(dtoUser.getSecondaryMiddleName());
+					userDetail.setSecondaryMiddleName(dtoUser.getSecondaryMiddleName());*/
 					userDetail.setUser(user);
 					repositoryUserDetail.saveAndFlush(userDetail);
 				}
@@ -687,7 +688,7 @@ public class ServiceUser {
 				user = new User();
 				user.setUsername(dtoUser.getEmail());
 				user.setActive(true);
-				user.setIpChecked(true);
+				//user.setIpChecked(true);
 				user.setCreatedBy(loggedInUserId);
 				user.setRole(repositoryRole.findByRoleId(SmartRoles.USER.getIndex()));
 				//user.setEmployeeCode(codeGenerator.getGeneratedCode(SmartCodeType.EMPLOYEECODE.name()));
@@ -713,10 +714,11 @@ public class ServiceUser {
 			userDetail.setFirstName(dtoUser.getFirstName());
 			userDetail.setLastName(dtoUser.getLastName());
 			userDetail.setMiddleName(dtoUser.getMiddleName());
-			userDetail.setSecondaryFirstName(dtoUser.getSecondaryFirstName());
+	/*		userDetail.setSecondaryFirstName(dtoUser.getSecondaryFirstName());
 			userDetail.setSecondaryLastName(dtoUser.getSecondaryLastName());
-			userDetail.setSecondaryMiddleName(dtoUser.getSecondaryMiddleName());
+			userDetail.setSecondaryMiddleName(dtoUser.getSecondaryMiddleName());*/
 			userDetail.setPhone(dtoUser.getPhone());
+			userDetail.setMobile(dtoUser.getMobile());
 			userDetail.setUser(user);
 			userDetail.setDob(UtilDateAndTime.ddmmyyyyStringToDate(dtoUser.getDob()));
 			userDetail.setStateMaster(repositoryStateMaster.findOne(dtoUser.getStateId()));
@@ -781,10 +783,10 @@ public class ServiceUser {
 					userMacAddress.setCreatedBy(loggedInUserId);
 					repositoryUserMacAddress.save(userMacAddress);
 				}
-			}
+			}*/
 			if(newUser){
 				serviceEmailHandler.sendWelcomeEmail(user.getEmail(), randomPasssword, user.getUsername());
-			}*/
+			}
 			return new String[] { "success", String.valueOf(user.getUserId()) };
 
 		} catch (Exception e) {
@@ -1171,12 +1173,12 @@ public class ServiceUser {
 		if (user3 != null) 
 		{
 			if (passwordEncoder.matches(dtoUserData.getPassword(), user3.getPassword())) {
-				if (user3.isResetPassword()) {
+				/*if (user3.isResetPassword()) {
 					dtoUserLogin.setIsResetPassword("Y");
 				} else {
 					dtoUserLogin.setIsResetPassword("N");
 				}
-
+*/
 				AppConfigSetting appConfigSetting = repositoryAppConfigSetting
 						.findByConfigNameAndIsDeleted(ConfigSetting.SMS_AUTHENTICATION.getValue(), false);
 				if (appConfigSetting != null) {
@@ -1230,6 +1232,7 @@ public class ServiceUser {
 											+ phone.substring(phone.length() - 3, phone.length());
 
 									dtoUserLogin.setPhone(phone);
+									//dtoUserLogin.setMobile(phone);
 								}
 
 
@@ -1321,7 +1324,7 @@ public class ServiceUser {
 		for (Integer userId : dtoUser.getUserIds()) {
 			User user = repositoryUser.findByUserId(userId);
 			if(user!=null){
-				user.setIpChecked(dtoUser.getIpChecked());
+				//user.setIpChecked(dtoUser.getIpChecked());
 				repositoryUser.saveAndFlush(user);
 			}
 		}
