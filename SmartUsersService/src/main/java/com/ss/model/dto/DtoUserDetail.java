@@ -25,11 +25,12 @@ public class DtoUserDetail {
 	private String firstName;
 	private String lastName;
 	private String middleName;
-	private String secondaryFirstName;
+/*	private String secondaryFirstName;
 	private String secondaryLastName;
-	private String secondaryMiddleName;
+	private String secondaryMiddleName;*/
 	private String phone;
-	private String sessionDuration;
+	private String mobile;
+	//private String sessionDuration;
 	private String zipcode;
 	private String username;
 	private String stateName;
@@ -118,7 +119,7 @@ public class DtoUserDetail {
 		this.middleName = middleName;
 	}
 
-	public String getSecondaryFirstName() {
+/*	public String getSecondaryFirstName() {
 		return secondaryFirstName;
 	}
 
@@ -140,7 +141,7 @@ public class DtoUserDetail {
 
 	public void setSecondaryMiddleName(String secondaryMiddleName) {
 		this.secondaryMiddleName = secondaryMiddleName;
-	}
+	}*/
 
 	public String getPhone() {
 		return phone;
@@ -150,13 +151,13 @@ public class DtoUserDetail {
 		this.phone = phone;
 	}
 
-	public String getSessionDuration() {
+/*	public String getSessionDuration() {
 		return sessionDuration;
 	}
 
 	public void setSessionDuration(String sessionDuration) {
 		this.sessionDuration = sessionDuration;
-	}
+	}*/
 
 	public String getZipcode() {
 		return zipcode;
@@ -246,4 +247,11 @@ public class DtoUserDetail {
 		this.pageSize = pageSize;
 	}
 
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
 }

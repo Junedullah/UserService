@@ -147,10 +147,10 @@ public class ControllerLogin {
 		if (user != null && user.isActive()) {
 			
 			boolean allowedIp=true;
-			if(user.getIpChecked()){
+			/*if(user.getIpChecked()){
             	allowedIp= serviceUserIp.checkAllowedUserIpRequest(request, dtoUser.getUserName());
             }
-			
+			*/
 			if (!allowedIp) {
 				responseMessage = new ResponseMessage(HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN,
 						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.INVALID_USER_IP_OR_BLOCKED, false));
@@ -202,7 +202,7 @@ public class ControllerLogin {
 	
 	/**
 	 * @description : Verify user otp for login 
-	 * @param user
+	 * //@param user
 	 * @param request
 	 * @return
 	 */

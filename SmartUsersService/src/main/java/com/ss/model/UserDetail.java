@@ -58,19 +58,23 @@ public class UserDetail extends BaseEntity implements Serializable {
 	@Column(name = "middle_name")
 	private String middleName;
 
-	@Column(name = "secondary_first_name")
+/*	@Column(name = "secondary_first_name")
 	private String secondaryFirstName;
 
 	@Column(name = "secondary_last_name")
 	private String secondaryLastName;
 
 	@Column(name = "secondary_middle_name")
-	private String secondaryMiddleName;
+
+	private String secondaryMiddleName;*/
+	
 
 	private String phone;
 
-	@Column(name = "session_duration")
-	private String sessionDuration;
+	private String mobile;
+
+/*	@Column(name = "session_duration")
+	private String sessionDuration;*/
 
 	private String zipcode;
 
@@ -170,28 +174,12 @@ public class UserDetail extends BaseEntity implements Serializable {
 		this.middleName = middleName;
 	}
 
-	public String getSecondaryFirstName() {
-		return secondaryFirstName;
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setSecondaryFirstName(String secondaryFirstName) {
-		this.secondaryFirstName = secondaryFirstName;
-	}
-
-	public String getSecondaryLastName() {
-		return secondaryLastName;
-	}
-
-	public void setSecondaryLastName(String secondaryLastName) {
-		this.secondaryLastName = secondaryLastName;
-	}
-
-	public String getSecondaryMiddleName() {
-		return secondaryMiddleName;
-	}
-
-	public void setSecondaryMiddleName(String secondaryMiddleName) {
-		this.secondaryMiddleName = secondaryMiddleName;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 	public String getPhone() {
@@ -202,13 +190,13 @@ public class UserDetail extends BaseEntity implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getSessionDuration() {
+/*	public String getSessionDuration() {
 		return sessionDuration;
 	}
 
 	public void setSessionDuration(String sessionDuration) {
 		this.sessionDuration = sessionDuration;
-	}
+	}*/
 
 	public String getZipcode() {
 		return zipcode;

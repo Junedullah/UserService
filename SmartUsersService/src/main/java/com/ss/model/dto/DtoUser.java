@@ -19,6 +19,7 @@ public class DtoUser {
 	private String firstName;
 	private String lastName;
 	private String phone;
+	private String mobile;
 	private String userName;
 	private String email;
 	private String employeeCode;
@@ -56,9 +57,9 @@ public class DtoUser {
 	private String smsAuthentication;
 	private String isResetPassword;
 	private String oldPassword;
-	private String secondaryFirstName;
+/*	private String secondaryFirstName;
 	private String secondaryMiddleName;
-	private String secondaryLastName;
+	private String secondaryLastName;*/
 	private List<Integer> companyIds;
 	private List<String> companyNames;
 	private String secondaryFullName;
@@ -99,11 +100,11 @@ public class DtoUser {
 		this.userId = user.getUserId();
 		this.userName = user.getUsername();
 		this.email = user.getEmail();
-		if (user.isResetPassword()) {
+		/*if (user.isResetPassword()) {
 			this.isResetPassword = "Y";
 		} else {
 			this.isResetPassword = "N";
-		}
+		}*/
 
 		this.isActive = user.isActive();
 
@@ -124,7 +125,7 @@ public class DtoUser {
 				this.primaryFullName = "";
 			}
 
-			if (UtilRandomKey.isNotBlank(userDetail.getSecondaryFirstName())) {
+		/*	if (UtilRandomKey.isNotBlank(userDetail.getSecondaryFirstName())) {
 				this.secondaryFullName = userDetail.getSecondaryFirstName();
 
 				if (UtilRandomKey.isNotBlank(userDetail.getSecondaryMiddleName())) {
@@ -136,7 +137,7 @@ public class DtoUser {
 				}
 			} else {
 				this.secondaryFullName = "";
-			}
+			}*/
 
 			if (UtilRandomKey.isNotBlank(userDetail.getFirstName())) {
 				this.firstName = userDetail.getFirstName();
@@ -159,7 +160,7 @@ public class DtoUser {
 				this.middleName = "";
 			}
 
-			if (UtilRandomKey.isNotBlank(userDetail.getSecondaryFirstName())) {
+			/*if (UtilRandomKey.isNotBlank(userDetail.getSecondaryFirstName())) {
 				this.secondaryFirstName = userDetail.getSecondaryFirstName();
 
 			} else {
@@ -178,7 +179,7 @@ public class DtoUser {
 
 			} else {
 				this.secondaryMiddleName = "";
-			}
+			}*/
 
 			if (userDetail.getDob() != null) {
 				this.dob = UtilDateAndTime.dateToStringddmmyyyy(userDetail.getDob());
@@ -257,7 +258,7 @@ public class DtoUser {
 				this.primaryFullName = "";
 			}
 
-			if (UtilRandomKey.isNotBlank(userDetail.getSecondaryFirstName())) {
+			/*if (UtilRandomKey.isNotBlank(userDetail.getSecondaryFirstName())) {
 				this.secondaryFullName = userDetail.getSecondaryFirstName();
 
 				if (UtilRandomKey.isNotBlank(userDetail.getSecondaryMiddleName())) {
@@ -270,7 +271,7 @@ public class DtoUser {
 				}
 			} else {
 				this.secondaryFullName = "";
-			}
+			}*/
 
 			if (UtilRandomKey.isNotBlank(userDetail.getFirstName())) {
 				this.firstName = userDetail.getFirstName();
@@ -293,7 +294,7 @@ public class DtoUser {
 				this.middleName = "";
 			}
 
-			if (UtilRandomKey.isNotBlank(userDetail.getSecondaryFirstName())) {
+			/*if (UtilRandomKey.isNotBlank(userDetail.getSecondaryFirstName())) {
 				this.secondaryFirstName = userDetail.getSecondaryFirstName();
 
 			} else {
@@ -312,7 +313,7 @@ public class DtoUser {
 
 			} else {
 				this.secondaryMiddleName = "";
-			}
+			}*/
 
 		}
 	}
@@ -550,7 +551,7 @@ public class DtoUser {
 	public void setOldPassword(String oldPassword) {
 		this.oldPassword = oldPassword;
 	}
-	public String getSecondaryFirstName() {
+/*	public String getSecondaryFirstName() {
 		return secondaryFirstName;
 	}
 	public void setSecondaryFirstName(String secondaryFirstName) {
@@ -567,7 +568,7 @@ public class DtoUser {
 	}
 	public void setSecondaryLastName(String secondaryLastName) {
 		this.secondaryLastName = secondaryLastName;
-	}
+	}*/
 	public List<Integer> getCompanyIds() {
 		return companyIds;
 	}
@@ -742,7 +743,12 @@ public class DtoUser {
 	public void setListOfCompanies(List<DtoCompany> listOfCompanies) {
 		this.listOfCompanies = listOfCompanies;
 	}
-	
-	
 
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
 }
