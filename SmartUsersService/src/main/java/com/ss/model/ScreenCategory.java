@@ -24,7 +24,7 @@ import javax.persistence.Table;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true)
-@Table(name = "screen_category")
+@Table(name = "screen_categorys")
 @NamedQuery(name = "ScreenCategory.findAll", query = "SELECT sc FROM ScreenCategory sc")
 public class ScreenCategory extends BaseEntity implements Serializable {
 

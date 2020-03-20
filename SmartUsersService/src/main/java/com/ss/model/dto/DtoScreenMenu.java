@@ -17,15 +17,13 @@ public class DtoScreenMenu {
 	private Integer screenMenuId;
 	private String moduleNamePrimary;
 	private String moduleNameSecondary;
-	private Integer moduleId;	
-	private String description;
+	private Integer moduleId;
 	private String screenNamePrimary;
 	private String screenNameSecondary;
 	private Integer screenCategoryId;
 	private String moduleCode;
 	private String screenCode;
 	private String sideMenuCode;
-	private String sideMenuUrl;
 	private String helpMessagePrimary;
 	private String helpMessageSecondary;
 	private String moduleName;
@@ -36,7 +34,7 @@ public class DtoScreenMenu {
 	private Boolean readAccess;
 	private Boolean writeAccess;
 	private Boolean deleteAccess;
-	private Integer languageId;
+	private Integer languageid;
 	private Integer companyId;
 
 	public Integer getScreenMenuId() {
@@ -199,12 +197,12 @@ public class DtoScreenMenu {
 		this.deleteAccess = deleteAccess;
 	}
 
-	public Integer getLanguageId() {
-		return languageId;
+	public Integer getLanguageid() {
+		return languageid;
 	}
 
-	public void setLanguageId(Integer languageid) {
-		this.languageId = languageid;
+	public void setLanguageid(Integer languageid) {
+		this.languageid = languageid;
 	}
 
 	public Integer getCompanyId() {
@@ -214,25 +212,5 @@ public class DtoScreenMenu {
 	public void setCompanyId(Integer companyId) {
 		this.companyId = companyId;
 	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getSideMenuUrl() {
-		return sideMenuUrl;
-	}
-
-	public void setSideMenuUrl(String sideMenuUrl) {
-		this.sideMenuUrl = sideMenuUrl;
-	}
-
-
-	
-	
 
 }

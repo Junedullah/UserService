@@ -12,7 +12,6 @@ package com.ss.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ss.model.ScreenCategory;
@@ -23,9 +22,4 @@ public interface RepositoryScreenCategory extends JpaRepository<ScreenCategory, 
 	List<ScreenCategory> findByIsDeleted(boolean isDeleted);
 	
 	List<ScreenCategory> findByModuleModuleIdAndIsDeleted(Integer moduleId, boolean isDeleted);
-
-	@Query("Select count(*) from ScreenCategory")
-	Integer getCountOfTotal();
-
-	ScreenCategory findByScreenCategoryIdAndIsDeleted(Integer screenCategoryId, boolean b);
 }

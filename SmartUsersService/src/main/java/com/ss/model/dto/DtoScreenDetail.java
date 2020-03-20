@@ -23,7 +23,6 @@ public class DtoScreenDetail {
 	private String screenNamePrimary;
 	private String screenNameSecondary;
 	private Integer screenId;
-	private String description;
 	private List<DtoFieldDetail> fieldList;
 	private List<DtoFieldAccess> fieldAccessList;
 	private List<DtoGrid> girdList;
@@ -41,13 +40,11 @@ public class DtoScreenDetail {
 	private Boolean writeAccess;
 	private Boolean deleteAccess;
 	private Integer accessRoleId;
-	private Integer languageId;
+	private Integer languageid;
 	private Boolean isMandatory;
 	private Integer fieldAccessId;
 	private Integer companyId;
 	private int userId;
-	private String sideMenuCode;
-	private String sideMenuUrl;
 
 	public DtoScreenDetail() {
 
@@ -242,7 +239,14 @@ public class DtoScreenDetail {
 		this.fieldAccessList = fieldAccessList;
 	}
 
-	
+	public Integer getLanguageid() {
+		return languageid;
+	}
+
+	public void setLanguageid(Integer languageid) {
+		this.languageid = languageid;
+	}
+
 	public Boolean getIsMandatory() {
 		return isMandatory;
 	}
@@ -283,37 +287,4 @@ public class DtoScreenDetail {
 		this.gridDataList = gridDataList;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public void setLanguageId(Integer languageId) {
-		this.languageId = languageId;
-	}
-
-	public Integer getLanguageId() {
-		return languageId;
-	}
-
-	public String getSideMenuCode() {
-		return sideMenuCode;
-	}
-
-	public void setSideMenuCode(String sideMenuCode) {
-		this.sideMenuCode = sideMenuCode;
-	}
-
-	public String getSideMenuUrl() {
-		return sideMenuUrl;
-	}
-
-	public void setSideMenuUrl(String sideMenuUrl) {
-		this.sideMenuUrl = sideMenuUrl;
-	}
-
-	
 }

@@ -152,20 +152,5 @@ public class MessageLabel {
 	public static final String MODULE_GET_ALL = "MODULE_GET_ALL";
 	public static final String MODULE_LIST_NOT_GETTING = "MODULE_LIST_NOT_GETTING";
 	
-	public static final String SCREEN_CATEGORY_CREATED ="SCREEN_CATEGORY_CREATED";
-	public static final String SCREEN_CATEGORY_NOT_CREATED = "SCREEN_CATEGORY_NOT_CREATED";
-	public static final String SCREEN_CATEGORY_GET_ALL = "SCREEN_CATEGORY_GET_ALL";
-	public static final String SCREEN_CATEGORY_LIST_NOT_GETTING = "SCREEN_CATEGORY_LIST_NOT_GETTING";
-	public static final String SCREEN_CREATED ="SCREEN_CREATED";
-	public static final String SCREEN_NOT_CREATED = "SCREEN_NOT_CREATED";
-	public static final String SCREEN_GET_ALL = "SCREEN_GET_ALL";
-	public static final String SCREEN_LIST_NOT_GETTING = "SCREEN_LIST_NOT_GETTING";
-	public static final String SCREEN_MENU_CREATED ="SCREEN_MENU_CREATED";
-	public static final String SCREEN_MENU_NOT_CREATED = "SCREEN_MENU_NOT_CREATED";
-	public static final String SCREEN_MENU_GET_ALL = "SCREEN_MENU_GET_ALL";
-	public static final String SCREEN_MENU_LIST_NOT_GETTING = "SCREEN_MENU_LIST_NOT_GETTING";
-	
-	
-	
 
 }

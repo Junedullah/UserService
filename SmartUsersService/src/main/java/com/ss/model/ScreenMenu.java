@@ -24,7 +24,7 @@ import javax.persistence.Table;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true)
-@Table(name = "screen_menu")
+@Table(name = "screen_menus")
 @NamedQuery(name = "ScreenMenu.findAll", query = "SELECT sm FROM ScreenMenu sm")
 public class ScreenMenu extends BaseEntity implements Serializable {
 

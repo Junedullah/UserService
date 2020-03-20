@@ -58,7 +58,7 @@ public class ServiceModule {
 	private static final String USER_ID = "userid";
 
 	/**
-	 * Description: save and update Module data
+	 * Description: save and update company data
 	 * 
 	 * @param dtoCompany
 	 * @return
