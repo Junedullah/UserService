@@ -55,13 +55,12 @@ server:
 smtp:
   protocol : smtp
   host: smtp.gmail.com
-  username: jbdatapoint@gmail.com
-  password: juned@123
-  port: 465 #587
+
+  username: smartsftproject@gmail.com
+  password: SmtSFT@proj#_.)
+  port: 587
   sender: SmartSoft
-  
- 
-#
+
 script:
  
   path:  E:\\HCM by Juned\\CODE BACK UP\\userDb\\smartuser.sql
