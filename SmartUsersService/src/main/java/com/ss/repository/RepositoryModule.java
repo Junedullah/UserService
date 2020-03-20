@@ -12,8 +12,11 @@ package com.ss.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -82,5 +85,22 @@ public interface RepositoryModule extends JpaRepository<Module, Integer> {
 	public Integer getCountOfTotalModule();
 
 	public List<Module> findByIsDeletedOrderByCreatedDateDesc(boolean b);
+
+//	public List<Module> findByProductIdAndIsDeleted(List<Integer> ids);
+	
+	 @Query("select m from Module m where m.moduleId=:moduleId and m.isDeleted=false")
+	    public List<Module> findBymoduleIdAndIsDeleted(@Param("moduleId") List<Integer> moduleId);
+	 
+	 Module findOne(Integer planId);
+	    @Modifying(clearAutomatically = true)
+	    @Transactional
+	    @Query("update Module m set m.isDeleted =:deleted ,m.updatedBy =:updateById where m.moduleId =:moduleId ")
+	    public void deleteSingleModulse(@Param("deleted") Boolean deleted, @Param("updateById") Integer updateById,
+	                                    @Param("moduleId") Integer moduleId);
+	    
+	    @Query("select m from Module m where (m.isDeleted = false or  m.isDeleted = null) and moduleId =:moduleId")
+	    public	Module findByAndIsDeleted(@Param("moduleId")int moduleId);
+
+
 
 }

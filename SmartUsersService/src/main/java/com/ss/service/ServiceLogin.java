@@ -605,8 +605,7 @@ public class ServiceLogin {
 									}
 								}
 
-								List<Grid> gridList = repositoryGrid.findByScreenIdAndModuleId(screen.getScreenId(),
-										module.getModuleId());
+								List<Grid> gridList =null; //repositoryGrid.findByScreenIdAndModuleId(screen.getScreenId(),
 								List<GridData> gridDataList = null;
 
 								if (gridList != null) {

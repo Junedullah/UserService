@@ -58,6 +58,9 @@ public class DtoModule {
 	
 	private Integer pageNumber;
 	private Integer pageSize;
+	
+	private List<Integer> ids;
+	private List<DtoModule> delete;
 
 
 	
@@ -310,6 +313,22 @@ public class DtoModule {
 
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public List<Integer> getIds() {
+		return ids;
+	}
+
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
+
+	public List<DtoModule> getDelete() {
+		return delete;
+	}
+
+	public void setDelete(List<DtoModule> delete) {
+		this.delete = delete;
 	}
 	
 

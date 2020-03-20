@@ -4,7 +4,7 @@
  * Name of Project: SmartSoftware
  * Created on: March 20, 2020
  * Modified on: March 20, 2020 10:19:38 AM
- * @author Juned
+ * @author Shahnawaz
  * Version: 
  */
 package com.ss.model.dto;
@@ -14,12 +14,17 @@ import java.util.Set;
 
 public class DtoGrid {
 
+	private Integer id;
 	private Integer pageNumber;
 	private Integer pageSize;
 	private Integer gridId;
 	private String helpMessage;
 	private List<DtoGrid> ids;
 	private Set<DtoFieldDetail> fieldDetailList;
+	private Integer moduleId;
+	private Integer screenId;
+
+
 
 	public DtoGrid() {
 
@@ -73,4 +78,29 @@ public class DtoGrid {
 		this.fieldDetailList = fieldDetailList;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getModuleId() {
+		return moduleId;
+	}
+
+	public void setModuleId(Integer moduleId) {
+		this.moduleId = moduleId;
+	}
+
+	public Integer getScreenId() {
+		return screenId;
+	}
+
+	public void setScreenId(Integer screenId) {
+		this.screenId = screenId;
+	}
+
+	
 }

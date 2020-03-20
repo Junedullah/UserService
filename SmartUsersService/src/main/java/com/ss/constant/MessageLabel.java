@@ -151,6 +151,7 @@ public class MessageLabel {
 	public static final String MODULE_NOT_CREATED = "MODULE_NOT_CREATED";
 	public static final String MODULE_GET_ALL = "MODULE_GET_ALL";
 	public static final String MODULE_LIST_NOT_GETTING = "MODULE_LIST_NOT_GETTING";
+	public static final String MODULE_GET_BY_ID = "MODULE_GET_BY_ID";
 	
 
 }

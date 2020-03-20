@@ -11,6 +11,7 @@ package com.ss.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ import com.ss.model.dto.DtoSearch;
 import com.ss.repository.RepositoryException;
 import com.ss.repository.RepositoryLanguage;
 import com.ss.repository.RepositoryModule;
+
 
 
 
@@ -131,6 +133,56 @@ public class ServiceModule {
 		}
 		return dtoSearch;
 	}
-	
+	public List<Integer> delete(List<Integer> ids) {
+
+		int loggedInUserId = Integer.parseInt(httpServletRequest.getHeader("userid"));
+		try {
+			for (Iterator<Integer> idIterator = ids.iterator(); idIterator.hasNext();) {
+				Integer moduleId = idIterator.next();
+				List<Module> modulesList = repositoryModule.findBymoduleIdAndIsDeleted(ids);
+				if(modulesList.size() == 0){
+					return ids;
+				}else{
+					repositoryModule.deleteSingleModulse(true, loggedInUserId, moduleId);
+					idIterator.remove();
+				}
+			}
+		} catch (Exception e) {
+			log.error("Error while deleting Account", e);
+		}
+		return ids;
+	}
+
+
+public DtoModule getById(int moduleId) {
+	DtoModule dtoModule  = new DtoModule();
+	try {
+		if (moduleId > 0) {
+			Module module = repositoryModule.findByAndIsDeleted(moduleId);
+
+			if (module != null) {
+				dtoModule = new DtoModule();
+				dtoModule.setModuleId(module.getModuleId());
+				dtoModule.setLanguageId(module.getLanguage().getLanguageId());
+				dtoModule.setDescription(module.getDescription());
+				dtoModule.setHelpMessage(module.getHelpMessage());
+				dtoModule.setModuleCode(module.getModuleCode());
+				dtoModule.setName(module.getName());
+				dtoModule.setIsActive(module.getIsActive());
+				
+
+			} 
+		} else {
+			dtoModule.setMessageType("INVALID_ID");
+
+		}
+
+	} catch (Exception e) {
+		log.error(e);
+	}
+	return dtoModule;
+}
+
+
 	
 }

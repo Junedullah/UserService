@@ -30,7 +30,18 @@ public interface RepositoryGrid extends JpaRepository<Grid, Integer> {
 	@Query("select count(*) from Grid g where g.isDeleted=false")
 	public Integer getCountOfTotalGrid();
 	
-	@Query("select g from Grid g where g.screenId.id =:screenId and g.moduleId.id =:moduleId and g.isDeleted=false")
-	public List<Grid> findByScreenIdAndModuleId(@Param("screenId") Integer screenId, @Param("moduleId") Integer moduleId);
+	
+	/*
+	 * @Query("select g from Grid g where g.screenId.id =:screenId and g.moduleId.id =:moduleId and g.isDeleted=false"
+	 * ) public List<Grid> findByScreenIdAndModuleId(@Param("screenId") Integer
+	 * screenId, @Param("moduleId") Integer moduleId);
+	 */
+//	@Query("select g from Grid g where g.Id =:Id and g.isDeleted=false")
+//    public Grid findByGridIdAndIsDeleted(@Param("id") Integer id));
+//    
+	
+	 @Query("select g from Grid g where g.isDeleted = false and g.id =:id")
+	    public Grid findByIdAndIsDeleted(@Param("id")Integer id);
+
 	
 }
