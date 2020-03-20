@@ -14,6 +14,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ss.model.Module;
@@ -71,5 +73,14 @@ public interface RepositoryModule extends JpaRepository<Module, Integer> {
 	public Module findByModuleIdAndIsDeleted(int parseInt, boolean b);
 
 	public Long countByIsDeletedAndLanguageLanguageId(boolean b, int i);
+
+	@Query("select m from Module m where m.isDeleted = false and m.moduleId =:moduleId")
+	public Module findByModuleIdAndIsDeleted(@Param("moduleId")Integer moduleId);
+	
+
+	@Query("select count(*) from Module m")
+	public Integer getCountOfTotalModule();
+
+	public List<Module> findByIsDeletedOrderByCreatedDateDesc(boolean b);
 
 }
