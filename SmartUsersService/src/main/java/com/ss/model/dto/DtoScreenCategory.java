@@ -12,6 +12,7 @@ package com.ss.model.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ss.model.Language;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DtoScreenCategory {
@@ -25,6 +26,8 @@ public class DtoScreenCategory {
 	private String helpMessage;
 	private Integer pageNumber;
 	private Integer pageSize;
+	private Integer languageId;
+
 	private List<DtoSideMenu> sideMenuList;
 
 	public DtoScreenCategory() {
@@ -110,5 +113,14 @@ public class DtoScreenCategory {
 	public void setScreenCategoryCode(String screenCategoryCode) {
 		this.screenCategoryCode = screenCategoryCode;
 	}
+
+	public Integer getLanguageId() {
+		return languageId;
+	}
+
+	public void setLanguageId(Integer languageId) {
+		this.languageId = languageId;
+	}
+	
 
 }

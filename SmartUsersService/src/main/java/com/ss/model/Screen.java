@@ -64,9 +64,9 @@ public class Screen extends BaseEntity implements Serializable {
 		private List<Company> companies;*/
 
 	// bi-directional many-to-one association to Module
-		@ManyToOne
+/*		@ManyToOne
 		@JoinColumn(name = "company_id")
-		private Company company;
+		private Company company;*/
 		
 	// bi-directional many-to-one association to Module
 	@ManyToOne
@@ -193,12 +193,5 @@ public class Screen extends BaseEntity implements Serializable {
 		this.language = language;
 	}
 	
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
 
 }
