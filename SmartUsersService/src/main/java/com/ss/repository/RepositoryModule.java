@@ -92,6 +92,7 @@ public interface RepositoryModule extends JpaRepository<Module, Integer> {
 	    public List<Module> findBymoduleIdAndIsDeleted(@Param("moduleId") List<Integer> moduleId);
 	 
 	 Module findOne(Integer planId);
+	 
 	    @Modifying(clearAutomatically = true)
 	    @Transactional
 	    @Query("update Module m set m.isDeleted =:deleted ,m.updatedBy =:updateById where m.moduleId =:moduleId ")
