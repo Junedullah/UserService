@@ -9,18 +9,23 @@
  */
 package com.ss.model.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DtoScreenMenu {
 
 	private Integer screenMenuId;
+	private List<Integer> ids;
 	private String moduleNamePrimary;
 	private String moduleNameSecondary;
 	private Integer moduleId;
+	private String description;
 	private String screenNamePrimary;
 	private String screenNameSecondary;
 	private Integer screenCategoryId;
+	private String sideMenuURL;
 	private String moduleCode;
 	private String screenCode;
 	private String sideMenuCode;
@@ -29,6 +34,7 @@ public class DtoScreenMenu {
 	private String moduleName;
 	private String screenName;
 	private String helpMessage;
+	private String messageType;
 	private Integer pageNumber;
 	private Integer pageSize;
 	private Boolean readAccess;
@@ -212,5 +218,43 @@ public class DtoScreenMenu {
 	public void setCompanyId(Integer companyId) {
 		this.companyId = companyId;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getSideMenuURL() {
+		return sideMenuURL;
+	}
+
+	public void setSideMenuURL(String sideMenuURL) {
+		this.sideMenuURL = sideMenuURL;
+	}
+
+	public List<Integer> getIds() {
+		return ids;
+	}
+
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
+
+	public String getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+
+
+	
+
+	
+	
 
 }

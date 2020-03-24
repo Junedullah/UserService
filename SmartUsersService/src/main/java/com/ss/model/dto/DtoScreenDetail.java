@@ -17,12 +17,15 @@ import com.ss.model.Screen;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DtoScreenDetail {
+	
 	private String moduleNamePrimary;
 	private String moduleNameSecondary;
 	private Integer moduleId;
 	private String screenNamePrimary;
 	private String screenNameSecondary;
 	private Integer screenId;
+	private String description;
+	private List<Integer> ids;
 	private List<DtoFieldDetail> fieldList;
 	private List<DtoFieldAccess> fieldAccessList;
 	private List<DtoGrid> girdList;
@@ -34,6 +37,7 @@ public class DtoScreenDetail {
 	private String moduleName;
 	private String screenName;
 	private String helpMessage;
+	private String messageType;
 	private Integer pageNumber;
 	private Integer pageSize;
 	private Boolean readAccess;
@@ -286,5 +290,33 @@ public class DtoScreenDetail {
 	public void setGridDataList(List<DtoGridData> gridDataList) {
 		this.gridDataList = gridDataList;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<Integer> getIds() {
+		return ids;
+	}
+
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
+
+	public String getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+
+
+	
+	
 
 }
