@@ -2,7 +2,9 @@
 package com.ss.service;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -550,7 +552,7 @@ public class ServiceUser {
 
 
 	/**
-	 * @param user
+	 * @param userm
 	 */
 	public void resetPassword(User user) {
 		String randomPassword = UtilRandomKey.getRandomOrderNumber();
@@ -676,6 +678,9 @@ public class ServiceUser {
 		int loggedInUserId = Integer.parseInt(httpServletRequest.getHeader(USER_ID));
 		User user = null;
 		UserDetail userDetail = null;
+
+
+		//String strDate = dateFormat.format(date);
 		try {
 
 			if (dtoUser.getUserId() != null) {
@@ -709,18 +714,18 @@ public class ServiceUser {
 				}
 			}
 
+			String dob = dtoUser.getDob();
+			SimpleDateFormat formatter=new SimpleDateFormat("dd-MM-yyyy");
 			user.setEmail(dtoUser.getEmail());
+			user.setEmployeeCode(dtoUser.getEmployeeCode());
 			user = repositoryUser.saveAndFlush(user);
 			userDetail.setFirstName(dtoUser.getFirstName());
 			userDetail.setLastName(dtoUser.getLastName());
 			userDetail.setMiddleName(dtoUser.getMiddleName());
-	/*		userDetail.setSecondaryFirstName(dtoUser.getSecondaryFirstName());
-			userDetail.setSecondaryLastName(dtoUser.getSecondaryLastName());
-			userDetail.setSecondaryMiddleName(dtoUser.getSecondaryMiddleName());*/
 			userDetail.setPhone(dtoUser.getPhone());
 			userDetail.setMobile(dtoUser.getMobile());
 			userDetail.setUser(user);
-			userDetail.setDob(UtilDateAndTime.ddmmyyyyStringToDate(dtoUser.getDob()));
+			userDetail.setDob(formatter.parse(dob));
 			userDetail.setStateMaster(repositoryStateMaster.findOne(dtoUser.getStateId()));
 			userDetail.setCityMaster(repositoryCityMaster.findOne(dtoUser.getCityId()));
 			userDetail.setCountryMaster(repositoryCountryMaster
@@ -729,61 +734,9 @@ public class ServiceUser {
 			userDetail.setZipcode(dtoUser.getZipCode());
 			userDetail.setAddress(dtoUser.getAddress());
 			userDetail.setEmail(dtoUser.getEmail());
+			userDetail.setEmployeeCode(dtoUser.getEmployeeCode());
 			repositoryUserDetail.saveAndFlush(userDetail);
 
-			/*List<UserCompanyRelation> userCompaniesList = repositoryUserCompanies
-					.findByUserUserIdAndIsDeleted(user.getUserId(), false);
-			if (userCompaniesList != null) {
-				for (UserCompanyRelation userCompanies2 : userCompaniesList) {
-					userCompanies2.setIsDeleted(true);
-					userCompanies2.setUpdatedBy(loggedInUserId);
-					repositoryUserCompanies.save(userCompanies2);
-				}
-			}*/
-
-			/*if (dtoUser.getCompanyIds() != null && !dtoUser.getCompanyIds().isEmpty()) {
-				 repositoryUserCompanies.deleteUserCompanyRelation(dtoUser.getCompanyIds(),user.getUserId());
-				for (Integer companyId : dtoUser.getCompanyIds()) {
-					Company company=repositoryCompany.findByCompanyIdAndIsDeleted(companyId, false);
-					if (company!= null) {
-						UserCompanyRelation userCompany = repositoryUserCompanies
-								.findByCompanyCompanyIdAndUserUserIdAndIsDeleted(companyId, user.getUserId(), false);
-						if (userCompany == null) {
-							userCompany = new UserCompanyRelation();
-							userCompany.setCompany(repositoryCompany.findByCompanyIdAndIsDeleted(companyId, false));
-							userCompany.setUser(user);
-							userCompany.setCreatedBy(loggedInUserId);
-							userCompany.setIsDeleted(false);
-						} else {
-							userCompany.setUpdatedBy(loggedInUserId);
-						}
-						userCompany.setUserGroup(repositoryUserGroup
-								.findByUserGroupIdAndIsDeleted(Integer.parseInt(dtoUser.getUserGroupId()), false));
-						userCompany.setIsDeleted(false);
-						repositoryUserCompanies.save(userCompany);
-					}
-				}
-			}
-			 */
-			/*repositoryUserMacAddress.deleteUserMacAddressByUserId(true, user.getUserId(), loggedInUserId);
-			UserMacAddress userMacAddress=null;
-			List<String> macAddressList = dtoUser.getMacAddressList();
-			if(macAddressList!=null && !macAddressList.isEmpty())
-			{
-				for (String macAddress : macAddressList) 
-				{
-					userMacAddress = repositoryUserMacAddress.findByMacAddressAndUserUserId(macAddress, user.getUserId());
-					if(userMacAddress==null){
-						userMacAddress= new UserMacAddress();
-					}
-					userMacAddress.setMacAddress(macAddress);
-					userMacAddress.setUser(user);
-					userMacAddress.setIsActive(true);
-					userMacAddress.setIsDeleted(false);
-					userMacAddress.setCreatedBy(loggedInUserId);
-					repositoryUserMacAddress.save(userMacAddress);
-				}
-			}*/
 			if(newUser){
 				serviceEmailHandler.sendWelcomeEmail(user.getEmail(), randomPasssword, user.getUsername());
 			}
