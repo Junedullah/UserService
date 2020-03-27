@@ -40,9 +40,9 @@ public class Grid extends BaseEntity implements Serializable {
 	@Column(name = "grid_id")
 	private Integer gridId;
 
-//	@ManyToOne
-//	@JoinColumn(name = "screen_id")
-//	private Screen screen;
+	@ManyToOne
+	@JoinColumn(name = "screen_id")
+	private Screen screen;
 
 	@ManyToOne
 	@JoinColumn(name = "module_id")
@@ -73,14 +73,14 @@ public class Grid extends BaseEntity implements Serializable {
 		this.module = module;
 	}
 
-//	public Screen getScreen() {
-//		return screen;
-//	}
-//
-//	public void setScreen(Screen screen) {
-//		this.screen = screen;
-//	}
+	public Screen getScreen() {
+		return screen;
+	}
 
-	
+	public void setScreen(Screen screen) {
+		this.screen = screen;
+	}
+
+	  
 
 }
