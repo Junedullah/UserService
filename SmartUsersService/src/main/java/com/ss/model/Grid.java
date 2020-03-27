@@ -81,6 +81,6 @@ public class Grid extends BaseEntity implements Serializable {
 		this.screen = screen;
 	}
 
-	 
+	  
 
 }
