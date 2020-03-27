@@ -93,7 +93,7 @@ public class DtoGrid {
 	public void setMessageType(String messageType) {
 		this.messageType = messageType;
 	}
-
+ 
 
 
 	
