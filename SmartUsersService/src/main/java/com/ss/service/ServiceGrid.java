@@ -60,7 +60,7 @@ public class ServiceGrid {
 	@Autowired(required = false)
 	HttpServletRequest httpServletRequest;
 	
-
+	
 	
 	@Autowired
 	ServiceResponse serviceResponse;
@@ -98,96 +98,95 @@ public class ServiceGrid {
          }
 		grid.setGridId(dtoGrid.getGridId());
 	    grid.setModule(repositoryModule.findOne(dtoGrid.getModuleId()));
-	  //  grid.setScreen(repositoryScreen.findOne(dtoGrid.getScreenId()));
+	   
+	   grid.setScreen(repositoryScreen.findOne(dtoGrid.getScreenId()));
 
 		grid = repositoryGrid.saveAndFlush(grid);
 
 		return dtoGrid;
 	}
 
-//	public DtoSearch getAllModule(DtoModule dtoModule) {
-//		DtoSearch dtoSearch = new DtoSearch();
-//		dtoSearch.setPageNumber(dtoModule.getPageNumber());
-//		dtoSearch.setPageSize(dtoModule.getPageSize());
-//		dtoSearch.setTotalCount(repositoryModule.getCountOfTotalModule());
-//		List<Module> moduleList = null;
-//		if (dtoModule.getPageNumber() != null && dtoModule.getPageSize() != null) {
-//			Pageable pageable = new PageRequest(dtoModule.getPageNumber(), dtoModule.getPageSize(), Direction.DESC, "createdDate");
-//			moduleList = repositoryModule.findByIsDeleted(false, pageable);
-//		} else {
-//			moduleList = repositoryModule.findByIsDeletedOrderByCreatedDateDesc(false);
-//		}
-//		
-//		List<DtoModule> dtoModules=new ArrayList<>();
-//		if(moduleList!=null && !moduleList.isEmpty())
-//		{
-//			for (Module module : moduleList) 
-//			{
-//			 dtoModule=new DtoModule();
-//			 dtoModule.setModuleId(module.getModuleId());
-//			 dtoModule.setName(module.getName());
-//			 dtoModule.setModuleCode(module.getModuleCode());
-//			 dtoModule.setDescription(module.getDescription());
-//			 dtoModule.setHelpMessage(module.getHelpMessage());
-//			 dtoModule.setIsActive(module.getIsActive());
-//				dtoModule.setLanguageId(module.getLanguage().getLanguageId()); 
-//				 
-//				dtoModules.add(dtoModule);
-//			}
-//			dtoSearch.setRecords(dtoModules);
-//		}
-//		return dtoSearch;
-//	}
-//	public List<Integer> delete(List<Integer> ids) {
-//
-//		int loggedInUserId = Integer.parseInt(httpServletRequest.getHeader("userid"));
-//		try {
-//			for (Iterator<Integer> idIterator = ids.iterator(); idIterator.hasNext();) {
-//				Integer moduleId = idIterator.next();
-//				List<Module> modulesList = repositoryModule.findBymoduleIdAndIsDeleted(ids);
-//				if(modulesList.size() == 0){
-//					return ids;
-//				}else{
-//					repositoryModule.deleteSingleModulse(true, loggedInUserId, moduleId);
-//					idIterator.remove();
-//				}
-//			}
-//		} catch (Exception e) {
-//			log.error("Error while deleting Account", e);
-//		}
-//		return ids;
-//	}
-//
-//
-//public DtoModule getById(int moduleId) {
-//	DtoModule dtoModule  = new DtoModule();
-//	try {
-//		if (moduleId > 0) {
-//			Module module = repositoryModule.findByAndIsDeleted(moduleId);
-//
-//			if (module != null) {
-//				dtoModule = new DtoModule();
-//				dtoModule.setModuleId(module.getModuleId());
-//				dtoModule.setLanguageId(module.getLanguage().getLanguageId());
-//				dtoModule.setDescription(module.getDescription());
-//				dtoModule.setHelpMessage(module.getHelpMessage());
-//				dtoModule.setModuleCode(module.getModuleCode());
-//				dtoModule.setName(module.getName());
-//				dtoModule.setIsActive(module.getIsActive());
-//				
-//
-//			} 
-//		} else {
-//			dtoModule.setMessageType("INVALID_ID");
-//
-//		}
-//
-//	} catch (Exception e) {
-//		log.error(e);
-//	}
-//	return dtoModule;
-//}
-//
-//
-//	
+	public DtoSearch getAllGrid(DtoGrid dtoGrid) {
+		DtoSearch dtoSearch = new DtoSearch();
+		dtoSearch.setPageNumber(dtoGrid.getPageNumber());
+		dtoSearch.setPageSize(dtoGrid.getPageSize());
+		dtoSearch.setTotalCount(repositoryGrid.getCountOfTotalGrid());
+		List<Grid> gridList = null;
+		if (dtoGrid.getPageNumber() != null && dtoGrid.getPageSize() != null) {
+			Pageable pageable = new PageRequest(dtoGrid.getPageNumber(), dtoGrid.getPageSize(), Direction.DESC, "createdDate");
+			gridList = repositoryGrid.findByIsDeleted(false, pageable);
+		} else {
+			gridList = repositoryGrid.findByIsDeletedOrderByCreatedDateDesc(false);
+		}
+		
+		List<DtoGrid> dtoGrids=new ArrayList<>();
+		if(gridList!=null && !gridList.isEmpty())
+		{
+			for (Grid grid : gridList) 
+			{
+			 dtoGrid=new DtoGrid();
+			 dtoGrid.setId(grid.getId());
+			 dtoGrid.setGridId(grid.getGridId());
+		 dtoGrid.setScreenId(grid.getScreen().getScreenId());
+			 dtoGrid.setModuleId(grid.getModule().getModuleId());
+			
+				dtoGrids.add(dtoGrid);
+			}
+			dtoSearch.setRecords(dtoGrids);
+		}
+		return dtoSearch;
+	}
+	
+	public List<Integer> delete(List<Integer> ids) {
+
+		int loggedInUserId = Integer.parseInt(httpServletRequest.getHeader("userid"));
+		try {
+			for (Iterator<Integer> idIterator = ids.iterator(); idIterator.hasNext();) {
+				Integer gridId = idIterator.next();
+				List<Grid> gridsList = repositoryGrid.findBygridIdAndIsDeleted(ids);
+				if(gridsList.size() == 0){
+					return ids;
+				}else{
+					repositoryGrid.deleteSingleGrids(true, loggedInUserId, gridId);
+					idIterator.remove();
+				}
+			}
+		} catch (Exception e) {
+			log.error("Error while deleting Account", e);
+		}
+		return ids;
+	}
+
+
+public DtoGrid getById(int id) {
+	DtoGrid dtoGrid  = new DtoGrid();
+	try {
+		if (id > 0) {
+			Grid grid = repositoryGrid.findByAndIsDeleted(id);
+
+			if (grid != null) {
+				dtoGrid = new DtoGrid();
+				dtoGrid.setId(grid.getId());
+				
+				dtoGrid.setGridId(grid.getGridId());
+				
+				dtoGrid.setModuleId(grid.getModule().getModuleId());
+				
+			dtoGrid.setScreenId(grid.getScreen().getScreenId());
+				
+
+			} 
+		} else {
+			dtoGrid.setMessageType("INVALID_ID");
+
+		}
+
+	} catch (Exception e) {
+		log.error(e);
+	}
+	return dtoGrid;
+}
+
+
+	
 }
