@@ -22,6 +22,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ss.model.Field;
+import com.ss.model.Grid;
 
 
 
@@ -78,4 +79,23 @@ public interface RepositoryFields extends JpaRepository<Field, Integer> {
 	
 	@Query("select f from Field f where f.grid.id =:gridId and f.isDeleted = false and f.fieldId NOT IN (select g.fieldId.fieldId from GridData g where g.isReset = false and g.createdBy =:userId)")
 	List<Field> findByGridIdAndNotInGridData(@Param("gridId") Integer gridId, @Param("userId") Integer userId);
+
+
+	 @Query("select f from Field f where f.isDeleted = false and f.fieldId =:fieldId")
+	    public Field findByIdAndIsDeleted(@Param("fieldId")Integer fieldId);
+
+
+	 @Query("select f from Field f where f.fieldId=:fieldId and f.isDeleted=false")
+	    public List<Field> findBygridIdAndIsDeleted(@Param("fieldId") List<Integer> fieldId);
+
+	  Field findOne(Integer planId);
+	    @Modifying(clearAutomatically = true)
+	    @Transactional
+	    @Query("update Field f set f.isDeleted =:deleted ,f.updatedBy =:updateById where f.fieldId =:fieldId ")
+	    public void deleteSingleFields(@Param("deleted") Boolean deleted, @Param("updateById") Integer updateById,
+	                                    @Param("fieldId") Integer fieldId);
+
+	    @Query("select f from Field f where (f.isDeleted = false or  f.isDeleted = null) and fieldId =:fieldId")
+	    public	Field findByAndIsDeleted(@Param("fieldId")int fieldId);
+	    
 }
