@@ -46,6 +46,13 @@ public class DtoFieldDetail {
 	private Integer colOrder;
 	private String gridFieldName;
 	private Integer fieldWidth;
+	private String fieldShort;
+	private String fieldCode;
+	private Integer screenId;
+	private String messageType;
+
+
+
 
 	public DtoFieldDetail() {
 
@@ -326,5 +333,40 @@ public class DtoFieldDetail {
 	public void setFieldWidth(Integer fieldWidth) {
 		this.fieldWidth = fieldWidth;
 	}
+
+	public String getFieldShort() {
+		return fieldShort;
+	}
+
+	public void setFieldShort(String fieldShort) {
+		this.fieldShort = fieldShort;
+	}
+
+	public String getFieldCode() {
+		return fieldCode;
+	}
+
+	public void setFieldCode(String fieldCode) {
+		this.fieldCode = fieldCode;
+	}
+
+	public Integer getScreenId() {
+		return screenId;
+	}
+
+	public void setScreenId(Integer screenId) {
+		this.screenId = screenId;
+	}
+
+	public String getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+	
+	
+	
 
 }
