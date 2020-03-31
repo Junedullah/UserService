@@ -28,33 +28,34 @@ public interface RepositoryGrid extends JpaRepository<Grid, Integer> {
 
 	@Query("select g from Grid g where g.gridId =:gridId and g.isDeleted=false")
 	public List<Grid> findByGridIdAndIsDeleted(@Param("gridId") Integer gridId);
-	
+
 	public List<Grid> findByIsDeleted(Boolean deleted, Pageable pageable);
-	
+
 	@Query("select count(*) from Grid g where g.isDeleted=false")
 	public Integer getCountOfTotalGrid();
-	
-	
-	
-	 @Query("select g from Grid g where g.isDeleted = false and g.id =:id")
-	    public Grid findByIdAndIsDeleted(@Param("id")Integer id);
+
+
+
+	@Query("select g from Grid g where g.isDeleted = false and g.id =:id")
+	public Grid findByIdAndIsDeleted(@Param("id")Integer id);
 
 	public List<Grid> findByIsDeletedOrderByCreatedDateDesc(boolean b);
-	
-	 @Query("select g from Grid g where g.gridId=:gridId and g.isDeleted=false")
-	    public List<Grid> findBygridIdAndIsDeleted(@Param("gridId") List<Integer> gridId);
-	 
-	    Grid findOne(Integer planId);
-	    @Modifying(clearAutomatically = true)
-	    @Transactional
-	    @Query("update Grid g set g.isDeleted =:deleted ,g.updatedBy =:updateById where g.gridId =:gridId ")
-	    public void deleteSingleGrids(@Param("deleted") Boolean deleted, @Param("updateById") Integer updateById,
-	                                    @Param("gridId") Integer gridId);
 
-	    @Query("select g from Grid g where (g.isDeleted = false or  g.isDeleted = null) and id =:id")
-	    public	Grid findByAndIsDeleted(@Param("id")int id);
-	    
-	 
+	@Query("select g from Grid g where g.gridId=:gridId and g.isDeleted=false")
+	public List<Grid> findBygridIdAndIsDeleted(@Param("gridId") List<Integer> gridId);
 
-	 
+	Grid findOne(Integer planId);
+	@Modifying(clearAutomatically = true)
+	@Transactional
+	@Query("update Grid g set g.isDeleted =:deleted ,g.updatedBy =:updateById where g.gridId =:gridId ")
+	public void deleteSingleGrids(@Param("deleted") Boolean deleted, @Param("updateById") Integer updateById,
+			@Param("gridId") Integer gridId);
+
+	@Query("select g from Grid g where (g.isDeleted = false or  g.isDeleted = null) and id =:id")
+	public	Grid findByAndIsDeleted(@Param("id")int id);
+
+	@Query("select g from Grid g where g.screen.screenId =:screenId and g.module.moduleId =:moduleId and g.isDeleted=false")
+	public List<Grid> findByScreenIdAndModuleId(@Param("screenId") Integer screenId, @Param("moduleId") Integer moduleId);
+
+
 }

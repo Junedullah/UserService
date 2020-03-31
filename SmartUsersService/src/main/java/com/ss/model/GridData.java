@@ -4,7 +4,7 @@
  * Name of Project: SmartSoftware
  * Created on: March 20, 2020
  * Modified on: March 20, 2020 11:19:38 AM
- * @author Juned
+ * @author Shahnawaz
  * Version: 
  */
 package com.ss.model;
@@ -39,19 +39,19 @@ public class GridData extends BaseEntity implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "screen_id")
-	private Screen screenId;
+	private Screen screen;
 
 	@ManyToOne
 	@JoinColumn(name = "module_id")
-	private Module moduleId;
+	private Module module;
 
 	@ManyToOne
 	@JoinColumn(name = "field_id")
-	private Field fieldId;
+	private Field field;
 
 	@ManyToOne
 	@JoinColumn(name = "grid_id")
-	private Grid gridId;
+	private Grid grid;
 
 	@Column(name = "col_order")
 	private Integer colOrder;
@@ -68,36 +68,36 @@ public class GridData extends BaseEntity implements Serializable {
 		this.gridDataId = gridDataId;
 	}
 
-	public Screen getScreenId() {
-		return screenId;
+	public Screen getScreen() {
+		return screen;
 	}
 
-	public void setScreenId(Screen screenId) {
-		this.screenId = screenId;
+	public void setScreen(Screen screen) {
+		this.screen = screen;
 	}
 
-	public Module getModuleId() {
-		return moduleId;
+	public Module getModule() {
+		return module;
 	}
 
-	public void setModuleId(Module moduleId) {
-		this.moduleId = moduleId;
+	public void setModule(Module module) {
+		this.module = module;
 	}
 
-	public Field getFieldId() {
-		return fieldId;
+	public Field getField() {
+		return field;
 	}
 
-	public void setFieldId(Field fieldId) {
-		this.fieldId = fieldId;
+	public void setField(Field field) {
+		this.field = field;
 	}
 
-	public Grid getGridId() {
-		return gridId;
+	public Grid getGrid() {
+		return grid;
 	}
 
-	public void setGridId(Grid gridId) {
-		this.gridId = gridId;
+	public void setGrid(Grid grid) {
+		this.grid = grid;
 	}
 
 	public Integer getColOrder() {
@@ -124,4 +124,5 @@ public class GridData extends BaseEntity implements Serializable {
 		this.isReset = isReset;
 	}
 
+	
 }

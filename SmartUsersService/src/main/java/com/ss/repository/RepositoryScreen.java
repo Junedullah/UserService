@@ -40,7 +40,8 @@ public interface RepositoryScreen extends JpaRepository<Screen, Integer> {
 	 * @param moduleId
 	 * @return
 	 */
-	Screen findByScreenCodeAndIsDeletedAndModuleModuleId(String screenCode, boolean delted, int moduleId);
+	@Query("select s from Screen s where s.screenCode =:screenCode and s.isDeleted =:delete and s.module.moduleId =:moduleId")
+	Screen findByScreenCodeAndIsDeletedAndModuleModuleId(@Param("screenCode")String screenCode,@Param("delete") boolean delted,@Param("moduleId") int moduleId);
 
 	/**
 	 * @param isDelted

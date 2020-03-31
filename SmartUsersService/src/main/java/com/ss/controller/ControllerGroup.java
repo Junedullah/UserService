@@ -29,7 +29,7 @@ import com.ss.service.ServiceResponse;
 import com.ss.service.ServiceUserGroup;
 */
 /**
- * Description: ControllerUser
+ * Description: ControllerGroup
  * Name of Project: SmartSoftware
  * Created on: MARCH 23, 2020
  * @author Tehmina Ali

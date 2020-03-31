@@ -77,7 +77,7 @@ public interface RepositoryFields extends JpaRepository<Field, Integer> {
 			+ "(select field_id from field_company where field_company.company_id=:companyId) and is_deleted=:isDeleted and is_mandatory IS NOT NULL", nativeQuery = true)
 	List<Field> findByIsDeletedAndScreenScreenIdAndCompanyId(@Param("isDeleted") Boolean isDeleted, @Param("screenId") int screenId, @Param("companyId") int companyId);
 	
-	@Query("select f from Field f where f.grid.id =:gridId and f.isDeleted = false and f.fieldId NOT IN (select g.fieldId.fieldId from GridData g where g.isReset = false and g.createdBy =:userId)")
+	@Query("select f from Field f where f.grid.id =:gridId and f.isDeleted = false and f.fieldId NOT IN (select g.field.fieldId from GridData g where g.isReset = false and g.createdBy =:userId)")
 	List<Field> findByGridIdAndNotInGridData(@Param("gridId") Integer gridId, @Param("userId") Integer userId);
 
 
