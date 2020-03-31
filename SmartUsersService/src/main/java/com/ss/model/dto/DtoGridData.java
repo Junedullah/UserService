@@ -19,6 +19,8 @@ public class DtoGridData {
 	private Integer pageSize;
 	private Integer gridDataId;
 	private Integer screenId;
+	private List<DtoGrid> screen;
+
 	private Integer moduleId;
 	private Integer userId;
 	private Integer fieldId;
@@ -30,6 +32,9 @@ public class DtoGridData {
 	private List<GridData> visible;
 	private List<DtoGridData> columnList;
 	private List<DtoGrid> resetGrid;
+	private String messageType;
+
+	
 	private List<Integer> ids;
 
 	public Integer getPageNumber() {
@@ -159,5 +164,23 @@ public class DtoGridData {
 	public void setResetGrid(List<DtoGrid> resetGrid) {
 		this.resetGrid = resetGrid;
 	}
+
+	public List<DtoGrid> getScreen() {
+		return screen;
+	}
+
+	public void setScreen(List<DtoGrid> screen) {
+		this.screen = screen;
+	}
+
+	public String getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+	
+	
 
 }

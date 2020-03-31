@@ -47,6 +47,8 @@ public class Grid extends BaseEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "module_id")
 	private Module module;
+	
+	
 
 	public int getId() {
 		return id;
