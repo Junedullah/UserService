@@ -251,6 +251,16 @@ public class ServiceHome {
 		return dtoCountry;
 	}
 
+
+	public boolean updateActiveSession(DtoUser dtoUser){
+		UserSession userSession = repositoryUserSession.findByUserUserIdAndSessionAndIsDeleted(dtoUser.getUserId(), dtoUser.getSession(), false);
+		if(userSession!=null){
+			userSession.setUpdatedDate(new Date());
+			repositoryUserSession.saveAndFlush(userSession);
+			return true;
+		}
+		return false;
+
 	/**
 	 * Description: reset password for user by super admin
 	 * @param user
@@ -312,5 +322,6 @@ public class ServiceHome {
 		}
 
 		return status;
+
 	}
 }

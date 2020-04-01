@@ -204,6 +204,7 @@ public class ControllerHome {
 		return responseMessage;
 	}
 
+
 	/**
 	 * @description : Reset Password
 	 * @param dtoUser
@@ -890,6 +891,7 @@ public class ControllerHome {
 	{
 		ResponseMessage responseMessage = null;
 			Boolean response = this.serviceHome.updateActiveSession(dtoUser);
+
 		if (response) {
 			responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
 					this.serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_UPDATED_SUCCESS, false));
@@ -899,6 +901,7 @@ public class ControllerHome {
 		}
 		return responseMessage;
 	}
+
 	
 	@RequestMapping(value = "/importUserMasterDataForUpdateLanguage",consumes = { "multipart/mixed", "multipart/form-data" }, method = RequestMethod.POST)
 	public @ResponseBody ResponseMessage importMasterDataForUpdateLanguage(
@@ -1011,5 +1014,6 @@ public class ControllerHome {
 		}
 		return responseMessage;
 	}*/
+
 
 }
