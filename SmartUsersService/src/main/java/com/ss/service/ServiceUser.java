@@ -1282,12 +1282,18 @@ public class ServiceUser {
 		for (Integer userId : dtoUser.getUserIds()) {
 			User user = repositoryUser.findByUserId(userId);
 			if(user!=null){
-				//user.setIpChecked(dtoUser.getIpChecked());
+				user.setIpChecked(dtoUser.getIpChecked());
 				repositoryUser.saveAndFlush(user);
 			}
 		}
 		result=true;
 		return result;
+	}
+
+
+
+	public User getUserDetailByUserName(String userName) {
+		return this.repositoryUser.findByusernameAndIsDeleted(userName, false);
 	}
 
 

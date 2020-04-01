@@ -12,6 +12,7 @@ package com.ss.model.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ss.model.Language;
 import com.ss.model.Module;
 import com.ss.util.UtilRandomKey;
 
@@ -44,6 +45,24 @@ public class DtoModule {
 	private String helpMessage;
 
 	private String messageType;
+	
+	private String description;
+	
+	private Boolean isActive;
+	
+	private String name;
+	
+	private int languageId;
+	
+	private Language language;
+	
+	private Integer pageNumber;
+	private Integer pageSize;
+	
+	private List<Integer> ids;
+	private List<DtoModule> delete;
+
+
 	
 	public DtoModule() {
 
@@ -240,4 +259,78 @@ public class DtoModule {
 		this.dtoGridDetail = dtoGridDetail;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public int getLanguageId() {
+		return languageId;
+	}
+
+	public void setLanguageId(int languageId) {
+		this.languageId = languageId;
+	}
+
+	public Language getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
+
+	public Integer getPageNumber() {
+		return pageNumber;
+	}
+
+	public void setPageNumber(Integer pageNumber) {
+		this.pageNumber = pageNumber;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public List<Integer> getIds() {
+		return ids;
+	}
+
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
+
+	public List<DtoModule> getDelete() {
+		return delete;
+	}
+
+	public void setDelete(List<DtoModule> delete) {
+		this.delete = delete;
+	}
+	
+
+	
 }

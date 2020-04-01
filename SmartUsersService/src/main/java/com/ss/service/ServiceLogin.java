@@ -151,7 +151,7 @@ public class ServiceLogin {
 							{
 								if(screen.getSideMenu()!=null){
 									dtoModule.setModuleName(screen.getSideMenu());
-								}
+						 		}
 								else
 								{
 									dtoModule.setModuleName(screen.getScreenName());
@@ -605,8 +605,7 @@ public class ServiceLogin {
 									}
 								}
 
-								List<Grid> gridList = repositoryGrid.findByScreenIdAndModuleId(screen.getScreenId(),
-										module.getModuleId());
+								List<Grid> gridList =repositoryGrid.findByScreenIdAndModuleId(screen.getScreenId(),module.getModuleId());
 								List<GridData> gridDataList = null;
 
 								if (gridList != null) {
@@ -617,7 +616,7 @@ public class ServiceLogin {
 										if (gridDataList != null) {
 											for (GridData gridData : gridDataList) {
 
-												Field field = gridData.getFieldId();
+												Field field = gridData.getField();
 
 												dtoFieldDetail = new DtoFieldDetail(field, langId);
 												dtoFieldDetail.setReadAccess(true);

@@ -147,5 +147,11 @@ public class MessageLabel {
 	public static final String FIELD_CUSTOMIZATION_DELETE_ERROR = "FIELD_CUSTOMIZATION_DELETE_ERROR";
 	public static final String FIELD_CUSTOMIZATION_GET_SUCCESS = "FIELD_CUSTOMIZATION_GET_SUCCESS";
 	public static final String FIELD_CUSTOMIZATION_GET_ERROR = "FIELD_CUSTOMIZATION_GET_ERROR";
+	public static final String MODULE_CREATED = "MODULE_CREATED";
+	public static final String MODULE_NOT_CREATED = "MODULE_NOT_CREATED";
+	public static final String MODULE_GET_ALL = "MODULE_GET_ALL";
+	public static final String MODULE_LIST_NOT_GETTING = "MODULE_LIST_NOT_GETTING";
+	public static final String MODULE_GET_BY_ID = "MODULE_GET_BY_ID";
+	
 
 }

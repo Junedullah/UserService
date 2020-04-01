@@ -4,7 +4,7 @@ public class Constant {
 	private Constant() {
 	}
 	public static final String USER_ID = "userid";
-	public static final String LANG_ID = "langId";
+	public static final String LANG_ID = "langid";
 	public static final String SESSION = "session";
 	public static final String TENANT_ID = "tenantid";
 	public static final String CONTENT_TYPE = "Content-Type";
