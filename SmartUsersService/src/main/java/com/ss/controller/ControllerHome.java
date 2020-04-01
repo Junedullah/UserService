@@ -204,5 +204,19 @@ public class ControllerHome {
 		return responseMessage;
 	}
 
+	@RequestMapping(value = "/updateActiveSession", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = "Accept=application/json")
+	public ResponseMessage updateActiveSessiong(HttpServletRequest request,@RequestBody DtoUser dtoUser)
+	{
+		ResponseMessage responseMessage = null;
+		Boolean response = this.serviceHome.updateActiveSession(dtoUser);
+		if (response) {
+			responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+					this.serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_UPDATED_SUCCESS, false));
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+		}
+		return responseMessage;
+	}
 
 }

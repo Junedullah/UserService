@@ -14,6 +14,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.ss.constant.SmartCodeType;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -679,7 +680,6 @@ public class ServiceUser {
 		User user = null;
 		UserDetail userDetail = null;
 
-
 		//String strDate = dateFormat.format(date);
 		try {
 
@@ -696,7 +696,7 @@ public class ServiceUser {
 				//user.setIpChecked(true);
 				user.setCreatedBy(loggedInUserId);
 				user.setRole(repositoryRole.findByRoleId(SmartRoles.USER.getIndex()));
-				//user.setEmployeeCode(codeGenerator.getGeneratedCode(SmartCodeType.EMPLOYEECODE.name()));
+				user.setEmployeeCode(codeGenerator.getGeneratedCode(SmartCodeType.EMPLOYEECODE.name()));
 				user.setPassword(passwordEncoder.encode(randomPasssword));
 				user = repositoryUser.saveAndFlush(user);
 				userDetail = new UserDetail();

@@ -254,4 +254,13 @@ public class ServiceHome {
 		return dtoCountry;
 	}
 
+	public boolean updateActiveSession(DtoUser dtoUser){
+		UserSession userSession = repositoryUserSession.findByUserUserIdAndSessionAndIsDeleted(dtoUser.getUserId(), dtoUser.getSession(), false);
+		if(userSession!=null){
+			userSession.setUpdatedDate(new Date());
+			repositoryUserSession.saveAndFlush(userSession);
+			return true;
+		}
+		return false;
 	}
+}
