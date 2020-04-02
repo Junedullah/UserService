@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,8 +19,12 @@ import com.ss.config.ResponseMessage;
 import com.ss.constant.MessageLabel;
 import com.ss.model.UserSession;
 import com.ss.model.dto.DtoGrid;
+import com.ss.model.dto.DtoGridData;
 import com.ss.model.dto.DtoSearch;
+import com.ss.repository.RepositoryGrid;
+import com.ss.repository.RepositoryGridData;
 import com.ss.service.ServiceGrid;
+import com.ss.service.ServiceGridData;
 import com.ss.service.ServiceResponse;
 
 /**SmartSoftware User - Service */
@@ -34,6 +39,9 @@ import com.ss.service.ServiceResponse;
 @RestController
 @RequestMapping("/grid")
 public class ControllerGrid {
+	
+	private static final Logger logger = Logger.getLogger(ControllerField.class);
+
 
 	@Autowired
 	ServiceGrid serviceGrid;
@@ -44,11 +52,24 @@ public class ControllerGrid {
 	@Autowired
 	ServiceResponse serviceResponse;
 
+	@Autowired
+	ServiceGridData serviceGridData;
+	
+	@Autowired
+	RepositoryGridData repositoryGridData;
+	
+	
+	@Autowired
+	RepositoryGrid repositoryGrid;
+	
+	
+	
+	
 	
 	/**
 	 * @description : Create Grid
 	 * @param request
-	 * @param dtomodule
+	 * @param dtGrid
 	 * @return
 	 */
 	@RequestMapping(value = "/createGrid", method = RequestMethod.POST)
@@ -143,6 +164,10 @@ public class ControllerGrid {
 		}
 		return responseMessage;
 	}
+	
+	
+	
+
 
 
 		}  

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,9 @@ import com.ss.service.ServiceResponse;
 @RestController
 @RequestMapping("/gridData")
 public class ControllerGridData {
+	
+	private static final Logger logger = Logger.getLogger(ControllerField.class);
+
 
 	@Autowired
 	ServiceGridData serviceGridData;
@@ -146,5 +150,112 @@ public class ControllerGridData {
 		return responseMessage;
 	}
 
+	
+	@RequestMapping(value = "/changeColumnVisibleStatus", method = RequestMethod.PUT)
+	public ResponseMessage changeColumnVisibleStatus(HttpServletRequest request, @RequestBody DtoGridData dtoGridData)
+			throws Exception {
+
+		logger.info("Change column visible status method called!!");
+		ResponseMessage responseMessage = null;
+		UserSession session = sessionManager.validateUserSessionId(request);
+
+		if (session != null) {
+			DtoGridData dtoSearch = serviceGridData.changeVisible(dtoGridData);
+			if (dtoSearch != null) {
+				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
+						serviceResponse.getMessageByShortAndIsDeleted("GRID_DATA_UPDATED_SUCCESSFULLY", false),
+						dtoSearch);
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+						serviceResponse.getMessageByShortAndIsDeleted("GRID_DATA_NOT_UPDATED", false), dtoSearch);
+			}
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+					serviceResponse.getMessageByShortAndIsDeleted("SESSION_EXPIRED", false));
+		}
+		logger.debug("Change visible status:" + responseMessage.getMessage());
+		return responseMessage;
+	}
+	@RequestMapping(value = "/hideAllColumns", method = RequestMethod.PUT)
+	public ResponseMessage hideAllColumns(HttpServletRequest request, @RequestBody DtoGridData dtoGridData)
+			throws Exception {
+
+		logger.info("Hide All Columns method Called!!");
+		ResponseMessage responseMessage = null;
+		UserSession session = sessionManager.validateUserSessionId(request);
+
+		if (session != null) {
+			DtoGridData dtoGridDataService = serviceGridData.hideAllColumns(dtoGridData.getGridId());
+			if (dtoGridDataService != null) {
+				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
+						serviceResponse.getMessageByShortAndIsDeleted("GRID_DATA_UPDATED_SUCCESSFULLY", false),
+						dtoGridDataService);
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+						serviceResponse.getMessageByShortAndIsDeleted("GRID_DATA_NOT_UPDATED", false),
+						dtoGridDataService);
+			}
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+					serviceResponse.getMessageByShortAndIsDeleted("SESSION_EXPIRED", false));
+		}
+		logger.debug("Hide All Columns:" + responseMessage.getMessage());
+		return responseMessage;
+	}
+
+
+	@RequestMapping(value = "/showAllColumns", method = RequestMethod.PUT)
+	public ResponseMessage showAllColumns(HttpServletRequest request, @RequestBody DtoGridData dtoGridData)
+			throws Exception {
+
+		logger.info("Hide All Columns method Called!!");
+		ResponseMessage responseMessage = null;
+		UserSession session = sessionManager.validateUserSessionId(request);
+
+		if (session != null) {
+			DtoGridData dtoGridDataService = serviceGridData.showAllColumns(dtoGridData.getGridId());
+			if (dtoGridDataService != null) {
+				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
+						serviceResponse.getMessageByShortAndIsDeleted("GRID_DATA_UPDATED_SUCCESSFULLY", false),
+						dtoGridDataService);
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+						serviceResponse.getMessageByShortAndIsDeleted("GRID_DATA_NOT_UPDATED", false),
+						dtoGridDataService);
+			}
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+					serviceResponse.getMessageByShortAndIsDeleted("SESSION_EXPIRED", false));
+		}
+		logger.debug("Hide All Columns:" + responseMessage.getMessage());
+		return responseMessage;
+	}
+
+	@RequestMapping(value = "/resetGrid", method = RequestMethod.PUT)
+	public ResponseMessage resetGrid(HttpServletRequest request, @RequestBody DtoGridData dtoGridData)
+			throws Exception {
+
+		logger.info("Reset Grid Method Called!!");
+		ResponseMessage responseMessage = null;
+		UserSession session = sessionManager.validateUserSessionId(request);
+
+		if (session != null) {
+			DtoGridData dtoGridDataService = serviceGridData.resetGrid(dtoGridData.getGridId());
+			if (dtoGridDataService != null) {
+				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
+						serviceResponse.getMessageByShortAndIsDeleted("GRID_DATA_UPDATED_SUCCESSFULLY", false),
+						dtoGridDataService);
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+						serviceResponse.getMessageByShortAndIsDeleted("GRID_DATA_NOT_UPDATED", false),
+						dtoGridDataService);
+			}
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+					serviceResponse.getMessageByShortAndIsDeleted("SESSION_EXPIRED", false));
+		}
+		logger.debug("Reset Grid:" + responseMessage.getMessage());
+		return responseMessage;
+	}
 
 		}  
