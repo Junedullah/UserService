@@ -20,7 +20,6 @@ public class DtoGridData {
 	private Integer gridDataId;
 	private Integer screenId;
 	private List<DtoGrid> screen;
-
 	private Integer moduleId;
 	private Integer userId;
 	private Integer fieldId;
