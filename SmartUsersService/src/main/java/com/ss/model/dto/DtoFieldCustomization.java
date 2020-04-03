@@ -4,7 +4,7 @@
  * Name of Project: SmartSoftware
  * Created on: March 20, 2020
  * Modified on: March 20, 2020 10:19:38 AM
- * @author Juned
+ * @author Shahnawaz
  * Version: 
  */
 package com.ss.model.dto;
@@ -15,6 +15,10 @@ public class DtoFieldCustomization {
 	private int userId;
 	private String code;
 	private String fieldsToShow;
+	private Integer pageNumber;
+	private Integer pageSize;
+	private String messageType;
+
 
 	public Integer getId() {
 		return id;
@@ -48,4 +52,33 @@ public class DtoFieldCustomization {
 		this.fieldsToShow = fieldsToShow;
 	}
 
+	public String getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+
+	public Integer getPageNumber() {
+		return pageNumber;
+	}
+
+	public void setPageNumber(Integer pageNumber) {
+		this.pageNumber = pageNumber;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	
 }
