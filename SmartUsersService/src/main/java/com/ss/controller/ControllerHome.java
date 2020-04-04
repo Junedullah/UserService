@@ -9,27 +9,37 @@
  */
 package com.ss.controller;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ss.config.ResponseMessage;
 import com.ss.constant.MessageLabel;
 import com.ss.model.AccessRole;
+import com.ss.model.Language;
 import com.ss.model.User;
+import com.ss.model.UserSession;
+import com.ss.model.dto.DtoCompany;
 import com.ss.model.dto.DtoCountry;
+import com.ss.model.dto.DtoLanguage;
 import com.ss.model.dto.DtoModule;
 import com.ss.model.dto.DtoScreenDetail;
+import com.ss.model.dto.DtoSearch;
 import com.ss.model.dto.DtoUser;
 import com.ss.repository.RepositoryAccessRole;
 import com.ss.repository.RepositoryException;
@@ -103,6 +113,7 @@ public class ControllerHome {
 	
 	@Autowired
 	RepositoryUserDraft repositoryUserDraft;
+	
 	/**
 	 * @description : It will return all the labels related to screen and module
 	 * @param dtoScreenDetail
@@ -390,146 +401,12 @@ public class ControllerHome {
 		return responseMessage;
 	}
 
-	
-	
-	
 	/**
-	 * @description : List Of Transaction Modules
-	 * @param dtoTransactionType
+	 * @description : It will return all the labels related to screen and module
+	 * @param dtoScreenDetail
 	 * @param request
 	 * @return
 	 */
-/*	@RequestMapping(value = "/listOfTransactionModules", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseMessage getListOfTransactionModules(@RequestBody DtoTransactionType dtoTransactionType,
-			HttpServletRequest request) {
-		LOGGER.info("Get List of Transaction Modules");
-		ResponseMessage responseMessage = null;
-		List<DtoModule> dtoScreenDetailList = serviceAccessRole.getAllAccessRolesTrasationList(dtoTransactionType);
-		if (dtoScreenDetailList != null) {
-			if (!dtoScreenDetailList.isEmpty()) {
-				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED, serviceResponse
-						.getMessageByShortAndIsDeleted(MessageLabel.TRANSACTION_LIST_OF_ROLE_ACCESS_GET_SUCCESS, false),
-						dtoScreenDetailList);
-			} else {
-				responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.TRANSACTION_LIST_OF_ROLE_ACCESS_NOT_FOUND,
-								false));
-			}
-		} else {
-			responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
-					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.BAD_REQUEST, false));
-		}
-		return responseMessage;
-	}
-
-	*//**
-	 * @description : List Of Report Modules
-	 * @param dtoReportCategory
-	 * @param request
-	 * @return
-	 *//*
-	@RequestMapping(value = "/listOfReportModules", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseMessage getListOfReportModules(@RequestBody DtoReportCategory dtoReportCategory,
-			HttpServletRequest request) {
-		LOGGER.info("Get List of report Modules");
-		ResponseMessage responseMessage = null;
-		List<DtoModule> dtoScreenDetailList = serviceAccessRole.getAllAccessRolesReportsList(dtoReportCategory);
-		if (dtoScreenDetailList != null) {
-			if (!dtoScreenDetailList.isEmpty()) {
-				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.REPORT_LIST_OF_ROLE_ACCESS_GET_SUCCESS, false),
-						dtoScreenDetailList);
-			} else {
-				responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.REPORT_LIST_OF_ROLE_ACCESS_NOT_FOUND, false));
-			}
-		} else {
-			responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
-					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.BAD_REQUEST, false));
-		}
-		return responseMessage;
-	}
-
-	*//**
-	 * @description : List Of Report Modules By Access Role
-	 * @param dtoReportCategory
-	 * @param request
-	 * @return
-	 *//*
-	@RequestMapping(value = "/listOfReportModulesByAccessRole", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseMessage getListOfReportModulesByAccessRole(@RequestBody DtoReportCategory dtoReportCategory,
-			HttpServletRequest request) {
-		LOGGER.info("Get List of Modules");
-		ResponseMessage responseMessage = null;
-		AccessRole accessRole = repositoryAccessRole.findByAccessRoleIdAndIsDeleted(dtoReportCategory.getAccessRoleId(),
-				false);
-		if (accessRole != null) {
-			List<DtoModule> dtoScreenDetailList = serviceAccessRole
-					.getAllAccessRolesReportsListByAccessRoleId(dtoReportCategory, accessRole);
-			if (dtoScreenDetailList != null) {
-				if (!dtoScreenDetailList.isEmpty()) {
-					responseMessage = new ResponseMessage(
-							HttpStatus.CREATED.value(), HttpStatus.CREATED, serviceResponse
-									.getMessageByShortAndIsDeleted(MessageLabel.REPORT_LIST_OF_ROLE_ACCESS_GET_SUCCESS, false),
-							dtoScreenDetailList);
-				} else {
-					responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
-							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.REPORT_LIST_OF_ROLE_ACCESS_NOT_FOUND,
-									false));
-				}
-			} else {
-				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.BAD_REQUEST, false));
-			}
-		} else {
-			responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
-					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.ACCESS_ROLE_NOT_FOUND, false));
-		}
-		return responseMessage;
-	}
-
-	*//**
-	 * @description : List Of Transaction Modules By Access Role
-	 * @param dtoTransactionType
-	 * @param request
-	 * @return
-	 *//*
-	@RequestMapping(value = "/listOfTransactionModulesByAccessRole", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseMessage getListOfTransactionModulesByAccessRole(@RequestBody DtoTransactionType dtoTransactionType,
-			HttpServletRequest request) {
-		LOGGER.info("Get List of Modules");
-		ResponseMessage responseMessage = null;
-		AccessRole accessRole = repositoryAccessRole
-				.findByAccessRoleIdAndIsDeleted(dtoTransactionType.getAccessRoleId(), false);
-		if (accessRole != null) {
-			List<DtoModule> dtoScreenDetailList = serviceAccessRole
-					.getAllAccessRolesTrasationListByAccessRoleId(dtoTransactionType, accessRole);
-			if (dtoScreenDetailList != null) {
-				if (!dtoScreenDetailList.isEmpty()) {
-					responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
-							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.TRANSACTION_LIST_OF_ROLE_ACCESS_GET_SUCCESS,
-									false),
-							dtoScreenDetailList);
-				} else {
-					responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
-							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.TRANSACTION_LIST_OF_ROLE_ACCESS_NOT_FOUND,
-									false));
-				}
-			} else {
-				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.BAD_REQUEST, false));
-			}
-		} else {
-			responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
-					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.ACCESS_ROLE_NOT_FOUND, false));
-		}
-		return responseMessage;
-	}
-	
 	@RequestMapping(value = "/getScreenDetailOfUser", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseMessage getScreenDetailOfUser(@RequestBody DtoScreenDetail dtoScreenDetail, HttpServletRequest request) {
@@ -564,30 +441,12 @@ public class ControllerHome {
 						"User session deleted successfully");
 		return responseMessage;
 	}
-	
-	@RequestMapping(value = "/getDueTypes", method = RequestMethod.GET)
-	@ResponseBody
-	public ResponseMessage getDueTypes(HttpServletRequest request) {
-		LOGGER.info("inside getDueTypes method");
-		ResponseMessage responseMessage = null;
-		List<DtoCountry> countryList = serviceHome.getCountryList();
-		responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
-				serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.GET_COUNTRY_LIST, false), countryList);
-		return responseMessage;
-	}
-	
-	@RequestMapping(value = "/deleteAllSession", method = RequestMethod.GET)
-	@ResponseBody
-	public ResponseMessage deleteAllSession(HttpServletRequest request) {
-		LOGGER.info("Get Country List");
-		ResponseMessage responseMessage = null;
-		
-		 repositoryUserSession.deleteAllInBatch();
-				responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-						"User session deleted successfully");
-		return responseMessage;
-	}
-	
+	/**
+	 * @description : It will return all the List Of Language
+	 * @param dtoSearch
+	 * @param request
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getLanguageList", method = RequestMethod.POST)
 	@ResponseBody
@@ -770,6 +629,57 @@ public class ControllerHome {
 		return responseMessage;
 	}
 	
+	/**
+	 * @description : It will return all the labels related to screen and module
+	 * @param dtoScreenDetail
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/screenGridDetail", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseMessage loginScreenGrid(@RequestBody DtoScreenDetail dtoScreenDetail, HttpServletRequest request) {
+		LOGGER.info("Get Screen Detail");
+		ResponseMessage responseMessage = null;
+		DtoModule dtoModule = serviceLogin.getScreenGridDetail(dtoScreenDetail);
+		if (dtoModule != null) {
+			if (dtoModule.getMessageType() == null) {
+				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
+						serviceResponse.getMessageByShortAndIsDeleted("SCREEN_DETAILS_SUCCESS", false), dtoModule);
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+						serviceResponse.getMessageByShortAndIsDeleted(dtoModule.getMessageType(), false));
+			}
+
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+					serviceResponse.getMessageByShortAndIsDeleted("DO_NOT_ACCESS_OF_SCREEN", false));
+		}
+		return responseMessage;
+	}
+	
+	/**
+	 * @description : List Of Modules
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/listOfModulesByLanguageAndIsActive", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseMessage getListOfModulesByLanguageAndIsActive(HttpServletRequest request) {
+		LOGGER.info("Get List of Modules");
+		ResponseMessage responseMessage = null;
+		List<DtoModule> dtoModuleList = serviceHome.getAllModuleByLanguageAndIsActive();
+		if (dtoModuleList != null && dtoModuleList.size() > 0) {
+			responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
+				serviceResponse.getMessageByShortAndIsDeleted("MODULE_DETAILS_SUCCESS", false), dtoModuleList);
+		
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+					serviceResponse.getMessageByShortAndIsDeleted("MODULE_DETAILS_FAIL", false));
+		}
+		return responseMessage;
+	}
+	
+
 	@RequestMapping(value = "/getCommononConstantList", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseMessage getCommononConstantList(HttpServletRequest request) 
@@ -848,6 +758,189 @@ public class ControllerHome {
 		return responseMessage;
 	}
 	
+	
+	@RequestMapping(value = "/updateActiveSession", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = "Accept=application/json")
+	public ResponseMessage updateActiveSessiong(HttpServletRequest request,@RequestBody DtoUser dtoUser) 
+	{
+		ResponseMessage responseMessage = null;
+			Boolean response = this.serviceHome.updateActiveSession(dtoUser);
+		if (response) {
+			responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+					this.serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_UPDATED_SUCCESS, false));
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+		}
+		return responseMessage;
+	}
+	
+	@RequestMapping(value = "/getDueTypes", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseMessage getDueTypes(HttpServletRequest request) {
+		LOGGER.info("inside getDueTypes method");
+		ResponseMessage responseMessage = null;
+		List<DtoCountry> countryList = serviceHome.getCountryList();
+		responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
+				serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.GET_COUNTRY_LIST, false), countryList);
+		return responseMessage;
+	}
+	
+	@RequestMapping(value = "/deleteAllSession", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseMessage deleteAllSession(HttpServletRequest request) {
+		LOGGER.info("Get Country List");
+		ResponseMessage responseMessage = null;
+		
+		 repositoryUserSession.deleteAllInBatch();
+				responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
+						"User session deleted successfully");
+		return responseMessage;
+	}
+	
+	
+	/**
+	 * @description : List Of Transaction Modules
+	 * @param dtoTransactionType
+	 * @param request
+	 * @return
+	 */
+/*	@RequestMapping(value = "/listOfTransactionModules", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseMessage getListOfTransactionModules(@RequestBody DtoTransactionType dtoTransactionType,
+			HttpServletRequest request) {
+		LOGGER.info("Get List of Transaction Modules");
+		ResponseMessage responseMessage = null;
+		List<DtoModule> dtoScreenDetailList = serviceAccessRole.getAllAccessRolesTrasationList(dtoTransactionType);
+		if (dtoScreenDetailList != null) {
+			if (!dtoScreenDetailList.isEmpty()) {
+				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED, serviceResponse
+						.getMessageByShortAndIsDeleted(MessageLabel.TRANSACTION_LIST_OF_ROLE_ACCESS_GET_SUCCESS, false),
+						dtoScreenDetailList);
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.TRANSACTION_LIST_OF_ROLE_ACCESS_NOT_FOUND,
+								false));
+			}
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.BAD_REQUEST, false));
+		}
+		return responseMessage;
+	}
+
+	*//**
+	 * @description : List Of Report Modules
+	 * @param dtoReportCategory
+	 * @param request
+	 * @return
+	 *//*
+	@RequestMapping(value = "/listOfReportModules", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseMessage getListOfReportModules(@RequestBody DtoReportCategory dtoReportCategory,
+			HttpServletRequest request) {
+		LOGGER.info("Get List of report Modules");
+		ResponseMessage responseMessage = null;
+		List<DtoModule> dtoScreenDetailList = serviceAccessRole.getAllAccessRolesReportsList(dtoReportCategory);
+		if (dtoScreenDetailList != null) {
+			if (!dtoScreenDetailList.isEmpty()) {
+				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.REPORT_LIST_OF_ROLE_ACCESS_GET_SUCCESS, false),
+						dtoScreenDetailList);
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.REPORT_LIST_OF_ROLE_ACCESS_NOT_FOUND, false));
+			}
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.BAD_REQUEST, false));
+		}
+		return responseMessage;
+	}
+
+	*//**
+	 * @description : List Of Report Modules By Access Role
+	 * @param dtoReportCategory
+	 * @param request
+	 * @return
+	 *//*
+	@RequestMapping(value = "/listOfReportModulesByAccessRole", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseMessage getListOfReportModulesByAccessRole(@RequestBody DtoReportCategory dtoReportCategory,
+			HttpServletRequest request) {
+		LOGGER.info("Get List of Modules");
+		ResponseMessage responseMessage = null;
+		AccessRole accessRole = repositoryAccessRole.findByAccessRoleIdAndIsDeleted(dtoReportCategory.getAccessRoleId(),
+				false);
+		if (accessRole != null) {
+			List<DtoModule> dtoScreenDetailList = serviceAccessRole
+					.getAllAccessRolesReportsListByAccessRoleId(dtoReportCategory, accessRole);
+			if (dtoScreenDetailList != null) {
+				if (!dtoScreenDetailList.isEmpty()) {
+					responseMessage = new ResponseMessage(
+							HttpStatus.CREATED.value(), HttpStatus.CREATED, serviceResponse
+									.getMessageByShortAndIsDeleted(MessageLabel.REPORT_LIST_OF_ROLE_ACCESS_GET_SUCCESS, false),
+							dtoScreenDetailList);
+				} else {
+					responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.REPORT_LIST_OF_ROLE_ACCESS_NOT_FOUND,
+									false));
+				}
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.BAD_REQUEST, false));
+			}
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.ACCESS_ROLE_NOT_FOUND, false));
+		}
+		return responseMessage;
+	}
+
+	*//**
+	 * @description : List Of Transaction Modules By Access Role
+	 * @param dtoTransactionType
+	 * @param request
+	 * @return
+	 *//*
+	@RequestMapping(value = "/listOfTransactionModulesByAccessRole", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseMessage getListOfTransactionModulesByAccessRole(@RequestBody DtoTransactionType dtoTransactionType,
+			HttpServletRequest request) {
+		LOGGER.info("Get List of Modules");
+		ResponseMessage responseMessage = null;
+		AccessRole accessRole = repositoryAccessRole
+				.findByAccessRoleIdAndIsDeleted(dtoTransactionType.getAccessRoleId(), false);
+		if (accessRole != null) {
+			List<DtoModule> dtoScreenDetailList = serviceAccessRole
+					.getAllAccessRolesTrasationListByAccessRoleId(dtoTransactionType, accessRole);
+			if (dtoScreenDetailList != null) {
+				if (!dtoScreenDetailList.isEmpty()) {
+					responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.TRANSACTION_LIST_OF_ROLE_ACCESS_GET_SUCCESS,
+									false),
+							dtoScreenDetailList);
+				} else {
+					responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
+							serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.TRANSACTION_LIST_OF_ROLE_ACCESS_NOT_FOUND,
+									false));
+				}
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.BAD_REQUEST, false));
+			}
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.ACCESS_ROLE_NOT_FOUND, false));
+		}
+		return responseMessage;
+	}
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/exportMasterData", method = RequestMethod.GET)
 	public void exportMasterData(HttpServletRequest request, HttpServletResponse response) {
 		serviceHome.exportMasterData(request, response);
@@ -885,20 +978,7 @@ public class ControllerHome {
 		return responseMessage;
 	}
 	
-	@RequestMapping(value = "/updateActiveSession", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = "Accept=application/json")
-	public ResponseMessage updateActiveSessiong(HttpServletRequest request,@RequestBody DtoUser dtoUser) 
-	{
-		ResponseMessage responseMessage = null;
-			Boolean response = this.serviceHome.updateActiveSession(dtoUser);
-		if (response) {
-			responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-					this.serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.USER_UPDATED_SUCCESS, false));
-		} else {
-			responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
-					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
-		}
-		return responseMessage;
-	}
+	
 	
 	@RequestMapping(value = "/importUserMasterDataForUpdateLanguage",consumes = { "multipart/mixed", "multipart/form-data" }, method = RequestMethod.POST)
 	public @ResponseBody ResponseMessage importMasterDataForUpdateLanguage(
@@ -962,54 +1042,6 @@ public class ControllerHome {
 		    return responseMessage;
 	}
 	
-	*//**
-	 * @description : List Of Modules
-	 * @param request
-	 * @return
-	 *//*
-	@RequestMapping(value = "/listOfModulesByLanguageAndIsActive", method = RequestMethod.GET)
-	@ResponseBody
-	public ResponseMessage getListOfModulesByLanguageAndIsActive(HttpServletRequest request) {
-		LOGGER.info("Get List of Modules");
-		ResponseMessage responseMessage = null;
-		List<DtoModule> dtoModuleList = serviceHome.getAllModuleByLanguageAndIsActive();
-		if (dtoModuleList != null && dtoModuleList.size() > 0) {
-			responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
-				serviceResponse.getMessageByShortAndIsDeleted("MODULE_DETAILS_SUCCESS", false), dtoModuleList);
-		
-		} else {
-			responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
-					serviceResponse.getMessageByShortAndIsDeleted("MODULE_DETAILS_FAIL", false));
-		}
-		return responseMessage;
-	}
-	
-	*//**
-	 * @description : It will return all the labels related to screen and module
-	 * @param dtoScreenDetail
-	 * @param request
-	 * @return
-	 *//*
-	@RequestMapping(value = "/screenGridDetail", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseMessage loginScreenGrid(@RequestBody DtoScreenDetail dtoScreenDetail, HttpServletRequest request) {
-		LOGGER.info("Get Screen Detail");
-		ResponseMessage responseMessage = null;
-		DtoModule dtoModule = serviceLogin.getScreenGridDetail(dtoScreenDetail);
-		if (dtoModule != null) {
-			if (dtoModule.getMessageType() == null) {
-				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
-						serviceResponse.getMessageByShortAndIsDeleted("SCREEN_DETAILS_SUCCESS", false), dtoModule);
-			} else {
-				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
-						serviceResponse.getMessageByShortAndIsDeleted(dtoModule.getMessageType(), false));
-			}
-
-		} else {
-			responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
-					serviceResponse.getMessageByShortAndIsDeleted("DO_NOT_ACCESS_OF_SCREEN", false));
-		}
-		return responseMessage;
-	}*/
+	*/
 
 }
