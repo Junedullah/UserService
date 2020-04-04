@@ -26,11 +26,13 @@ import com.ss.config.ResponseMessage;
 import com.ss.constant.MessageLabel;
 import com.ss.model.UserSession;
 import com.ss.model.dto.DtoFieldCustomization;
+import com.ss.model.dto.DtoFieldDetail;
+import com.ss.model.dto.DtoSearch;
 import com.ss.service.ServiceFieldCustomization;
 import com.ss.service.ServiceResponse;
 
 @RestController
-@RequestMapping("/field-customization")
+@RequestMapping("/fieldcustomization")
 public class ControllerFieldCustomization {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ControllerFieldCustomization.class);
@@ -175,5 +177,45 @@ public class ControllerFieldCustomization {
 		}
 
 		return responseMessage;
+	
 	}
+	
+	@RequestMapping(value = "/getById", method = RequestMethod.POST)
+	public ResponseMessage getById(HttpServletRequest request, @RequestBody DtoFieldCustomization dtoFieldCustomization) throws Exception {
+		ResponseMessage responseMessage = null;
+		UserSession session =sessionManager.validateUserSessionId(request);
+		if (session != null) {
+			dtoFieldCustomization = serviceFieldCustomization.getById(dtoFieldCustomization.getId());
+			
+			responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.MODULE_GET_BY_ID, false), dtoFieldCustomization);		
+			
+			} else {
+				
+			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+		}
+		return responseMessage;
+	}
+	
+	@RequestMapping(value = "/getAllFieldCustomization", method = RequestMethod.PUT)
+	public ResponseMessage getAllFieldCustomization(HttpServletRequest request, @RequestBody DtoFieldCustomization dtoFieldCustomization) {
+		ResponseMessage responseMessage = null;
+		UserSession session = sessionManager.validateUserSessionId(request);
+		if (session != null) {
+			DtoSearch dtoSearch = serviceFieldCustomization.getAllFieldCustomization(dtoFieldCustomization);
+			if (dtoSearch.getRecords() != null) {
+				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.MODULE_GET_ALL, false), dtoSearch);
+			} else {
+				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.MODULE_LIST_NOT_GETTING, false));
+			}
+		} else {
+			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.FORBIDDEN, false));
+		}
+		return responseMessage;
+	}
+	
 }

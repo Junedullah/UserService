@@ -260,7 +260,7 @@ public class ServiceHome {
 			return true;
 		}
 		return false;
-
+	}
 	/**
 	 * Description: reset password for user by super admin
 	 * @param user
