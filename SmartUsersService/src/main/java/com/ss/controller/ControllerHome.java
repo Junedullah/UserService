@@ -1020,28 +1020,6 @@ public class ControllerHome {
 		return responseMessage;
 	}
 
-	@RequestMapping(value = "/screenLockAndCheckEditAccess", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = "Accept=application/json")
-	public ResponseMessage saveScreenId(HttpServletRequest request,@RequestBody DtoScreenDetail dtoScreenDetail) 
-	{
-		    ResponseMessage responseMessage = null;
-		    String langId = request.getHeader(Constant.LANG_ID);
-		    int lang=0;
-		    if(UtilRandomKey.isNotBlank(langId)){
-		    	lang=Integer.parseInt(langId);
-		    }
-		    
-//		    String message =  this.serviceHome.saveUserDraftDetail(dtoScreenDetail,lang);
-//		    if(message.equalsIgnoreCase(MessageLabel.SCREEN_LOCKED)){
-			   responseMessage = new ResponseMessage(HttpStatus.OK.value(), HttpStatus.OK,
-						this.serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.SCREEN_LOCKED, false));
-//		    }
-//		    else{
-//			   responseMessage = new ResponseMessage(HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN,
-//						this.serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.SCREEN_ALREADY_LOCKED, false));
-//		    }
-		    return responseMessage;
-	}
 	
-	*/
  
 }
