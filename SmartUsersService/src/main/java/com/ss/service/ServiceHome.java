@@ -87,15 +87,7 @@ import com.ss.util.CodeGenerator;
 import com.ss.util.UtilRandomKey;
 
 
-/**
- * Description: Service Home
- * Name of Project:SST
- * Created on: FEB 18, 2020
- * Modified on: MARCH 19, 2020 11:19:38 AM
- *
- * @author Tehmina ALi
- * Version:
- */
+
 @Service("serviceHome")
 @Transactional
 @EnableScheduling
