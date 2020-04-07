@@ -39,50 +39,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ss.constant.Constant;
-import com.ss.model.CityMaster;
-import com.ss.model.CommonConstant;
-import com.ss.model.Company;
-import com.ss.model.CountryMaster;
-import com.ss.model.Field;
-import com.ss.model.FieldValidation;
-import com.ss.model.Language;
-import com.ss.model.Module;
-import com.ss.model.Screen;
-import com.ss.model.StateMaster;
-import com.ss.model.User;
-import com.ss.model.UserCompanyRelation;
-import com.ss.model.UserDetail;
-import com.ss.model.UserSession;
-import com.ss.model.ValidationMessage;
-import com.ss.model.dto.DtoCompany;
-import com.ss.model.dto.DtoCountry;
-import com.ss.model.dto.DtoLanguage;
-import com.ss.model.dto.DtoModule;
-import com.ss.model.dto.DtoSearch;
-import com.ss.model.dto.DtoUser;
-import com.ss.repository.RepositoryAuthorizationSetting;
-import com.ss.repository.RepositoryCityMaster;
-import com.ss.repository.RepositoryCommonConstant;
-import com.ss.repository.RepositoryCompany;
-import com.ss.repository.RepositoryCountryMaster;
-import com.ss.repository.RepositoryFieldValidation;
-import com.ss.repository.RepositoryFields;
-import com.ss.repository.RepositoryLanguage;
-import com.ss.repository.RepositoryLoginOtp;
-import com.ss.repository.RepositoryModule;
-import com.ss.repository.RepositoryRole;
-import com.ss.repository.RepositoryRoleGroup;
-import com.ss.repository.RepositoryScreen;
-import com.ss.repository.RepositoryStateMaster;
-import com.ss.repository.RepositoryUser;
-import com.ss.repository.RepositoryUserCompanyRelation;
-import com.ss.repository.RepositoryUserDetail;
-import com.ss.repository.RepositoryUserDetailPagination;
-import com.ss.repository.RepositoryUserDraft;
-import com.ss.repository.RepositoryUserGroup;
-import com.ss.repository.RepositoryUserSession;
-import com.ss.repository.RepositoryValidationMessages;
-import com.ss.repository.RepositoryWeekDay;
+import com.ss.model.*;
+import com.ss.model.dto.*;
+import com.ss.repository.*;
 import com.ss.util.CodeGenerator;
 import com.ss.util.UtilRandomKey;
 
@@ -167,14 +126,9 @@ public class ServiceHome {
 	@Autowired
 	ServiceResponse serviceResponse;
 
-	/*	@Autowired
-	RepositoryCommonConstant repositoryCommonConstant;*/
 
 	@Autowired
 	RepositoryUserCompanyRelation repositoryUserCompanyRelation;
-
-	/*	@Autowired
-	RepositorySstMessage repositorySstMessage;*/
 
 	@Autowired
 	RepositoryWeekDay repositoryWeekDay;
@@ -724,13 +678,5 @@ public class ServiceHome {
 		return null;
 	}
 	
-	public boolean updateActiveSession(DtoUser dtoUser){
-		UserSession userSession = repositoryUserSession.findByUserUserIdAndSessionAndIsDeleted(dtoUser.getUserId(), dtoUser.getSession(), false);
-		if(userSession!=null){
-			userSession.setUpdatedDate(new Date());
-			repositoryUserSession.saveAndFlush(userSession);
-			return true;
-		}
-		return false;
-	}
+
 }
