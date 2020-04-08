@@ -29,7 +29,10 @@ public class DtoFieldAccess {
 	private Integer screenId;
 	private String screenName;
 	private List<DtoFieldAccess> accessIds;
-	private List<DtoFieldAccessDeatils> ids;
+	private List<Integer> ids;
+	private String messageType;
+
+	
 
 	public DtoFieldAccess(FieldAccess field) {
 		if (UtilRandomKey.isNotNull(field.getField().getFieldId())) {
@@ -64,9 +67,7 @@ public class DtoFieldAccess {
 		this.fieldAccessId = fieldAccessId;
 	}
 
-	public List<DtoFieldAccessDeatils> getIds() {
-		return ids;
-	}
+	
 
 	public Integer getCompanyId() {
 		return companyId;
@@ -76,10 +77,7 @@ public class DtoFieldAccess {
 		this.companyId = companyId;
 	}
 
-	public void setIds(List<DtoFieldAccessDeatils> ids) {
-		this.ids = ids;
-	}
-
+	
 	public Integer getModuleId() {
 		return moduleId;
 	}
@@ -168,4 +166,21 @@ public class DtoFieldAccess {
 		this.accessIds = accessIds;
 	}
 
+	public List<Integer> getIds() {
+		return ids;
+	}
+
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
+
+	public String getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+
+	
 }

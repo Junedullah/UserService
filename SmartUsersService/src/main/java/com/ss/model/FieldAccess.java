@@ -4,7 +4,7 @@
  * Name of Project: SmartSoftware
  * Created on: March 20, 2020
  * Modified on: March 20, 2020 11:19:38 AM
- * @author Juned
+ * @author Juned,Shahnawaz
  * Version: 
  */
 package com.ss.model;
@@ -56,7 +56,7 @@ public class FieldAccess extends BaseEntity implements Serializable {
 	private Boolean mandatory;
 
 	@ManyToOne
-	@JoinColumn(name = "keyboard_input")
+	@JoinColumn(name = "lang_id")
 	private Language language;
 
 	public int getFieldAccessId() {

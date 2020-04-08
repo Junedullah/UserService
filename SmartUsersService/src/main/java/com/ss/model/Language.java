@@ -6,7 +6,7 @@ package com.ss.model;
  * Name of Project: SmartSoftware
  * Created on: March 20, 2020
  * Modified on: March 20, 2020 11:19:38 AM
- * @author Juned
+ * @author Juned,Shahnawaz
  * Version: 
  */
 

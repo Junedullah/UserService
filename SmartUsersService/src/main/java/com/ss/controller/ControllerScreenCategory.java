@@ -1,4 +1,3 @@
-
 package com.ss.controller;
 
 import java.util.ArrayList;
@@ -6,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,57 +17,41 @@ import com.ss.config.ResponseMessage;
 import com.ss.constant.MessageLabel;
 import com.ss.model.UserSession;
 import com.ss.model.dto.DtoFieldDetail;
-import com.ss.model.dto.DtoGrid;
+import com.ss.model.dto.DtoScreenCategory;
+import com.ss.model.dto.DtoScreenDetail;
+import com.ss.model.dto.DtoScreenMenu;
 import com.ss.model.dto.DtoSearch;
-import com.ss.service.ServiceField;
-import com.ss.service.ServiceGrid;
 import com.ss.service.ServiceResponse;
+import com.ss.service.ServiceScreen;
+import com.ss.service.ServiceScreenCategory;
 
-/**SmartSoftware User - Service */
-/**
- * Description: The persistent class for the Field database table.
- * Name of Project: SmartUserSoftware
- * Created on: march 11, 2020
- * Modified on: march 11, 2020 11:19:38 AM
- * @author shahnawaz Ahmad
- * Version: 
- */
 @RestController
-@RequestMapping("/fields")
-public class ControllerField {
+@RequestMapping("/screenCategory")
+public class ControllerScreenCategory {
 	
-	private static final Logger LOGGER = Logger.getLogger(ControllerField.class);
-
-
-	@Autowired
-	ServiceField serviceField;
-
 	@Autowired
 	SessionManager sessionManager;
-
+	
 	@Autowired
 	ServiceResponse serviceResponse;
-
 	
-	/**
-	 * @description : Create Field
-	 * @param request
-	 * @param dtoField
-	 * @return
-	 */
-	@RequestMapping(value = "/createfields", method = RequestMethod.POST)
-	public ResponseMessage createfields(HttpServletRequest request, @RequestBody DtoFieldDetail dtoFieldDetail) {
+	@Autowired
+	ServiceScreenCategory serviceScreenCategory;
+	
+	
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public ResponseMessage createScreenCategory(HttpServletRequest request, @RequestBody DtoScreenCategory dtoScreenCategory) {
 		ResponseMessage responseMessage = null;
 		UserSession session = sessionManager.validateUserSessionId(request);
 		if (session != null) {
 			
-			dtoFieldDetail = serviceField.saveOrUpdate(dtoFieldDetail);
-			if (dtoFieldDetail != null) {
+			dtoScreenCategory = serviceScreenCategory.saveOrUpdate(dtoScreenCategory);
+			if (dtoScreenCategory != null) {
 				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.MODULE_CREATED, false), dtoFieldDetail);
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.MODULE_CREATED, false), dtoScreenCategory);
 			} else {
 				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
-						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.MODULE_NOT_CREATED, false), dtoFieldDetail);
+						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.MODULE_NOT_CREATED, false), dtoScreenCategory);
 			}
 		
 		} else {
@@ -79,12 +61,12 @@ public class ControllerField {
 		return responseMessage;
 	}
 	
-	@RequestMapping(value = "/getAllField", method = RequestMethod.PUT)
-	public ResponseMessage getAllField(HttpServletRequest request, @RequestBody DtoFieldDetail dtoFieldDetail) {
+	@RequestMapping(value = "/getAllScreenCategory", method = RequestMethod.PUT)
+	public ResponseMessage getAllScreenCategory(HttpServletRequest request, @RequestBody DtoScreenCategory dtoScreenCategory) {
 		ResponseMessage responseMessage = null;
 		UserSession session = sessionManager.validateUserSessionId(request);
 		if (session != null) {
-			DtoSearch dtoSearch = serviceField.getAllField(dtoFieldDetail);
+			DtoSearch dtoSearch = serviceScreenCategory.getAllScreenCategory(dtoScreenCategory);
 			if (dtoSearch.getRecords() != null) {
 				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
 						serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.MODULE_GET_ALL, false), dtoSearch);
@@ -100,23 +82,23 @@ public class ControllerField {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.PUT)
-	public ResponseMessage delete(HttpServletRequest request, @RequestBody DtoFieldDetail dtoFieldDetail) {
+	public ResponseMessage delete(HttpServletRequest request, @RequestBody DtoScreenCategory dtoScreenCategory) {
 
 		ResponseMessage responseMessage = null;
 		UserSession session = sessionManager.validateUserSessionId(request);
 		List<Integer> inputIds = new ArrayList<>();
 		//Integer pId = null;
-		inputIds.addAll(dtoFieldDetail.getIds());
+		inputIds.addAll(dtoScreenCategory.getIds());
 		if (session != null) {
-				if (dtoFieldDetail.getIds() != null && !dtoFieldDetail.getIds().isEmpty()) {
+				if (dtoScreenCategory.getIds() != null && !dtoScreenCategory.getIds().isEmpty()) {
 
-					List<Integer> ids = (List<Integer>) serviceField.delete(dtoFieldDetail.getIds());
+					List<Integer> ids = (List<Integer>) serviceScreenCategory.delete(dtoScreenCategory.getIds());
 					if (ids.isEmpty()) {
 						responseMessage = new ResponseMessage(HttpStatus.DELETED.value(), HttpStatus.DELETED,
-								serviceResponse.getMessageByShortAndIsDeleted("DELETED", false), dtoFieldDetail);
+								serviceResponse.getMessageByShortAndIsDeleted("DELETED", false), dtoScreenCategory);
 					} else if (ids.size() < inputIds.size()) {
 						responseMessage = new ResponseMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,
-								serviceResponse.getMessageByShortAndIsDeleted("NOT_FOUND", false), dtoFieldDetail);
+								serviceResponse.getMessageByShortAndIsDeleted("NOT_FOUND", false), dtoScreenCategory);
 					} else {
 						responseMessage = new ResponseMessage(HttpStatus.NOT_ACCEPTABLE.value(),
 								HttpStatus.NOT_ACCEPTABLE,
@@ -133,14 +115,14 @@ public class ControllerField {
 	}
 	
 	@RequestMapping(value = "/getById", method = RequestMethod.POST)
-	public ResponseMessage getById(HttpServletRequest request, @RequestBody DtoFieldDetail dtoFieldDetail) throws Exception {
+	public ResponseMessage getById(HttpServletRequest request, @RequestBody DtoScreenCategory dtoScreenCategory) throws Exception {
 		ResponseMessage responseMessage = null;
 		UserSession session =sessionManager.validateUserSessionId(request);
 		if (session != null) {
-			dtoFieldDetail = serviceField.getById(dtoFieldDetail.getFieldId());
+			dtoScreenCategory = serviceScreenCategory .getById(dtoScreenCategory.getScreenCategoryId());
 			
 			responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
-					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.MODULE_GET_BY_ID, false), dtoFieldDetail);		
+					serviceResponse.getMessageByShortAndIsDeleted(MessageLabel.MODULE_GET_BY_ID, false), dtoScreenCategory);		
 			
 			} else {
 				
@@ -150,28 +132,5 @@ public class ControllerField {
 		return responseMessage;
 	}
 
-	@RequestMapping(value = "/saveOrUpdateFieldLanguage", method = RequestMethod.PUT)
-	public ResponseMessage saveOrUpdateFieldLanguage(HttpServletRequest request,
-			@RequestBody DtoFieldDetail dtoFieldDetail) throws Exception {
-		LOGGER.info("Get All Field By CompanyId Method");
-		ResponseMessage responseMessage = null;
-		UserSession session = sessionManager.validateUserSessionId(request);
-		if (session != null) {
-			dtoFieldDetail = serviceField.changeLanguage(dtoFieldDetail.getLanguageIds());
-			if (dtoFieldDetail != null) {
-				responseMessage = new ResponseMessage(HttpStatus.CREATED.value(), HttpStatus.CREATED,
-						serviceResponse.getMessageByShortAndIsDeleted("FIELD_LANGUAGE_UPDATED_SUCCESS", false), dtoFieldDetail);
-			} else {
-				responseMessage = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST,
-						serviceResponse.getMessageByShortAndIsDeleted("FIELD_LANGUAGE_NOT_UPDATED", false), dtoFieldDetail);
-			}
-		} else {
-			responseMessage = new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED,
-					serviceResponse.getMessageByShortAndIsDeleted("SESSION_EXPIRED", false));
-		}
-		LOGGER.debug("Get All Fields Method:" + responseMessage.getMessage());
-		return responseMessage;
-	}
-
-
-		}  
+	
+}
