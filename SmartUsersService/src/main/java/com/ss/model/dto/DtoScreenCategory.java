@@ -26,6 +26,12 @@ public class DtoScreenCategory {
 	private Integer pageNumber;
 	private Integer pageSize;
 	private List<DtoSideMenu> sideMenuList;
+	private List<Integer> ids;
+	private Integer languageId;
+	private String messageType;
+
+
+
 
 	public DtoScreenCategory() {
 		
@@ -110,5 +116,32 @@ public class DtoScreenCategory {
 	public void setScreenCategoryCode(String screenCategoryCode) {
 		this.screenCategoryCode = screenCategoryCode;
 	}
+
+	public List<Integer> getIds() {
+		return ids;
+	}
+
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
+	}
+
+	public Integer getLanguageId() {
+		return languageId;
+	}
+
+	public void setLanguageId(Integer languageId) {
+		this.languageId = languageId;
+	}
+
+	public String getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+	
+	
+	
 
 }

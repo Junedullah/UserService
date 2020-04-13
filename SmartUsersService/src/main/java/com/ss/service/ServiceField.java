@@ -24,14 +24,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ss.model.Company;
 import com.ss.model.Field;
-import com.ss.model.Grid;
-import com.ss.model.Module;
-import com.ss.model.dto.DtoCompany;
+import com.ss.model.Language;
+import com.ss.model.dto.DtoFieldAccessDeatils;
 import com.ss.model.dto.DtoFieldDetail;
-import com.ss.model.dto.DtoGrid;
-import com.ss.model.dto.DtoModule;
 import com.ss.model.dto.DtoSearch;
 import com.ss.repository.RepositoryException;
 import com.ss.repository.RepositoryFields;
@@ -231,6 +227,26 @@ public DtoFieldDetail getById(int id) {
 	}
 	return dtoFieldDetail;
 }
+
+public DtoFieldDetail changeLanguage(List<DtoFieldAccessDeatils> languageIds) {
+		log.info("change Language Id Method called");
+		DtoFieldDetail dtoFieldDetail = new DtoFieldDetail();
+		int loggedInUserId = Integer.parseInt(httpServletRequest.getHeader("userid").toString());
+		try {
+			for (DtoFieldAccessDeatils dtoFieldAccessDeatils : languageIds) {
+				Field field = repositoryFields.findOne(dtoFieldAccessDeatils.getFieldId());
+				Language language = repositoryLanguage.findByLanguageIdAndIsDeleted(dtoFieldAccessDeatils.getLanguageId(), false);
+
+				if (field.getLanguage().getLanguageId() != 0 && field.getLanguage().getLanguageId() > 0) {
+					field.setLanguage(language);
+					repositoryFields.saveAndFlush(field);
+				}	
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		return dtoFieldDetail;
+	}
  
  
 	

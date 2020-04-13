@@ -20,6 +20,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.ss.model.Field;
 import com.ss.model.FieldAccess;
 
 
@@ -84,11 +85,12 @@ public interface RepositoryFieldAccess extends JpaRepository<FieldAccess, Intege
 	 * @param updateById
 	 * @param id
 	 */
-	@Modifying(clearAutomatically = true)
-	@Transactional
-	@Query("update FieldAccess d set d.isDeleted =:deleted ,d.updatedBy =:updateById where d.id =:id ")
-	public void deleteSingleFieldAccess(@Param("deleted") Boolean deleted, @Param("updateById") Integer updateById,
-			@Param("id") Integer id);
+	 FieldAccess findOne(Integer planId);
+	    @Modifying(clearAutomatically = true)
+	    @Transactional
+	    @Query("update FieldAccess p set p.isDeleted =:deleted ,p.updatedBy =:updateById where p.fieldAccessId =:fieldAccessId ")
+	    public void deleteSingleFieldAccess(@Param("deleted") Boolean deleted, @Param("updateById") Integer updateById,
+	                                    @Param("fieldAccessId") Integer fieldAccessId);
 
 	/**
 	 * 
@@ -130,6 +132,18 @@ public interface RepositoryFieldAccess extends JpaRepository<FieldAccess, Intege
 	
 	@Query("select p from FieldAccess p where (p.company.companyId =:companyId and p.screen.screenId =:screenId) and p.isDeleted=false")
 	public List<FieldAccess> findScreenIdbyCompanyId(@Param("companyId")Integer companyId, @Param("screenId")Integer screenId);
+
+	 @Query("select p from FieldAccess p where p.isDeleted = false and p.fieldAccessId =:fieldAccessId")
+	    public FieldAccess findByIdAndIsDeleted(@Param("fieldAccessId")Integer fieldAccessId);
+
+	public List<FieldAccess> findByIsDeletedOrderByCreatedDateDesc(boolean b);
+
+	 @Query("select p from FieldAccess p where (p.isDeleted = false or  p.isDeleted = null) and fieldAccessId =:fieldAccessId")
+	    public	FieldAccess findByAndIsDeleted(@Param("fieldAccessId")int fieldAccessId);
+	    
+	 @Query("select p from FieldAccess p where p.fieldAccessId=:fieldAccessId and p.isDeleted=false")
+	    public List<FieldAccess> findBygridIdAndIsDeleted(@Param("fieldAccessId") List<Integer> fieldAccessId);
+
 	
 //	@Query("select p from FieldAccess p where (p.company.companyId =:companyId and p.screen.screenId =:screenId) and p.isDeleted=false")
 //	public List<FieldAccess> findFieldbyFieldIdCompanyId(@Param("fieldId")Integer fieldId, @Param("companyId")Integer companyId);
